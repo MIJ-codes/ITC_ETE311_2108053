@@ -1,0 +1,281 @@
+\documentclass[11pt,a4paper]{book}
+
+% Essential packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[top = 2.5cm, bottom = 1.5cm, left = 1.5cm, right = 1.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage{mdframed}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{colortbl}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{gensymb}
+\usepackage{calligra}
+\usepackage{polyglossia}
+\usepackage[export]{adjustbox}
+\usepackage[font=small, labelfont=bf]{caption}
+\captionsetup[longtable]{width=\textwidth, justification=centering}
+
+% TikZ libraries
+\usetikzlibrary{shapes,arrows,positioning,decorations.pathmorphing,decorations.markings,calc}
+\usetikzlibrary{patterns,shadows,backgrounds}
+
+% ===================================
+% Language Setup
+% ===================================
+\setdefaultlanguage{english}
+\setotherlanguage{arabic}
+\newfontfamily\arabicfont[Script=Arabic]{Amiri}
+
+% Color definitions - Soft, elegant palette inspired by the cat image
+\definecolor{softblue}{HTML}{D6EBF4}        % Main soft blue from image
+\definecolor{warmgray}{HTML}{8B7D7B}        % Warm gray/brown
+\definecolor{deepbrown}{HTML}{4A3C3A}       % Deep brown
+\definecolor{rosepink}{HTML}{E8B4B8}        % Soft rose pink
+\definecolor{creamwhite}{HTML}{F5F5F0}      % Cream white
+\definecolor{charcoal}{HTML}{3D3D3D}        % Charcoal for text
+\definecolor{skyblue}{HTML}{A8D8E8}         % Lighter sky blue
+\definecolor{accentblue}{HTML}{6BA3C8}      % Accent blue
+\definecolor{mutedviolet}{HTML}{B8A8C8}     % Muted violet
+
+% Hyperlink settings
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accentblue,
+    urlcolor=accentblue,
+    citecolor=accentblue
+}
+
+\begin{document}
+
+% ============================================================================
+% CUSTOM TITLE PAGE
+% ============================================================================
+\begin{titlepage}
+    \thispagestyle{empty}
+    
+    % Background with subtle pattern
+    \begin{tikzpicture}[remember picture,overlay]
+        % Soft gradient background
+        \fill[softblue!40] (current page.south west) rectangle (current page.north east);
+        
+        % Binary pattern in background (representing information/coding)
+        \begin{scope}[opacity=0.06, shift={(current page.center)}]
+            \foreach \x in {-8,-7,...,8} {
+                \foreach \y in {-12,-11,...,12} {
+                    \pgfmathparse{int(random(0,1))}
+                    \node[warmgray] at (\x,\y) {\tiny\texttt{\pgfmathresult}};
+                }
+            }
+        \end{scope}
+        
+        % Decorative wave pattern (top)
+        \begin{scope}[opacity=0.15]
+            \fill[accentblue] ([yshift=-2cm]current page.north west) 
+                .. controls ++(3,0.5) and ++(-3,0.5) .. ([yshift=-2cm,xshift=6cm]current page.north west)
+                .. controls ++(3,-0.5) and ++(-3,-0.5) .. ([yshift=-2.5cm,xshift=12cm]current page.north west)
+                .. controls ++(3,0.5) and ++(-3,0.5) .. ([yshift=-2cm,xshift=21cm]current page.north west) % stretched from 18cm → 21cm
+                -- ([yshift=0cm,xshift=21cm]current page.north west) % also extended to match
+                -- (current page.north west) -- cycle;
+        \end{scope}
+        
+        % Decorative wave pattern (bottom)
+        \begin{scope}[opacity=0.15]
+            \fill[rosepink] ([yshift=2cm]current page.south west) 
+                .. controls ++(3,-0.5) and ++(-3,-0.5) .. ([yshift=2cm,xshift=6cm]current page.south west)
+                .. controls ++(3,0.5) and ++(-3,0.5) .. ([yshift=2.5cm,xshift=12cm]current page.south west)
+                .. controls ++(3,-0.5) and ++(-3,-0.5) .. ([yshift=2cm,xshift=21cm]current page.south west) % stretched from 18cm → 21cm
+                -- ([yshift=0cm,xshift=21cm]current page.south west) % also extended to match
+                -- (current page.south west) -- cycle;
+        \end{scope}
+
+    \end{tikzpicture}
+    
+    \centering
+
+    % Quranic Verse at the top
+    \vspace{-1.5cm}
+    {\Large\textcolor{rosepink!110}{\textarabic{يُؤْتِي الْحِكْمَةَ مَن يَشَاءُ وَمَن يُؤْتَ الْحِكْمَةَ فَقَدْ أُوتِيَ خَيْرًا كَثِيرًا}}}\\
+    \vspace{0.2cm}
+    {\small\textcolor{warmgray}{\textit{He gives wisdom to whom He wills, and whoever has been given wisdom has certainly been given much good.}}}\\
+    \vspace{0.1cm}
+    {\tiny\textcolor{warmgray}{(Surah Al Baqarah, 2:269)}}
+
+    
+    % Header decoration
+    \vspace*{1cm}
+    \begin{tikzpicture}
+        \draw[accentblue, line width=3pt] (0,0) -- (10,0);
+        \draw[rosepink, line width=1.5pt] (0,-0.2) -- (10,-0.2);
+    \end{tikzpicture}
+    
+    \vspace{0.5cm}
+    
+    % Main Title
+    {\fontsize{40}{48}\selectfont\textbf{\textcolor{accentblue}{INFORMATION}}}\\
+    \vspace{0.5cm}
+    {\fontsize{40}{48}\selectfont\textbf{\textcolor{warmgray}{THEORY}}}\\
+    \vspace{0.5cm}
+    {\fontsize{36}{44}\selectfont\textbf{\textcolor{deepbrown}{\& CODING}}}\\
+    
+    \vspace{0.5cm}
+    
+    % Information Theory Illustration - Binary Tree & Shannon's Model
+    \begin{tikzpicture}[scale=0.8, every node/.style={transform shape}]
+        
+        % Shannon's Communication Model
+        % Source
+        \draw[warmgray, fill=softblue!60, thick, rounded corners=3pt] 
+            (-6,-0.75) rectangle (-4,0.75);
+        \node[align=center] at (-5,0) {\textbf{\small Info}\\\textbf{\small Source}};
+        
+        % Encoder
+        \draw[accentblue, fill=skyblue!50, thick, rounded corners=3pt] 
+            (-3,-0.75) rectangle (-1,0.75);
+        \node[align=center] at (-2,0) {\textbf{\small Encoder}};
+        
+        % Channel (with noise)
+        \draw[deepbrown, fill=rosepink!40, thick, rounded corners=3pt] 
+            (0,-0.75) rectangle (2,0.75);
+        \node[align=center] at (1,0) {\textbf{\small Channel}};
+        
+        % Noise source (above channel)
+        \draw[warmgray, fill=rosepink!60, thick] 
+            (0.5,1.5) circle (0.5);
+        \node at (0.5,1.5) {\tiny\textbf{Noise}};
+        \draw[->, warmgray, line width=1.2pt] (0.5,1) -- (1,0.75);
+        
+        % Decoder
+        \draw[accentblue, fill=skyblue!50, thick, rounded corners=3pt] 
+            (3,-0.75) rectangle (5,0.75);
+        \node[align=center] at (4,0) {\textbf{\small Decoder}};
+        
+        % Destination
+        \draw[warmgray, fill=softblue!60, thick, rounded corners=3pt] 
+            (6,-0.75) rectangle (8,0.75);
+        \node[align=center] at (7,0) {\textbf{\small Destin-}\\\textbf{\small ation}};
+        
+        % Arrows connecting components
+        \draw[->, deepbrown, line width=1.5pt] (-4,0) -- (-3,0);
+        \draw[->, deepbrown, line width=1.5pt] (-1,0) -- (0,0);
+        \draw[->, deepbrown, line width=1.5pt] (2,0) -- (3,0);
+        \draw[->, deepbrown, line width=1.5pt] (5,0) -- (6,0);
+        
+        % Labels on arrows
+        \node[above, warmgray] at (-3.5,0.2) {\tiny message};
+        \node[above, accentblue] at (-0.5,0.2) {\tiny encoded};
+        \node[above, accentblue] at (2.5,0.2) {\tiny received};
+        \node[above, warmgray] at (5.5,0.2) {\tiny decoded};
+        
+        % Binary tree below (representing coding)
+        \begin{scope}[shift={(0.5,-2.5)}, scale=0.8] % ← was -3.5, now -2.5 (moved 1 cm up)
+            % Root node
+            \draw[accentblue, fill=softblue!70, thick] (0,0) circle (0.4);
+            \node at (0,0) {\small\textbf{1}};
+            
+            % Level 1
+            \draw[warmgray, fill=skyblue!60, thick] (-2,-1.5) circle (0.35);
+            \node at (-2,-1.5) {\small 0};
+            \draw[warmgray, fill=skyblue!60, thick] (2,-1.5) circle (0.35);
+            \node at (2,-1.5) {\small 1};
+            
+            % Level 2
+            \draw[deepbrown, fill=rosepink!50, thick] (-3,-3) circle (0.3);
+            \node at (-3,-3) {\tiny 00};
+            \draw[deepbrown, fill=rosepink!50, thick] (-1,-3) circle (0.3);
+            \node at (-1,-3) {\tiny 01};
+            \draw[deepbrown, fill=rosepink!50, thick] (1,-3) circle (0.3);
+            \node at (1,-3) {\tiny 10};
+            \draw[deepbrown, fill=rosepink!50, thick] (3,-3) circle (0.3);
+            \node at (3,-3) {\tiny 11};
+            
+            % Connections
+            \draw[accentblue, line width=1.2pt] (0,-0.4) -- (-2,-1.15);
+            \draw[accentblue, line width=1.2pt] (0,-0.4) -- (2,-1.15);
+            \draw[warmgray, line width=1pt] (-2,-1.85) -- (-3,-2.7);
+            \draw[warmgray, line width=1pt] (-2,-1.85) -- (-1,-2.7);
+            \draw[warmgray, line width=1pt] (2,-1.85) -- (1,-2.7);
+            \draw[warmgray, line width=1pt] (2,-1.85) -- (3,-2.7);
+            
+            % Labels
+            \node[left, charcoal, font=\tiny] at (-1,-0.7) {0};
+            \node[right, charcoal, font=\tiny] at (1,-0.7) {1};
+        \end{scope}
+        
+        % Information symbols floating around
+        \node[accentblue, font=\Large] at (-7,2) {$H$};
+        \node[warmgray, font=\Large] at (9,2) {$I$};
+        \node[rosepink!80, font=\small] at (-7,-3) {$S = -\sum p_i \log p_i$}; % ← moved 1 cm up
+        \node[accentblue, font=\small] at (8,-3) {$C = B \log_2(1+\text{SNR})$}; % ← moved 1 cm up
+    \end{tikzpicture}
+    
+    \vspace{0.6cm}
+    
+    % Subtitle
+    {\large\textcolor{accentblue}{\textbf{Comprehensive Study Notes}}}
+    
+    \vspace{0.3cm}
+    {\scriptsize\textcolor{charcoal}{Entropy • Source Coding • Channel Capacity • Error Control Coding • Cyclic Codes • Channel Model}}
+    
+    \vspace{0.8cm}
+    
+    % Course Information Box
+    \begin{tcolorbox}[
+        enhanced,
+        colback=creamwhite,
+        colframe=accentblue,
+        sharp corners,
+        boxrule=2pt,
+        left=15pt,
+        right=15pt,
+        top=10pt,
+        bottom=10pt,
+        width=0.75\textwidth
+    ]
+        \centering
+        {\large\textbf{\textcolor{accentblue}{Course Information}}}\\
+        \vspace{0.3cm}
+        \begin{tabular}{rl}
+            \textcolor{charcoal}{\textbf{Course code:}} & \textcolor{warmgray}{ETE 311} \\[0.15cm]
+            \textcolor{charcoal}{\textbf{Professors:}} & 
+            \begin{tabular}[t]{@{}l@{}}
+                \textcolor{warmgray}{Lecturer Arif Istiaque Rupom} \\
+                \textcolor{warmgray}{Lecturer Takowa Rahman}
+            \end{tabular} \\[0.35cm] % added extra spacing before the next row
+            \textcolor{charcoal}{\textbf{Semester:}} & \textcolor{warmgray}{3-2} \\[0.15cm]
+            \textcolor{charcoal}{\textbf{Institution:}} & \textcolor{warmgray}{CUET} \\
+        \end{tabular}
+        \end{tcolorbox}
+
+    \vspace{0.6cm}
+    
+    % Author and Date
+    {\normalsize\textcolor{charcoal}{\textbf{Prepared by:} Md. Miadul Islam Jasim - 2108053}}\\
+    \vspace{0.2cm}
+    {\normalsize\textcolor{charcoal}{\textbf{Date:} \today}}
+    
+    \vspace{0.6cm}
+    
+    % Bottom decoration
+    \begin{tikzpicture}
+        \draw[rosepink, line width=1.5pt] (0,0) -- (10,0);
+        \draw[accentblue, line width=3pt] (0,-0.2) -- (10,-0.2);
+    \end{tikzpicture}
+
+\end{titlepage}
+\end{document}

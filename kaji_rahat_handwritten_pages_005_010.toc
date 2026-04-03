@@ -1,0 +1,30 @@
+\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Information}{3}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Importance of Information Theory}{3}{subsection.1.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1.1}Why Information Theory Matters}{3}{subsubsection.1.1.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1.2}Real-Life Relevance}{3}{subsubsection.1.1.1.2}%
+\contentsline {subsection}{\numberline {1.1.2}Importance in Communication}{3}{subsection.1.1.2}%
+\contentsline {subsubsection}{\numberline {1.1.2.1}Key Points}{3}{subsubsection.1.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.1.2.2}Communication Insight}{3}{subsubsection.1.1.2.2}%
+\contentsline {section}{\numberline {1.2}Discrete Source}{5}{section.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.0.1}Examples of Discrete Sources}{5}{subsubsection.1.2.0.1}%
+\contentsline {subsection}{\numberline {1.2.1}Source Types}{5}{subsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.1.1}Memoryless Source}{5}{subsubsection.1.2.1.1}%
+\contentsline {subsubsection}{\numberline {1.2.1.2}Memory Source}{5}{subsubsection.1.2.1.2}%
+\contentsline {section}{\numberline {1.3}Self Information}{6}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Properties of Self Information}{6}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Physical significance / insight of self information}{6}{subsection.1.3.2}%
+\contentsline {section}{\numberline {1.4}Entropy}{8}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Interpretation}{8}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Why This Form Appears}{8}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}Significance of Entropy}{10}{subsection.1.4.3}%
+\contentsline {subsection}{\numberline {1.4.4}Relation between Hartley, Nats and Bits}{10}{subsection.1.4.4}%
+\contentsline {subsubsection}{\numberline {1.4.4.1}Units of Self Information}{10}{subsubsection.1.4.4.1}%
+\contentsline {subsection}{\numberline {1.4.5}Equal Probability Leads to High Entropy}{11}{subsection.1.4.5}%
+\contentsline {section}{\numberline {1.5}Joint Entropy}{13}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Mutual Information}{15}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Conditional Entropy}{17}{section.1.7}%
+\contentsline {subsection}{\numberline {1.7.1}Simple Intuition}{17}{subsection.1.7.1}%
+\contentsline {subsection}{\numberline {1.7.2}Relation with Joint Entropy}{17}{subsection.1.7.2}%
+\contentsline {section}{\numberline {1.8}Relative Entropy}{18}{section.1.8}%
+\contentsline {subsection}{\numberline {1.8.1}Mutual Information as Relative Entropy}{19}{subsection.1.8.1}%
