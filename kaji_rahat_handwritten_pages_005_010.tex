@@ -38,25 +38,13 @@
 \definecolor{softpeach}{HTML}{F4C2A3}
 \definecolor{mintgreen}{HTML}{A8D5BA}
 \definecolor{softcoral}{HTML}{F5A5A8}
-\definecolor{brightred}{HTML}{FF2B2B}
 \setlength{\headheight}{24pt}
 \renewcommand{\arraystretch}{1.4}
 \setlength{\tabcolsep}{6pt}
-\newcolumntype{C}[1]{w{c}{#1}}
-\newcolumntype{L}[1]{w{l}{#1}}
-
-\let\originaltextbf\textbf
-\renewcommand{\textbf}[1]{\textcolor{brightred}{\originaltextbf{#1}}}
-
-\newenvironment{notelongtable}[1]{%
-    \begingroup
-    \setlength{\LTleft}{0pt}
-    \setlength{\LTright}{0pt}
-    \begin{longtable}{#1}
-}{%
-    \end{longtable}
-    \endgroup
-}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}m{#1}}
+\setlength{\LTleft}{\fill}
+\setlength{\LTright}{\fill}
 
 \renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter: #1}{}}
 \renewcommand{\sectionmark}[1]{\markright{Section \thesection: #1}}
@@ -66,12 +54,12 @@
 \fancyhead[L]{%
     \begin{minipage}[t]{0.48\textwidth}
     \raggedright
-    \adjustbox{max width=\linewidth}{\textcolor{darkgray}{{\bfseries\leftmark}}}%
+    \adjustbox{max width=\linewidth}{\textcolor{darkgray}{\textbf{\leftmark}}}%
     \end{minipage}}
 \fancyhead[R]{%
     \begin{minipage}[t]{0.48\textwidth}
     \raggedleft
-    \adjustbox{max width=\linewidth}{\textcolor{darkgray}{{\bfseries\rightmark}}}%
+    \adjustbox{max width=\linewidth}{\textcolor{darkgray}{\textbf{\rightmark}}}%
     \end{minipage}}
 \fancyfoot[C]{\textcolor{darkgray}{\thepage}}
 \fancyfoot[R]{\tiny\textcalligra{\textcolor{dangerred}{Miad}}}
@@ -365,16 +353,29 @@ I(x_i) = \log \frac{1}{P(x_i)} = -\log P(x_i).
     \[
     I(x_1) > I(x_2) \quad \text{if } P_1 < P_2
     \]
-    \item For statistically independent events,
+    \item For statistically independent events, the total information obtained from the joint occurrence is equal to the sum of the individual informations.
     \[
     I(x_1, x_2) = I(x_1) + I(x_2).
     \]
+    This means that \textbf{information is additive for independent events}.
+
     Equivalently,
     \[
     I_A + I_B = \log \frac{1}{P_A} + \log \frac{1}{P_B}
     = \log \frac{1}{P_A P_B}
     = \log \frac{1}{P(AB)}.
     \]
+
+    This follows because for independent events,
+    \[
+    P(AB) = P_A \cdot P_B.
+    \]
+
+    Thus, the information of the joint event can be written as
+    \[
+    I(AB) = \log \frac{1}{P(AB)},
+    \]
+    which matches the sum of the individual informations. This implies that \textbf{independent events do not share information, so their informations simply add up}.
 \end{enumerate}
 
 \subsection{Physical significance / insight of self information}
@@ -383,12 +384,12 @@ Consider a set of events $X = \{x_1, x_2, x_3\}$ with probability
 P = \{0.5, 0.25, 0.25\}.
 \]
 
-\bfseries{Step 1:} Self information for the first event:
+\textbf{Step 1:} Self information for the first event:
 \[
 I_{x_1} = \log_2 \frac{1}{0.5} = -\log_2 0.5 = 1 \text{ bit}
 \]
 
-\bfseries{Step 2:} For the other two events:
+\textbf{Step 2:} For the other two events:
 \[
 I_{x_2} = I_{x_3} = \log_2 \frac{1}{0.25} = -\log_2 0.25 = 2 \text{ bit}
 \]
@@ -485,6 +486,13 @@ H_{\max} = \log_2 4 = 2.
     \item So the self information term $\left(-\log_2 P_i\right)$ must be weighted by its probability $P_i$.
     \item This keeps highly probable events contributing more frequently and less probable events contributing less frequently to the final average.
     \item It also keeps the entropy value bounded properly for a valid probability distribution.
+            For example- the probability must be in between 0 and 1. If - 
+            \begin{align*}
+                P = 0.1 &\Rightarrow I = -\log_2(0.1) = 3.32 \text{ bits} \text{ (more than 1 bit)} \\
+                P = 0.5 &\Rightarrow I = -\log_2(0.6) = 0.74 \text{ bit} \\
+                P = 0.9 &\Rightarrow I = -\log_2(0.9) = 0.152 \text{ bits}
+            \end{align*}
+            To maintain entropy value below 1 bit/symbol, we need to multiply the self information with the probability $P_i$.
 \end{itemize}
 \end{questionanswerbox}
 
@@ -554,9 +562,54 @@ H_{\max} = \log_2 4 = 2.
 \end{formulabox}
 
 \begin{questionanswerbox}[Example]
-If there are $100$ equiprobable outcomes, calculate the corresponding values in nats, bits and Hartley.
+\textbf{Q:} If there are $100$ equiprobable outcomes, calculate the corresponding values in nats, bits and Hartley.
 
-Given $N = 100$,
+\textbf{A:} Given $N = 100$, for equiprobable outcomes:
+\[
+P(x_i) = \frac{1}{100}
+\]
+
+\textbf{Using entropy formula:}
+\[
+H(X) = -\sum_{i=1}^{100} \frac{1}{100} \log \frac{1}{100}
+\]
+
+Since all terms are identical:
+\[
+H(X) = -100 \cdot \frac{1}{100} \log \frac{1}{100}
+\]
+
+\[
+H(X) = -\log \frac{1}{100}
+\]
+
+Now simplify:
+\[
+H(X) = \log 100
+\]
+
+\textbf{Concept:}
+\begin{itemize}
+    \item Bits, nats, and Hartley are \textbf{units of information} (log base), used for both $I(x)$ and $H(X)$.
+    \item The question refers to a \textbf{set of outcomes}, so we use \textbf{entropy}:
+    \[
+    H(X) = -\sum P(x_i)\log P(x_i)
+    \]
+    \item For equiprobable case:
+    \[
+    I(x_i) = -\log \frac{1}{100} = \log 100, \quad H(X) = \log 100
+    \]
+    \item Hence, \textbf{self-information = entropy} in this case.
+    \item Units depend on log base:
+    \[
+    \log_2 \rightarrow \text{bits}, \quad
+    \log_e \rightarrow \text{nats}, \quad
+    \log_{10} \rightarrow \text{Hartley}
+    \]
+\end{itemize}
+
+\textbf{Note:} Bits, nats and Hartley are units of information (log base).
+
 \begin{align*}
 \text{In bits, } H(X) &= \log_2(100) = 6.64 \\
 \text{In nats, } H(X) &= \log_e(100) = 4.605 \\
@@ -622,7 +675,12 @@ Calculate the entropy of the QPSK transmitted signal below:
 
 QPSK has four distinct $(00, 01, 10, 11)$ bit combinations. Thus, $2^n = 4 \Rightarrow n = 2$. So, we have to take two bits for each symbol.
 
-\begin{notelongtable}{|C{2.8cm}|C{2.2cm}|}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+\begin{longtable}{|C{2.8cm}|C{2.2cm}|}
+    \hline
+    \textbf{Symbol} & \textbf{Times} \\ \hline
+    \endfirsthead
     \hline
     \textbf{Symbol} & \textbf{Times} \\ \hline
     \endhead
@@ -631,7 +689,7 @@ QPSK has four distinct $(00, 01, 10, 11)$ bit combinations. Thus, $2^n = 4 \Righ
     01 & 4 \\ \hline
     10 & 6 \\ \hline
     11 & 3 \\ \hline
-\end{notelongtable}
+\end{longtable}
 
 \[
 P_{00} = \frac{2}{15}, \qquad
@@ -695,7 +753,12 @@ Two variables are considered for a student:
 
 Their joint probabilities are listed below. Show that the variables are dependent on each other.
 
-\begin{notelongtable}{|C{2.8cm}|C{2.8cm}|C{2.8cm}|}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+\begin{longtable}{|C{2.8cm}|C{2.8cm}|C{2.8cm}|}
+    \hline
+    \textbf{X} & \textbf{Y} & $\mathbf{P(X,Y)}$ \\ \hline
+    \endfirsthead
     \hline
     \textbf{X} & \textbf{Y} & $\mathbf{P(X,Y)}$ \\ \hline
     \endhead
@@ -704,7 +767,7 @@ Their joint probabilities are listed below. Show that the variables are dependen
     Low  & High & 0.10 \\ \hline
     High & Low  & 0.15 \\ \hline
     High & High & 0.55 \\ \hline
-\end{notelongtable}
+\end{longtable}
 
 \textbf{Step 1: Joint entropy contribution of each case}
 \begin{align*}
@@ -769,14 +832,19 @@ I(X;Y) = H(X) + H(Y) - H(X,Y)
 \begin{questionanswerbox}[Example]
 Calculate the joint entropy for the following data and also find the mutual information.
 
-\begin{notelongtable}{|C{3.4cm}|C{2.4cm}|C{2.4cm}|}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+\begin{longtable}{|C{3.4cm}|C{2.4cm}|C{2.4cm}|}
+    \hline
+    \textbf{Y $\backslash$ X} & $\mathbf{0}$ & $\mathbf{1}$ \\ \hline
+    \endfirsthead
     \hline
     \textbf{Y $\backslash$ X} & $\mathbf{0}$ & $\mathbf{1}$ \\ \hline
     \endhead
     \endfoot
     $0$ & $\dfrac{1}{2}$ & $\dfrac{1}{4}$ \\ \hline
     $1$ & $\dfrac{1}{8}$ & $\dfrac{1}{8}$ \\ \hline
-\end{notelongtable}
+\end{longtable}
 
 \textbf{Step 1: Joint entropy}
 \begin{align*}
@@ -1004,5 +1072,335 @@ I(X;Y) = H(X) + H(Y) - H(X,Y)
     \end{tikzpicture}
     \caption{Mutual information as the overlap between $H(X)$ and $H(Y)$}
 \end{figure}
+
+\clearpage
+
+% Source PDF page 16
+\subsection{Convexity and Jensen's Inequality}
+
+\begin{definitionbox}[Convex Function]
+A function $f$ is convex over an interval if its second derivative is non-negative over that interval:
+\[
+\frac{d^2 f(x)}{dx^2} \ge 0
+\]
+Examples: $x^2$ and $e^x$.
+\end{definitionbox}
+
+Consider the function $f(x)=x^2$ with $a=0$ and $b=2$.
+
+\begin{itemize}
+    \item $f(0)=0$ and $f(2)=4$
+    \item Average of the function values:
+\[
+\frac{f(0)+f(2)}{2} = \frac{0+4}{2} = 2
+\]
+    \item Function of the average:
+\[
+f\left(\frac{a+b}{2}\right)
+= f\left(\frac{0+2}{2}\right)
+= f(1)
+= 1^2
+= 1
+\]
+\end{itemize}
+
+\begin{infobox}[Key Observation]
+For a convex function, the average of the function is greater than or equal to the function of the average:
+\[
+\text{Average of the function} \ge \text{Function of the average}
+\]
+\end{infobox}
+
+\begin{formulabox}[Jensen's Inequality]
+If a function $f(x)$ is convex over an interval $(a,b)$, then for every $x_1,x_2 \in (a,b)$ and $0 \le \lambda \le 1$,
+\[
+\lambda f(x_1) + (1-\lambda)f(x_2) \ge f\bigl[\lambda x_1 + (1-\lambda)x_2\bigr]
+\]
+A function $f$ is said to be strictly convex if equality holds only when $\lambda = 0$ or $\lambda = 1$.
+\end{formulabox}
+
+\begin{questionanswerbox}[Example]
+For $x_1=0$, $x_2=2$, $\lambda=0.5$, and $f(x)=x^2$,
+\[
+\lambda f(x_1) + (1-\lambda)f(x_2) \ge f\bigl[\lambda x_1 + (1-\lambda)x_2\bigr]
+\]
+\[
+0.5\times 0 + 0.5\times 4 \ge f[0.5\times 0 + 0.5\times 2]
+\]
+\[
+2 \ge 1
+\]
+Thus $f(x)=x^2$ is a convex function.
+\end{questionanswerbox}
+
+\clearpage
+
+% Source PDF page 17
+\subsection{Gibbs Information Inequality}
+
+\begin{infobox}[Statement]
+Let $P(x)$ and $Q(x)$, where $x \in X$, be two probability mass functions. Then
+\[
+D(P \parallel Q) \ge 0
+\]
+with equality if and only if $P(x)=Q(x)$ for all $x$.
+\end{infobox}
+
+Let
+\[
+A = \{x : P(x) > 0\}
+\]
+be the support set of $P(x)$. Then
+\begin{align*}
+-D(P \parallel Q)
+&= -\sum_{x\in A} P(x)\log \frac{P(x)}{Q(x)} \\
+&= \sum_{x\in A} P(x)\log \frac{Q(x)}{P(x)} \\
+&\le \log \sum_{x\in A} P(x)\frac{Q(x)}{P(x)} \\
+&= \log \sum_{x\in A} Q(x) \\
+&\le \log \sum_{x\in X} Q(x) \\
+&= \log 1 \\
+&= 0
+\end{align*}
+
+The inequality step follows because $\log(\cdot)$ is a strictly concave function.
+
+Therefore,
+\[
+D(P \parallel Q) \ge 0
+\]
+and relative entropy becomes zero only when the two distributions are identical.
+
+\clearpage
+
+% Source PDF page 18
+\subsection{Example: Asymmetric Nature of Relative Entropy}
+
+\begin{questionanswerbox}[Example]
+Let $X=\{0,1\}$ and consider two distributions $P$ and $Q$ on $X$:
+\[
+P(0)=1-r,\qquad P(1)=r,\qquad Q(0)=1-s,\qquad Q(1)=s
+\]
+Find $D(P \parallel Q)$ and $D(Q \parallel P)$.
+
+We have
+\[
+D(P \parallel Q)
+= \sum_x P(x)\log_2 \frac{P(x)}{Q(x)}
+= P(0)\log_2\frac{P(0)}{Q(0)} + P(1)\log_2\frac{P(1)}{Q(1)}
+\]
+\[
+= (1-r)\log_2\frac{1-r}{1-s} + r\log_2\frac{r}{s}
+\]
+
+When $r=s=\dfrac{1}{2}$, then
+\[
+D(P \parallel Q)=0
+\]
+
+When $r=\dfrac{1}{2}$ and $s=\dfrac{1}{4}$,
+\[
+D(P \parallel Q)
+= \frac{1}{2}\log_2\frac{1-\frac{1}{2}}{1-\frac{1}{4}}
++ \frac{1}{2}\log_2\frac{\frac{1}{2}}{\frac{1}{4}}
+\]
+\[
+= \frac{1}{2}\log_2\frac{\frac{1}{2}}{\frac{3}{4}}
++ \frac{1}{2}\log_2\frac{\frac{1}{2}}{\frac{1}{4}}
+\]
+\[
+= -0.292481 + \frac{1}{2}
+= 0.2075 \text{ bit}
+\]
+
+Similarly,
+\[
+D(Q \parallel P)
+= (1-s)\log_2\frac{1-s}{1-r} + s\log_2\frac{s}{r}
+\]
+\[
+= \left(1-\frac{1}{4}\right)\log_2\frac{1-\frac{1}{4}}{1-\frac{1}{2}}
++ \frac{1}{4}\log_2\frac{\frac{1}{4}}{\frac{1}{2}}
+\]
+\[
+= \frac{3}{4}\log_2\frac{\frac{3}{4}}{\frac{1}{2}}
++ \frac{1}{4}\log_2\frac{1}{2}
+\]
+\[
+= 0.438721 - 0.25
+\]
+\[
+= 0.188721 \text{ bit}
+\]
+
+Hence,
+\[
+D(P \parallel Q) \ne D(Q \parallel P)
+\]
+So the asymmetric relationship is proved.
+\end{questionanswerbox}
+
+\clearpage
+
+% Source PDF page 19
+\section{Chain Rule}
+
+\subsection{Entropy}
+\begin{formulabox}[Chain Rule for Entropy]
+\[
+H(X_1,X_2,\ldots,X_n) = \sum_{i=1}^{n} H(X_i \mid X_1,\ldots,X_{i-1})
+\]
+\end{formulabox}
+
+\begin{itemize}
+    \item For $n=2$:
+\[
+H(1,2)=H(1)+H(2 \mid 1)
+\]
+    \item For $n=3$:
+\[
+H(1,2,3)=H(1)+H(2 \mid 1)+H(3 \mid 1,2)
+\]
+\end{itemize}
+
+\subsection{Conditional Entropy}
+\begin{formulabox}[Chain Rule for Conditional Entropy]
+\[
+H(X_1,X_2,\ldots,X_n \mid Y) = \sum_{i=1}^{n} H(X_i \mid X_1,\ldots,X_{i-1},Y)
+\]
+\end{formulabox}
+
+\subsection{Mutual Information}
+\begin{formulabox}[Chain Rule for Mutual Information]
+\[
+I(X_1,X_2,\ldots,X_n;Y) = \sum_{i=1}^{n} I(X_i;Y \mid X_1,\ldots,X_{i-1})
+\]
+\end{formulabox}
+
+\begin{itemize}
+    \item For $n=2$:
+\[
+I(1,2;Y)=I(1;Y)+I(2;Y \mid 1)
+\]
+    \item For $n=3$:
+\[
+I(1,2,3;Y)=I(1;Y)+I(2;Y \mid 1)+I(3;Y \mid 1,2)
+\]
+\end{itemize}
+
+\subsection{Worked Examples}
+
+\begin{questionanswerbox}[Entropy of a Finite-Length DMS]
+Calculate the entropy of the finite-length DMS $X$ with probability distribution
+\[
+P(x)=\{0.125,0.25,0.5,0.125\}, \qquad x \in X
+\]
+
+Entropy,
+\[
+H(X) = \sum_{x\in X} H(x_i) = -\sum_{i=1}^{n} p_i \log_2 p_i
+\]
+\[
+= -\left[2(0.125)\log_2(0.125) + (0.25)\log_2(0.25) + (0.5)\log_2(0.5)\right]
+\]
+\[
+= 1.375
+\]
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Average Self Information of a Source]
+For any source $X$ with pmf
+\[
+P(x)=\{0.0625,0.5,0.25,0.125,0.0625\}, \qquad x \in X
+\]
+calculate its average self information.
+
+The average self information is nothing but the entropy.
+
+\[
+H(X) = -\left[2\times 0.0625\log_2 0.0625 + 0.5\log_2 0.5 + 0.25\log_2 0.25 + 0.125\log_2 0.125\right]
+\]
+\[
+= 1.875
+\]
+\end{questionanswerbox}
+
+\clearpage
+
+% Source PDF page 20
+\section{Worked Problems}
+
+\begin{questionanswerbox}[Fully Dependent System]
+Prove that for a fully dependent system, mutual information is the same as self information.
+
+Let two random variables $X$ and $Y$ be fully dependent. Knowing $X$ gives full knowledge of $Y$, and vice versa. Therefore,
+\[
+H(Y \mid X)=0
+\]
+
+From the formula of mutual information,
+\[
+I(X;Y)=H(Y)-H(Y \mid X)
+\]
+\[
+= H(Y)-0
+\]
+
+So,
+\[
+I(X;Y)=H(Y)
+\]
+
+Hence, mutual information equals the entropy, that is, the average self information. All uncertainty in one variable is resolved by knowing the other.
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[8-PSK Modulator Example]
+An 8-PSK modulator generates the following symbol sequence:
+\[
+010\;\;110\;\;111\;\;101\;\;011\;\;000\;\;011\;\;101\;\;110
+\]
+\[
+101\;\;110\;\;111\;\;010\;\;001\;\;101\;\;100
+\]
+Determine the average information of the modulator.
+
+The average information is the entropy.
+
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+\begin{longtable}{|C{2.8cm}|C{2.3cm}|}
+    \hline
+    \textbf{Symbol} & \textbf{Count} \\ \hline
+    \endfirsthead
+    \hline
+    \textbf{Symbol} & \textbf{Count} \\ \hline
+    \endhead
+    \endfoot
+    000 & 1 \\ \hline
+    001 & 1 \\ \hline
+    010 & 2 \\ \hline
+    011 & 2 \\ \hline
+    100 & 1 \\ \hline
+    101 & 4 \\ \hline
+    110 & 3 \\ \hline
+    111 & 2 \\ \hline
+\end{longtable}
+
+\[
+H = -\left[
+3\times \frac{1}{16}\log_2\frac{1}{16}
++ 3\times \frac{2}{16}\log_2\frac{2}{16}
++ \frac{3}{16}\log_2\frac{3}{16}
++ \frac{4}{16}\log_2\frac{4}{16}
+\right]
+\]
+\[
+= \frac{3}{4} + \frac{9}{8} + 0.4528195311 + \frac{1}{2}
+\]
+\[
+\approx 2.8278 \text{ bits/symbol}
+\]
+
+\textbf{Significance:} At least $3$ bits are required to transmit the 8-PSK modulated signal.
+\end{questionanswerbox}
 
 \end{document}
