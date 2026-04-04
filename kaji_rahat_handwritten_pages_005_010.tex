@@ -829,21 +829,45 @@ I(X;Y) = H(X) + H(Y) - H(X,Y)
 \end{itemize}
 \end{formulabox}
 
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.02, >=stealth]
+        \draw[thick, color=chaptercolor] (-1.35,0) circle (1.85);
+        \draw[thick, color=chaptercolor] (1.35,0) circle (1.85);
+        \fill[softlavender!35] (0,0) ellipse (0.5 and 1.45);
+
+        \node at (-1.85,0) {$H(X \mid Y)$};
+        \node at (1.85,0) {$H(Y \mid X)$};
+        \node at (0,0) {$I(X;Y)$};
+
+        \node[font=\bfseries] at (0,2.55) {$H(X,Y)$};
+        \draw[->, thick] (-0.25,2.28) -- (-0.85,1.55);
+        \draw[->, thick] (0.25,2.28) -- (0.85,1.55);
+
+        \node[font=\bfseries] at (-2.95,-2.35) {$H(X)$};
+        \draw[->, thick] (-2.55,-2.05) -- (-2.1,-1.55);
+
+        \node[font=\bfseries] at (2.95,-2.35) {$H(Y)$};
+        \draw[->, thick] (2.55,-2.05) -- (2.1,-1.55);
+    \end{tikzpicture}
+    \caption{Mutual information as the overlap between $H(X)$ and $H(Y)$}
+\end{figure}
+
 \begin{questionanswerbox}[Example]
 Calculate the joint entropy for the following data and also find the mutual information.
 
-\renewcommand{\arraystretch}{1.3}
+\renewcommand{\arraystretch}{1.8}
 \setlength{\tabcolsep}{8pt}
 \begin{longtable}{|C{3.4cm}|C{2.4cm}|C{2.4cm}|}
     \hline
-    \textbf{Y $\backslash$ X} & $\mathbf{0}$ & $\mathbf{1}$ \\ \hline
+    \textbf{Y $\backslash$ X} & 0 & 1 \\ \hline
     \endfirsthead
     \hline
-    \textbf{Y $\backslash$ X} & $\mathbf{0}$ & $\mathbf{1}$ \\ \hline
+    \textbf{Y $\backslash$ X} & 0 & 1 \\ \hline
     \endhead
     \endfoot
-    $0$ & $\dfrac{1}{2}$ & $\dfrac{1}{4}$ \\ \hline
-    $1$ & $\dfrac{1}{8}$ & $\dfrac{1}{8}$ \\ \hline
+    $0$ & $\frac{1}{2}$ & $\frac{1}{4}$ \\ \hline
+    $1$ & $\frac{1}{8}$ & $\frac{1}{8}$ \\ \hline
 \end{longtable}
 
 \textbf{Step 1: Joint entropy}
@@ -916,6 +940,19 @@ H(Y \mid X) = -\sum_{x \in X} P(x)\sum_{y \in Y} P(y \mid x)\log_2 P(y \mid x)
 \end{itemize}
 \end{formulabox}
 
+\begin{formulabox}[Useful Relation for the Derivation]
+\[
+P(y \mid x)=\frac{P(x,y)}{P(x)}
+\]
+\[
+\log(AB)=\log A+\log B
+\]
+\begin{itemize}
+    \item The first relation rewrites conditional probability in terms of joint and marginal probability.
+    \item The logarithm identity is used when expanding \(\log_2\bigl(P(x)P(y \mid x)\bigr)\).
+\end{itemize}
+\end{formulabox}
+
 \subsection{Relation with Joint Entropy}
 Starting from the joint entropy,
 \begin{align*}
@@ -946,6 +983,17 @@ H(X,Y) = H(Y) + H(X \mid Y)
 Relative entropy, also called Kullback-Leibler divergence, measures how different an estimated probability distribution is from the true distribution.
 \end{definitionbox}
 
+\begin{infobox}[What Relative Entropy Means]
+\begin{itemize}
+    \item Relative entropy compares two probability mass functions: \(P(x)\) and \(Q(x)\).
+    \item \(P(x)\) represents the true or actual distribution.
+    \item \(Q(x)\) represents the estimated or assumed distribution.
+    \item It tells us how far the estimate \(Q(x)\) is from the true distribution \(P(x)\).
+    \item A larger value of \(D(P \parallel Q)\) means the deviation from the actual distribution is higher.
+    \item If the two distributions are identical, then the relative entropy becomes zero.
+\end{itemize}
+\end{infobox}
+
 \begin{formulabox}[Kullback-Leibler Divergence]
 \[
 D(P \parallel Q) = \sum_{x \in X} P(x)\log_2 \frac{P(x)}{Q(x)}
@@ -960,13 +1008,30 @@ D(P \parallel Q) = \sum_{x \in X} P(x)\log_2 \frac{P(x)}{Q(x)}
 \begin{infobox}[Basic Points]
 \begin{itemize}
     \item If $P(x) = Q(x)$, then $D(P \parallel Q) = 0$.
-    \item In the note's illustration:
+        \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}[x=1.7cm,y=2.1cm]
+            \draw[->, thick] (0,0) -- (0,1.45);
+            \draw[->, thick] (0,0) -- (3.4,0);
+
+            \draw[thick] (0.45,0) rectangle (0.95,1.1);
+            \draw[thick] (1.55,0) rectangle (2.05,0.8);
+            \draw[thick] (2.65,0) rectangle (3.15,0.68);
+
+            \node[above] at (0.7,1.1) {$P$};
+            \node[above] at (1.8,0.8) {$A$};
+            \node[above] at (2.9,0.68) {$B$};
+        \end{tikzpicture}
+        \caption{Relative entropy illustration comparing the true distribution $P$ with estimates $A$ and $B$}
+        \end{figure}
+    \item In the illustration:
     \[
     D(P \parallel P) = 0, \qquad D(P \parallel A) = 0.25, \qquad D(P \parallel B) = 1.25
     \]
     \item Higher relative entropy means the estimated distribution deviates more from the actual distribution.
 \end{itemize}
 \end{infobox}
+
 
 \begin{questionanswerbox}[Example]
 Consider a scenario where the true distribution is
@@ -1023,20 +1088,24 @@ For two dependent random variables $(X,Y)$, mutual information can be written as
 I(X;Y) = \sum_{x,y} P(x,y)\log_2 \frac{P(x,y)}{P(x)P(y)}
 = D\bigl(P(x,y)\,\|\,P(x)P(y)\bigr)
 \]
+\begin{itemize}
+    \item $I(X;Y)$ = mutual information between $X$ and $Y$
+    \item $P(x,y)$ = joint probability distribution of $X$ and $Y$
+    \item $P(x)$, $P(y)$ = marginal probability distributions of $X$ and $Y$
+    \item $P(x)P(y)$ = product of marginals, representing the independent case
+    \item $D\bigl(P(x,y)\,\|\,P(x)P(y)\bigr)$ = relative entropy between the joint distribution and the product of marginals
+\end{itemize}
 \end{formulabox}
 
 \begin{align*}
 I(X;Y)
+&= \sum_{x,y} P(x,y)\log_2 \frac{P(x,y)}{P(x)P(y)}\\
 &= \sum_{x,y} P(x,y)\log_2 \frac{P(x)P(y \mid x)}{P(x)P(y)} \\
 &= \sum_{x,y} P(x,y)\log_2 \frac{P(y \mid x)}{P(y)} \\
 &= \sum_{x,y} P(x,y)\log_2 P(y \mid x) - \sum_{x,y} P(x,y)\log_2 P(y) \\
-&= -H(Y \mid X) + H(Y)
+&= -H(Y \mid X) + H(Y)\\
+\text{So, } I(X;Y) &= H(Y) - H(Y \mid X)
 \end{align*}
-
-So,
-\[
-I(X;Y) = H(Y) - H(Y \mid X)
-\]
 
 Also,
 \[
@@ -1060,15 +1129,24 @@ I(X;Y) = H(X) + H(Y) - H(X,Y)
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[scale=0.95]
-        \draw[thick, color=chaptercolor] (-1.1,0) circle (1.5);
-        \draw[thick, color=chaptercolor] (1.1,0) circle (1.5);
-        \fill[softlavender!35] (0,0) ellipse (0.4 and 1.15);
+    \begin{tikzpicture}[scale=1.02, >=stealth]
+        \draw[thick, color=chaptercolor] (-1.35,0) circle (1.85);
+        \draw[thick, color=chaptercolor] (1.35,0) circle (1.85);
+        \fill[softlavender!35] (0,0) ellipse (0.5 and 1.45);
+
         \node at (-1.85,0) {$H(X \mid Y)$};
         \node at (1.85,0) {$H(Y \mid X)$};
         \node at (0,0) {$I(X;Y)$};
-        \node at (-1.1,-1.95) {$H(X)$};
-        \node at (1.1,-1.95) {$H(Y)$};
+
+        \node[font=\bfseries] at (0,2.55) {$H(X,Y)$};
+        \draw[->, thick] (-0.25,2.28) -- (-0.85,1.55);
+        \draw[->, thick] (0.25,2.28) -- (0.85,1.55);
+
+        \node[font=\bfseries] at (-2.95,-2.35) {$H(X)$};
+        \draw[->, thick] (-2.55,-2.05) -- (-2.1,-1.55);
+
+        \node[font=\bfseries] at (2.95,-2.35) {$H(Y)$};
+        \draw[->, thick] (2.55,-2.05) -- (2.1,-1.55);
     \end{tikzpicture}
     \caption{Mutual information as the overlap between $H(X)$ and $H(Y)$}
 \end{figure}
@@ -1401,6 +1479,298 @@ H = -\left[
 \]
 
 \textbf{Significance:} At least $3$ bits are required to transmit the 8-PSK modulated signal.
+\end{questionanswerbox}
+
+% Source PDF page 21
+\section{Channel Interpretation}
+
+\begin{questionanswerbox}[Mutual Information as a Measure of Channel Goodness]
+Mutual information can be interpreted as a measure of channel goodness. Justify the statement with an example.
+
+\paragraph*{Answer}
+\begin{itemize}
+    \item Mutual information \(I(X;Y)\) quantifies how much information the received signal \(Y\) reveals about the transmitted signal \(X\).
+    \item A higher mutual information means less uncertainty in decoding and a more reliable channel.
+    \item For a perfect channel, \(I(X;Y)=H(X)\). All transmitted information is received without loss.
+    \item For a noisy channel, \(I(X;Y)=0\). The output reveals nothing about the input, indicating a useless or fully noisy channel.
+\end{itemize}
+
+\paragraph*{Example}
+For a binary symmetric channel with low crossover probability \(p\), \(I(X;Y)\) is high, showing good channel reliability. For BSC, let \(p=0.1\).
+
+\[
+C=\max_{P(X)} I(X;Y)=1-H(p)
+\]
+\[
+= 1-\left[-p\log_2 p-(1-p)\log_2(1-p)\right]
+\]
+\[
+= 1+0.1\log_2(0.1)+0.9\log_2(0.9)
+\]
+\[
+= 0.531 \text{ bit per bit}
+\]
+
+The channel is fairly good but not perfect.
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Probability of Correct Reception]
+Prove that the probability of correct reception is \(1-P_e\).
+
+\paragraph*{Answer}
+Let \(P_c\) be the probability of correct reception and \(P_e\) be the probability of error.
+
+Since these are complementary events,
+\[
+P_c+P_e=1
+\]
+or,
+\[
+P_c=1-P_e
+\]
+
+Hence proved.
+\end{questionanswerbox}
+
+% Source PDF page 22
+\section{Discrete Memoryless Channel}
+
+\begin{definitionbox}[Discrete Memoryless Channel (DMC)]
+A discrete memoryless channel (DMC) is a channel where:
+\begin{itemize}
+    \item the input and output alphabets are discrete (finite),
+    \item the current output depends only on the current input,
+    \item the current output does not depend on any previous inputs or outputs.
+\end{itemize}
+So, the channel has no memory.
+\end{definitionbox}
+
+\begin{definitionbox}[Channel Matrix]
+The channel matrix of a DMC is a table showing the conditional probabilities of receiving output symbols given an input symbol.
+\end{definitionbox}
+
+\begin{questionanswerbox}[Example]
+Let the input alphabet be \(\{0,1\}\) and the output alphabet be \(\{0,1\}\). If
+\[
+P(y=0\mid x=0)=0.9,\qquad P(y=1\mid x=0)=0.1
+\]
+\[
+P(y=1\mid x=1)=0.8,\qquad P(y=0\mid x=1)=0.2
+\]
+then the channel matrix is
+\[
+\begin{bmatrix}
+0.9 & 0.1 \\
+0.2 & 0.8
+\end{bmatrix}
+\]
+\end{questionanswerbox}
+
+\subsection{Average Information Rate of a Source}
+
+\begin{questionanswerbox}[Worked Example]
+The output of an information source consists of \(150\) symbols, \(32\) of which occur with a probability of \(\frac{1}{64}\), and the remaining with a probability of \(\frac{1}{236}\). The source emits \(2000\) symbols/sec. Assume the symbols are chosen independently. Find the average information rate of this source.
+
+\paragraph*{Given}
+\begin{itemize}
+    \item \(p_1=\frac{1}{64}\)
+    \item \(p_2=\frac{1}{236}\)
+    \item \(n_1=32\)
+    \item \(n_2=150-32=118\)
+\end{itemize}
+
+\paragraph*{Total Entropy}
+\[
+H(X)=-\left(p_1\log_2 p_1 \times n_1 + p_2\log_2 p_2 \times n_2\right)
+\]
+\[
+= -\left(\frac{1}{64}\log_2\frac{1}{64}\times 32 + \frac{1}{236}\log_2\frac{1}{236}\times 118\right)
+\]
+\[
+= 6.9413 \text{ bit/symbol}
+\]
+
+\paragraph*{Average Information Rate}
+\[
+R=H(X)\times r
+\]
+\[
+= 6.9413\times 2000
+\]
+\[
+= 13882.64305 \text{ bits/sec}
+\]
+\end{questionanswerbox}
+
+% Source PDF page 23
+\section{Additional Worked Problems}
+
+\begin{questionanswerbox}[Maximum Entropy for Two Messages]
+Consider a source that transmits two independent messages with probabilities \(p\) and \((1-p)\), respectively. Demonstrate that the entropy is maximized when the two messages are equally likely. Plot the entropy of source vs probability.
+
+\paragraph*{Answer}
+For equally likely messages, the probabilities are
+\[
+p = 1-p = 0.5
+\]
+
+Entropy,
+\[
+H(p)=-p\log_2 p-(1-p)\log_2(1-p)
+\]
+\[
+= -0.5\log_2 0.5 - 0.5\log_2 0.5
+\]
+\[
+= 1
+\]
+
+Hence, the entropy is maximum when \(p=0.5\). When both terms are equally probable, the uncertainty is highest; hence the entropy is maximum. This represents the most information per message.
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[B\&W TV Picture Information Rate]
+A B\&W TV picture consists of \(525\) lines of picture information. Assume that each element can have \(256\) brightness levels. If pictures are repeated at a rate of \(32\) frame/sec, calculate the average rate of information conveyed by a TV set to a viewer.
+
+\paragraph*{Given}
+\begin{itemize}
+    \item Number of lines per frame \(=525\)
+    \item Brightness levels per picture element \(=256\)
+    \item Frame rate \(=32\) fps
+    \item Pixels per line \(=256\) (as used in the note)
+\end{itemize}
+
+\paragraph*{Pixels per Frame}
+\[
+525\times 256 = 13440 \text{ pixels/frame}
+\]
+
+\paragraph*{Bits per Pixel}
+\[
+\log_2 256 = 8 \text{ bits}
+\]
+
+\paragraph*{Bits per Frame}
+\[
+8\times 13440 = 107520 \text{ bits/frame}
+\]
+
+\paragraph*{Information Rate}
+\[
+107520\times 32 = 3440640 \text{ bps}
+\]
+\[
+= 3.44 \text{ Mbps}
+\]
+\end{questionanswerbox}
+
+% Source PDF pages 24-25 are unrelated inserts in the source PDF and are intentionally skipped.
+
+% Source PDF page 26
+\begin{questionanswerbox}[Finding \(H(X)\), \(H(Y)\), \(H(X \mid Y)\), and \(H(Y \mid X)\)]
+Calculate \(H(X)\), \(H(Y)\), \(H(X \mid Y)\), and \(H(Y \mid X)\) from the data given below.
+
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{6pt}
+\begin{longtable}{|C{2cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|}
+    \hline
+    \textbf{Y $\backslash$ X} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} \\ \hline
+    \endfirsthead
+    \hline
+    \textbf{Y $\backslash$ X} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} \\ \hline
+    \endhead
+    \endfoot
+    1 & \(\dfrac{1}{8}\)  & \(\dfrac{1}{16}\) & \(\dfrac{1}{32}\) & \(\dfrac{1}{32}\) \\ \hline
+    2 & \(\dfrac{1}{16}\) & \(\dfrac{1}{8}\)  & \(\dfrac{1}{32}\) & \(\dfrac{1}{32}\) \\ \hline
+    3 & \(\dfrac{1}{16}\) & \(\dfrac{1}{16}\) & \(\dfrac{1}{16}\) & \(\dfrac{1}{16}\) \\ \hline
+    4 & \(\dfrac{1}{4}\)  & 0                 & 0                 & 0                 \\ \hline
+\end{longtable}
+
+From the table above,
+\[
+P(x_1)=\frac{1}{8}+\frac{1}{16}+\frac{1}{16}+\frac{1}{4}=\frac{1}{2}
+\]
+\[
+P(x_2)=\frac{1}{16}+\frac{1}{8}+\frac{1}{16}+0=\frac{1}{4}
+\]
+\[
+P(x_3)=\frac{1}{32}+\frac{1}{32}+\frac{1}{16}=\frac{1}{8}
+\]
+\[
+P(x_4)=\frac{1}{32}+\frac{1}{32}+\frac{1}{16}=\frac{1}{8}
+\]
+
+We have,
+\[
+H(X)=-\sum_{i=1}^{4} P(x_i)\log_2 P(x_i)
+\]
+\[
+= \frac{1}{2}\log_2 2 + \frac{1}{4}\log_2 2^2 + \frac{1}{8}\log_2 2^3 + \frac{1}{8}\log_2 2^3
+\]
+\[
+= \frac{1}{2}+\frac{1}{2}+\frac{3}{8}+\frac{3}{8}
+\]
+\[
+= \frac{7}{4} \text{ bits/symbol}
+\]
+
+Now,
+\[
+P(y_1)=\frac{1}{8}+\frac{1}{16}+\frac{1}{32}+\frac{1}{32}=\frac{1}{4}
+\]
+\[
+P(y_2)=\frac{1}{16}+\frac{1}{8}+\frac{1}{32}+\frac{1}{32}=\frac{1}{4}
+\]
+\[
+P(y_3)=\frac{4}{16}=\frac{1}{4}
+\]
+\[
+P(y_4)=\frac{1}{4}
+\]
+
+% Source PDF page 27
+Now,
+\[
+H(Y)=-\sum_{i=1}^{4} P(y_i)\log_2 P(y_i)
+\]
+\[
+= \frac{4}{4}\log_2 4
+\]
+\[
+= \log_2 2^2
+\]
+\[
+= 2 \text{ bits/symbol}
+\]
+
+Now, joint entropy,
+\[
+H(X,Y)=-\sum_{j=1}^{4}\sum_{i=1}^{4} P(x_i,y_j)\log_2 P(x_i,y_j)
+\]
+\[
+= \frac{2}{8}\log_2 8 + \frac{6}{16}\log_2 16 + \frac{4}{32}\log_2 32 + \frac{1}{4}\log_2 4
+\]
+\[
+= \frac{2}{8}\log_2 2^3 + \frac{6}{16}\log_2 2^4 + \frac{4}{32}\log_2 2^5 + \frac{1}{4}\log_2 2^2
+\]
+\[
+= \frac{6}{8}\log_2 2 + \frac{24}{16}\log_2 2 + \frac{20}{32}\log_2 2 + \frac{2}{4}\log_2 2
+\]
+\[
+= \frac{6}{8} + \frac{24}{16} + \frac{20}{32} + \frac{1}{2}
+\]
+\[
+= \frac{27}{8} \text{ bits/symbol}
+\]
+
+Now,
+\[
+H(X \mid Y)=H(X,Y)-H(Y)=\frac{27}{8}-2=1.375 \text{ bits/symbol}
+\]
+
+and,
+\[
+H(Y \mid X)=H(X,Y)-H(X)=\frac{27}{8}-\frac{7}{4}=1.625 \text{ bits/symbol}
+\]
 \end{questionanswerbox}
 
 \end{document}

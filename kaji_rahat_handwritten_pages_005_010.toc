@@ -26,14 +26,18 @@
 \contentsline {section}{\numberline {1.7}Conditional Entropy}{18}{section.1.7}%
 \contentsline {subsection}{\numberline {1.7.1}Simple Intuition}{18}{subsection.1.7.1}%
 \contentsline {subsection}{\numberline {1.7.2}Relation with Joint Entropy}{18}{subsection.1.7.2}%
-\contentsline {section}{\numberline {1.8}Relative Entropy}{19}{section.1.8}%
-\contentsline {subsection}{\numberline {1.8.1}Mutual Information as Relative Entropy}{20}{subsection.1.8.1}%
-\contentsline {subsection}{\numberline {1.8.2}Convexity and Jensen's Inequality}{21}{subsection.1.8.2}%
-\contentsline {subsection}{\numberline {1.8.3}Gibbs Information Inequality}{22}{subsection.1.8.3}%
-\contentsline {subsection}{\numberline {1.8.4}Example: Asymmetric Nature of Relative Entropy}{23}{subsection.1.8.4}%
-\contentsline {section}{\numberline {1.9}Chain Rule}{24}{section.1.9}%
-\contentsline {subsection}{\numberline {1.9.1}Entropy}{24}{subsection.1.9.1}%
-\contentsline {subsection}{\numberline {1.9.2}Conditional Entropy}{24}{subsection.1.9.2}%
-\contentsline {subsection}{\numberline {1.9.3}Mutual Information}{24}{subsection.1.9.3}%
-\contentsline {subsection}{\numberline {1.9.4}Worked Examples}{24}{subsection.1.9.4}%
-\contentsline {section}{\numberline {1.10}Worked Problems}{26}{section.1.10}%
+\contentsline {section}{\numberline {1.8}Relative Entropy}{20}{section.1.8}%
+\contentsline {subsection}{\numberline {1.8.1}Mutual Information as Relative Entropy}{22}{subsection.1.8.1}%
+\contentsline {subsection}{\numberline {1.8.2}Convexity and Jensen's Inequality}{24}{subsection.1.8.2}%
+\contentsline {subsection}{\numberline {1.8.3}Gibbs Information Inequality}{25}{subsection.1.8.3}%
+\contentsline {subsection}{\numberline {1.8.4}Example: Asymmetric Nature of Relative Entropy}{26}{subsection.1.8.4}%
+\contentsline {section}{\numberline {1.9}Chain Rule}{27}{section.1.9}%
+\contentsline {subsection}{\numberline {1.9.1}Entropy}{27}{subsection.1.9.1}%
+\contentsline {subsection}{\numberline {1.9.2}Conditional Entropy}{27}{subsection.1.9.2}%
+\contentsline {subsection}{\numberline {1.9.3}Mutual Information}{27}{subsection.1.9.3}%
+\contentsline {subsection}{\numberline {1.9.4}Worked Examples}{27}{subsection.1.9.4}%
+\contentsline {section}{\numberline {1.10}Worked Problems}{29}{section.1.10}%
+\contentsline {section}{\numberline {1.11}Channel Interpretation}{30}{section.1.11}%
+\contentsline {section}{\numberline {1.12}Discrete Memoryless Channel}{30}{section.1.12}%
+\contentsline {subsection}{\numberline {1.12.1}Average Information Rate of a Source}{31}{subsection.1.12.1}%
+\contentsline {section}{\numberline {1.13}Additional Worked Problems}{32}{section.1.13}%

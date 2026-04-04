@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.17.1 (MiKTeX 24.1) (format=lualatex 2025.9.2)  4 APR 2026 08:32
+This is LuaHBTeX, Version 1.17.1 (MiKTeX 24.1) (format=lualatex 2025.9.2)  4 APR 2026 17:10
  restricted system commands enabled.
  file:line:error style messages enabled.
 **kaji_rahat_handwritten_pages_005_010.tex
@@ -1176,42 +1176,56 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 ]
 [17] [18
 
-] [19
+] [19] [20
 
-] [20
+] [21]
+Underfull \vbox (badness 4686) has occurred while \output is active []
 
-] [21
-
-] [22
-
-] [23
-
-] [24
-
-] [25] [26
+ [22
 
 ]
-(./kaji_rahat_handwritten_pages_005_010.aux)
+[23] [24
+
+] [25
+
+] [26
+
+] [27
+
+] [28]
+Underfull \vbox (badness 1776) has occurred while \output is active []
+
+ [29
+
+]
+[30] [31]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [32]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [33]
+[34] [35] (./kaji_rahat_handwritten_pages_005_010.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `kaji_rahat_handwritten_pages_005_010.out' ha
 s not changed.
-(rerunfilecheck)             Checksum: 0F2993C4F4362486F20E11D36CACE58E;5438.
+(rerunfilecheck)             Checksum: 94B1F69C2D9E65066539A3F8DBC2DA93;6255.
 )
 
 Here is how much of LuaTeX's memory you used:
- 32412 strings out of 476497
+ 32486 strings out of 476497
  125027,1977958 words of node,token memory allocated
- 1887 words of node memory still in use:
-   31 hlist, 2 vlist, 14 rule, 2 glue, 4 kern, 1 glyph, 217 attribute, 63 glue_s
-pec, 217 attribute_list, 2 write, 24 pdf_literal, 24 pdf_colorstack nodes
-   avail lists: 1:1,2:1764,3:949,4:415,5:627,6:148,7:4770,8:69,9:1083,10:9,11:38
-7
- 53555 multiletter control sequences out of 65536+600000
- 73 fonts using 4637759 bytes
- 91i,14n,115p,469b,1091s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 2099 words of node memory still in use:
+   31 hlist, 2 vlist, 14 rule, 2 glue, 4 kern, 1 glyph, 270 attribute, 63 glue_s
+pec, 270 attribute_list, 2 write, 24 pdf_literal, 24 pdf_colorstack nodes
+   avail lists: 1:1,2:2154,3:1281,4:463,5:700,6:164,7:5169,8:69,9:1601,10:13,11:
+387
+ 53606 multiletter control sequences out of 65536+600000
+ 75 fonts using 4803119 bytes
+ 91i,14n,115p,469b,1106s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}<C:/U
 sers/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/calligra-type1/calli
 g15.pfb><C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
@@ -1229,10 +1243,10 @@ s/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users
 /miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/m
 iadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/miad
 u/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb>
-Output written on kaji_rahat_handwritten_pages_005_010.pdf (26 pages, 358238 byt
+Output written on kaji_rahat_handwritten_pages_005_010.pdf (35 pages, 393095 byt
 es).
 
-PDF statistics: 406 PDF objects out of 1000 (max. 8388607)
- 90 named destinations out of 1000 (max. 131072)
- 504 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 474 PDF objects out of 1000 (max. 8388607)
+ 113 named destinations out of 1000 (max. 131072)
+ 536 words of extra memory for PDF output out of 10000 (max. 100000000)
 
