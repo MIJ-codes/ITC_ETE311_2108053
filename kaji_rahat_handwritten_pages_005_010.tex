@@ -677,19 +677,16 @@ QPSK has four distinct $(00, 01, 10, 11)$ bit combinations. Thus, $2^n = 4 \Righ
 
 \renewcommand{\arraystretch}{1.3}
 \setlength{\tabcolsep}{8pt}
-\begin{longtable}{|C{2.8cm}|C{2.2cm}|}
+\begin{center}
+\begin{tabular}{|C{2.8cm}|C{2.2cm}|}
     \hline
     \textbf{Symbol} & \textbf{Times} \\ \hline
-    \endfirsthead
-    \hline
-    \textbf{Symbol} & \textbf{Times} \\ \hline
-    \endhead
-    \endfoot
     00 & 2 \\ \hline
     01 & 4 \\ \hline
     10 & 6 \\ \hline
     11 & 3 \\ \hline
-\end{longtable}
+\end{tabular}
+\end{center}
 
 \[
 P_{00} = \frac{2}{15}, \qquad
@@ -755,19 +752,16 @@ Their joint probabilities are listed below. Show that the variables are dependen
 
 \renewcommand{\arraystretch}{1.3}
 \setlength{\tabcolsep}{8pt}
-\begin{longtable}{|C{2.8cm}|C{2.8cm}|C{2.8cm}|}
+\begin{center}
+\begin{tabular}{|C{2.8cm}|C{2.8cm}|C{2.8cm}|}
     \hline
     \textbf{X} & \textbf{Y} & $\mathbf{P(X,Y)}$ \\ \hline
-    \endfirsthead
-    \hline
-    \textbf{X} & \textbf{Y} & $\mathbf{P(X,Y)}$ \\ \hline
-    \endhead
-    \endfoot
     Low  & Low  & 0.20 \\ \hline
     Low  & High & 0.10 \\ \hline
     High & Low  & 0.15 \\ \hline
     High & High & 0.55 \\ \hline
-\end{longtable}
+\end{tabular}
+\end{center}
 
 \textbf{Step 1: Joint entropy contribution of each case}
 \begin{align*}
@@ -858,17 +852,14 @@ Calculate the joint entropy for the following data and also find the mutual info
 
 \renewcommand{\arraystretch}{1.8}
 \setlength{\tabcolsep}{8pt}
-\begin{longtable}{|C{3.4cm}|C{2.4cm}|C{2.4cm}|}
+\begin{center}
+\begin{tabular}{|C{3.4cm}|C{2.4cm}|C{2.4cm}|}
     \hline
     \textbf{Y $\backslash$ X} & 0 & 1 \\ \hline
-    \endfirsthead
-    \hline
-    \textbf{Y $\backslash$ X} & 0 & 1 \\ \hline
-    \endhead
-    \endfoot
     $0$ & $\frac{1}{2}$ & $\frac{1}{4}$ \\ \hline
     $1$ & $\frac{1}{8}$ & $\frac{1}{8}$ \\ \hline
-\end{longtable}
+\end{tabular}
+\end{center}
 
 \textbf{Step 1: Joint entropy}
 \begin{align*}
@@ -1081,9 +1072,10 @@ So model $B$ is better because it has lower KL divergence.
 
 % Source PDF page 15
 \subsection{Mutual Information as Relative Entropy}
-For two dependent random variables $(X,Y)$, mutual information can be written as the relative entropy between the joint distribution $P(x,y)$ and the product of the marginals $P(x)P(y)$:
 
 \begin{formulabox}[Mutual Information from Relative Entropy]
+For two dependent random variables $(X,Y)$, mutual information can be written as the relative entropy between the joint distribution $P(x,y)$ and the product of the marginals $P(x)P(y)$:
+
 \[
 I(X;Y) = \sum_{x,y} P(x,y)\log_2 \frac{P(x,y)}{P(x)P(y)}
 = D\bigl(P(x,y)\,\|\,P(x)P(y)\bigr)
@@ -1096,6 +1088,15 @@ I(X;Y) = \sum_{x,y} P(x,y)\log_2 \frac{P(x,y)}{P(x)P(y)}
     \item $D\bigl(P(x,y)\,\|\,P(x)P(y)\bigr)$ = relative entropy between the joint distribution and the product of marginals
 \end{itemize}
 \end{formulabox}
+
+\begin{infobox}[Simple Meaning]
+\begin{itemize}
+    \item If $X$ and $Y$ are independent, then \(P(x,y)=P(x)P(y)\).
+    \item Then the two distributions inside the KL divergence are the same, so the value becomes zero.
+    \item If they are dependent, then \(P(x,y)\) differs from \(P(x)P(y)\), so the value becomes positive.
+    \item So mutual information measures how far the pair $(X,Y)$ is from being independent.
+\end{itemize}
+\end{infobox}
 
 \begin{align*}
 I(X;Y)
@@ -1189,6 +1190,30 @@ For a convex function, the average of the function is greater than or equal to t
 \]
 \end{infobox}
 
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.0, >=stealth]
+        \draw[->, thick] (0,0) -- (4.2,0) node[right] {$x$};
+        \draw[->, thick] (0,0) -- (0,3.2) node[above] {$f(x)$};
+
+        \draw[thick, color=chaptercolor] (0,0) -- (3,2.4);
+
+        \draw[dashed] (1.25,0) -- (1.25,1);
+        \draw[dashed] (0,1) -- (1.25,1);
+        \draw[dashed] (2.5,0) -- (2.5,2);
+        \draw[dashed] (0,2) -- (2.5,2);
+
+        \filldraw (1.25,1) circle (1.6pt);
+        \filldraw (2.5,2) circle (1.6pt);
+
+        \node[below] at (1.25,0) {$1$};
+        \node[below] at (2.5,0) {$2$};
+        \node[left] at (0,1) {$1$};
+        \node[left] at (0,2) {$2$};
+    \end{tikzpicture}
+    \caption{Graphical view of the average-of-function versus function-of-average idea}
+\end{figure}
+
 \begin{formulabox}[Jensen's Inequality]
 If a function $f(x)$ is convex over an interval $(a,b)$, then for every $x_1,x_2 \in (a,b)$ and $0 \le \lambda \le 1$,
 \[
@@ -1196,6 +1221,13 @@ If a function $f(x)$ is convex over an interval $(a,b)$, then for every $x_1,x_2
 \]
 A function $f$ is said to be strictly convex if equality holds only when $\lambda = 0$ or $\lambda = 1$.
 \end{formulabox}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Figures/jensens-inequality.pdf}
+    \label{fig:jensens-inequality}
+    \caption{Geometric interpretation of Jensen's inequality for a convex function}
+\end{figure}
 
 \begin{questionanswerbox}[Example]
 For $x_1=0$, $x_2=2$, $\lambda=0.5$, and $f(x)=x^2$,
@@ -1211,17 +1243,50 @@ For $x_1=0$, $x_2=2$, $\lambda=0.5$, and $f(x)=x^2$,
 Thus $f(x)=x^2$ is a convex function.
 \end{questionanswerbox}
 
+\begin{definitionbox}[Concave Function]
+A function $f$ is concave over an interval if its second derivative is non-positive over that interval:
+\[
+\frac{d^2 f(x)}{dx^2} \le 0
+\]
+Examples: $\log x$ and $\sqrt{x}$.
+\end{definitionbox}
+
+\begin{infobox}[Relation with Jensen's Inequality]
+\begin{itemize}
+    \item For a concave function, Jensen's inequality reverses direction.
+\end{itemize}
+\[
+\lambda f(x_1) + (1-\lambda)f(x_2) \le f\bigl[\lambda x_1 + (1-\lambda)x_2\bigr]
+\]
+\begin{itemize}
+    \item So for a concave function:
+\[
+\text{Average of the function} \le \text{Function of the average}
+\]
+    \item This is the version used later in the Gibbs information inequality because $\log(x)$ is a concave function.
+\end{itemize}
+\end{infobox}
+
 \clearpage
 
 % Source PDF page 17
 \subsection{Gibbs Information Inequality}
 
-\begin{infobox}[Statement]
+\begin{formulabox}[Gibbs Information Inequality]
 Let $P(x)$ and $Q(x)$, where $x \in X$, be two probability mass functions. Then
 \[
 D(P \parallel Q) \ge 0
 \]
 with equality if and only if $P(x)=Q(x)$ for all $x$.
+\end{formulabox}
+
+\begin{infobox}[Beginner Meaning]
+\begin{itemize}
+    \item Gibbs information inequality says that relative entropy can never be negative.
+    \item So, the ``distance-like'' mismatch between a true distribution $P$ and an assumed distribution $Q$ is always zero or positive.
+    \item It becomes exactly zero only when the two distributions are the same at every point.
+    \item This is why KL divergence is useful for measuring how wrong an estimate is.
+\end{itemize}
 \end{infobox}
 
 Let
@@ -1229,18 +1294,32 @@ Let
 A = \{x : P(x) > 0\}
 \]
 be the support set of $P(x)$. Then
+\begin{infobox}[How to Read the Proof]
+\begin{itemize}
+    \item The set $A$ contains only the values where $P(x)$ is actually nonzero.
+    \item We work on $A$ so the ratio $\dfrac{Q(x)}{P(x)}$ is well-defined inside the summation.
+    \item The main trick is Jensen's inequality applied to the concave function $\log(\cdot)$.
+    \item The proof shows that $-D(P\parallel Q)\le 0$, which is the same as saying $D(P\parallel Q)\ge 0$.
+\end{itemize}
+\end{infobox}
+
 \begin{align*}
 -D(P \parallel Q)
-&= -\sum_{x\in A} P(x)\log \frac{P(x)}{Q(x)} \\
-&= \sum_{x\in A} P(x)\log \frac{Q(x)}{P(x)} \\
-&\le \log \sum_{x\in A} P(x)\frac{Q(x)}{P(x)} \\
-&= \log \sum_{x\in A} Q(x) \\
-&\le \log \sum_{x\in X} Q(x) \\
-&= \log 1 \\
-&= 0
+&= -\sum_{x\in A} P(x)\log \frac{P(x)}{Q(x)} = \sum_{x\in A} P(x)\log \frac{Q(x)}{P(x)} \\
+\text{or, } -D(P \parallel Q) &\le \log \sum_{x\in A} P(x)\frac{Q(x)}{P(x)} = \log \sum_{x\in A} Q(x) \\
+\text{or, } -D(P \parallel Q) &\le \log \sum_{x\in X} Q(x) = \log 1 = 0
 \end{align*}
 
-The inequality step follows because $\log(\cdot)$ is a strictly concave function.
+The inequality step follows because $\log(\cdot)$ is a concave function, so Jensen's inequality is used in its reversed form here.
+
+\begin{infobox}[What Happened in the Middle Steps]
+\begin{itemize}
+    \item The third line is the Jensen step: average of the log is less than or equal to log of the average.
+    \item The next line simplifies because $P(x)$ cancels with the denominator inside $\dfrac{Q(x)}{P(x)}$.
+    \item Since $A \subseteq X$, the sum over $A$ cannot exceed the full sum over $X$.
+    \item And because $Q(x)$ is a probability mass function, \(\sum_{x\in X}Q(x)=1\).
+\end{itemize}
+\end{infobox}
 
 Therefore,
 \[
@@ -1248,19 +1327,34 @@ D(P \parallel Q) \ge 0
 \]
 and relative entropy becomes zero only when the two distributions are identical.
 
+\begin{infobox}[First-Timer Takeaway]
+\begin{itemize}
+    \item Think of $P(x)$ as the correct probability model and $Q(x)$ as the model we guessed.
+    \item Gibbs information inequality says the penalty for using the wrong model can never be negative.
+    \item If our guess is perfect, then the penalty is zero. If the guess is off, the penalty becomes positive.
+    \item This is why KL divergence is often read as a measure of ``how different'' the assumed distribution is from the true one.
+\end{itemize}
+\end{infobox}
+
 \clearpage
 
 % Source PDF page 18
 \subsection{Example: Asymmetric Nature of Relative Entropy}
 
 \begin{questionanswerbox}[Example]
-Let $X=\{0,1\}$ and consider two distributions $P$ and $Q$ on $X$:
+\textbf{Q:} Let $X=\{0,1\}$ and consider two distributions $P$ and $Q$ on $X$:
 \[
 P(0)=1-r,\qquad P(1)=r,\qquad Q(0)=1-s,\qquad Q(1)=s
 \]
 Find $D(P \parallel Q)$ and $D(Q \parallel P)$.
 
-We have
+\textbf{A:} Given,
+\begin{align*}
+    X=\{0,1\}, \qquad P(0)&=1-r,\qquad P(1)=r\\
+    Q(0)&=1-s,\qquad Q(1)=s
+\end{align*}
+
+We have,
 \[
 D(P \parallel Q)
 = \sum_x P(x)\log_2 \frac{P(x)}{Q(x)}
@@ -1329,6 +1423,15 @@ H(X_1,X_2,\ldots,X_n) = \sum_{i=1}^{n} H(X_i \mid X_1,\ldots,X_{i-1})
 \]
 \end{formulabox}
 
+\begin{infobox}[Simple Reading]
+\begin{itemize}
+    \item The total uncertainty is built step by step.
+    \item Start with the uncertainty of $X_1$.
+    \item Then add the extra uncertainty of $X_2$ after $X_1$ is already known.
+    \item Then add the extra uncertainty of $X_3$ after $X_1$ and $X_2$ are known, and so on.
+\end{itemize}
+\end{infobox}
+
 \begin{itemize}
     \item For $n=2$:
 \[
@@ -1347,12 +1450,40 @@ H(X_1,X_2,\ldots,X_n \mid Y) = \sum_{i=1}^{n} H(X_i \mid X_1,\ldots,X_{i-1},Y)
 \]
 \end{formulabox}
 
+\begin{infobox}[Simple Reading]
+\begin{itemize}
+    \item Here the total uncertainty is measured while $Y$ is already known.
+    \item Start with the uncertainty of $X_1$ when $Y$ is known.
+    \item Then add the extra uncertainty of $X_2$ after $X_1$ and $Y$ are known.
+    \item Then add the extra uncertainty of $X_3$ after $X_1$, $X_2$, and $Y$ are known, and so on.
+\end{itemize}
+\end{infobox}
+
+\begin{itemize}
+    \item For $n=2$:
+\[
+H(X_1,X_2 \mid Y)=H(X_1 \mid Y)+H(X_2 \mid X_1,Y)
+\]
+    \item For $n=3$:
+\[
+H(X_1,X_2,X_3 \mid Y)=H(X_1 \mid Y)+H(X_2 \mid X_1,Y)+H(X_3 \mid X_1,X_2,Y)
+\]
+\end{itemize}
+
 \subsection{Mutual Information}
 \begin{formulabox}[Chain Rule for Mutual Information]
 \[
 I(X_1,X_2,\ldots,X_n;Y) = \sum_{i=1}^{n} I(X_i;Y \mid X_1,\ldots,X_{i-1})
 \]
 \end{formulabox}
+
+\begin{infobox}[Why This Helps]
+\begin{itemize}
+    \item This says the information that the whole group gives about $Y$ can be counted one variable at a time.
+    \item \textbf{Each new term tells us how much extra information the next variable adds after the previous ones are already known}.
+    \item So the chain rule avoids double counting.
+\end{itemize}
+\end{infobox}
 
 \begin{itemize}
     \item For $n=2$:
@@ -1365,40 +1496,33 @@ I(1,2,3;Y)=I(1;Y)+I(2;Y \mid 1)+I(3;Y \mid 1,2)
 \]
 \end{itemize}
 
-\subsection{Worked Examples}
+\subsubsection{Worked Examples}
 
-\begin{questionanswerbox}[Entropy of a Finite-Length DMS]
-Calculate the entropy of the finite-length DMS $X$ with probability distribution
+\begin{questionanswerbox}[Entropy of a Finite-Length DMS Example]
+\textbf{Q: } Calculate the entropy of the finite-length DMS $X$ with probability distribution
 \[
 P(x)=\{0.125,0.25,0.5,0.125\}, \qquad x \in X
 \]
 
-Entropy,
-\[
-H(X) = \sum_{x\in X} H(x_i) = -\sum_{i=1}^{n} p_i \log_2 p_i
-\]
-\[
-= -\left[2(0.125)\log_2(0.125) + (0.25)\log_2(0.25) + (0.5)\log_2(0.5)\right]
-\]
-\[
-= 1.375
-\]
+\textbf{A: } Entropy,
+\begin{align*}
+    H(X) &= \sum_{x\in X} H(x_i) = -\sum_{i=1}^{n} p_i \log_2 p_i\\
+    &= -\left[0.125\log_2(0.125) + 0.25\log_2(0.25) + 0.5\log_2(0.5) + 0.125\log_2(0.125)\right]\\
+    &= 1.375
+\end{align*}
 \end{questionanswerbox}
 
-\begin{questionanswerbox}[Average Self Information of a Source]
-For any source $X$ with pmf
+\begin{questionanswerbox}[Average Self Information of a Source Example]
+\textbf{Q: } For any source $X$ with probability distribution function
 \[
 P(x)=\{0.0625,0.5,0.25,0.125,0.0625\}, \qquad x \in X
 \]
 calculate its average self information.
 
-The average self information is nothing but the entropy.
+\textbf{A: } The average self information is nothing but the entropy.
 
 \[
-H(X) = -\left[2\times 0.0625\log_2 0.0625 + 0.5\log_2 0.5 + 0.25\log_2 0.25 + 0.125\log_2 0.125\right]
-\]
-\[
-= 1.875
+H(X) = -\left[2\times 0.0625\log_2 0.0625 + 0.5\log_2 0.5 + 0.25\log_2 0.25 + 0.125\log_2 0.125\right] = 1.875
 \]
 \end{questionanswerbox}
 
@@ -1407,10 +1531,10 @@ H(X) = -\left[2\times 0.0625\log_2 0.0625 + 0.5\log_2 0.5 + 0.25\log_2 0.25 + 0.
 % Source PDF page 20
 \section{Worked Problems}
 
-\begin{questionanswerbox}[Fully Dependent System]
-Prove that for a fully dependent system, mutual information is the same as self information.
+\begin{questionanswerbox}[Fully Dependent System Example]
+\textbf{Q: } Prove that for a fully dependent system, mutual information is the same as self information.
 
-Let two random variables $X$ and $Y$ be fully dependent. Knowing $X$ gives full knowledge of $Y$, and vice versa. Therefore,
+\textbf{A: } Let two random variables $X$ and $Y$ be fully dependent. Knowing $X$ gives full knowledge of $Y$, and vice versa. Therefore,
 \[
 H(Y \mid X)=0
 \]
@@ -1428,11 +1552,11 @@ So,
 I(X;Y)=H(Y)
 \]
 
-Hence, mutual information equals the entropy, that is, the average self information. All uncertainty in one variable is resolved by knowing the other.
+Hence, mutual information equals the entropy, that is, the average self information. Because all uncertainty in one variable (X) is resolved by knowing the other variable (Y).
 \end{questionanswerbox}
 
 \begin{questionanswerbox}[8-PSK Modulator Example]
-An 8-PSK modulator generates the following symbol sequence:
+\textbf{Q: } An 8-PSK modulator generates the following symbol sequence:
 \[
 010\;\;110\;\;111\;\;101\;\;011\;\;000\;\;011\;\;101\;\;110
 \]
@@ -1441,18 +1565,14 @@ An 8-PSK modulator generates the following symbol sequence:
 \]
 Determine the average information of the modulator.
 
-The average information is the entropy.
+\textbf{A: } The average information is the entropy.
 
 \renewcommand{\arraystretch}{1.3}
 \setlength{\tabcolsep}{8pt}
-\begin{longtable}{|C{2.8cm}|C{2.3cm}|}
+\begin{center}
+\begin{tabular}{|C{2.8cm}|C{2.3cm}|}
     \hline
     \textbf{Symbol} & \textbf{Count} \\ \hline
-    \endfirsthead
-    \hline
-    \textbf{Symbol} & \textbf{Count} \\ \hline
-    \endhead
-    \endfoot
     000 & 1 \\ \hline
     001 & 1 \\ \hline
     010 & 2 \\ \hline
@@ -1461,33 +1581,29 @@ The average information is the entropy.
     101 & 4 \\ \hline
     110 & 3 \\ \hline
     111 & 2 \\ \hline
-\end{longtable}
+\end{tabular}
+\end{center}
 
-\[
-H = -\left[
+\begin{align*}
+    H &= -\left[
 3\times \frac{1}{16}\log_2\frac{1}{16}
 + 3\times \frac{2}{16}\log_2\frac{2}{16}
 + \frac{3}{16}\log_2\frac{3}{16}
 + \frac{4}{16}\log_2\frac{4}{16}
-\right]
-\]
-\[
-= \frac{3}{4} + \frac{9}{8} + 0.4528195311 + \frac{1}{2}
-\]
-\[
-\approx 2.8278 \text{ bits/symbol}
-\]
+\right]\\
+&= \frac{3}{4} + \frac{9}{8} + 0.4528195311 + \frac{1}{2}\\
+&\approx 2.8278 \text{ bits/symbol} \approx 3 \text{ bits/symbol}
+\end{align*}
 
 \textbf{Significance:} At least $3$ bits are required to transmit the 8-PSK modulated signal.
 \end{questionanswerbox}
 
 % Source PDF page 21
-\section{Channel Interpretation}
 
-\begin{questionanswerbox}[Mutual Information as a Measure of Channel Goodness]
-Mutual information can be interpreted as a measure of channel goodness. Justify the statement with an example.
+\begin{questionanswerbox}[Channel Interpretation: Mutual Information as a Measure of Channel Goodness\\Example]
+\textbf{Q:} Mutual information can be interpreted as a measure of channel goodness. Justify the statement with an example.
 
-\paragraph*{Answer}
+\textbf{A:}
 \begin{itemize}
     \item Mutual information \(I(X;Y)\) quantifies how much information the received signal \(Y\) reveals about the transmitted signal \(X\).
     \item A higher mutual information means less uncertainty in decoding and a more reliable channel.
@@ -1495,41 +1611,31 @@ Mutual information can be interpreted as a measure of channel goodness. Justify 
     \item For a noisy channel, \(I(X;Y)=0\). The output reveals nothing about the input, indicating a useless or fully noisy channel.
 \end{itemize}
 
-\paragraph*{Example}
-For a binary symmetric channel with low crossover probability \(p\), \(I(X;Y)\) is high, showing good channel reliability. For BSC, let \(p=0.1\).
+\textbf{Example:}
+For a binary symmetric channel with low crossover probability \(P\), \(I(X;Y)\) is high, showing good channel reliability. For BSC, let \(P=0.1\).\\
 
-\[
-C=\max_{P(X)} I(X;Y)=1-H(p)
-\]
-\[
-= 1-\left[-p\log_2 p-(1-p)\log_2(1-p)\right]
-\]
-\[
-= 1+0.1\log_2(0.1)+0.9\log_2(0.9)
-\]
-\[
-= 0.531 \text{ bit per bit}
-\]
+So, maximum amount of information that can be transmitted reliably through the channel is given by the channel capacity \(C\):
+\begin{align*}
+    C &= \substack{max \\ P(X)} I(X;Y) = 1-H(P)\\
+    &= 1-\left[-P\log_2 P-(1-P)\log_2(1-P)\right]\\
+    &= 1+0.1\log_2(0.1)+0.9\log_2(0.9)\\
+    &= 0.531 \text{ bit per bit}
+\end{align*}
 
 The channel is fairly good but not perfect.
 \end{questionanswerbox}
 
-\begin{questionanswerbox}[Probability of Correct Reception]
-Prove that the probability of correct reception is \(1-P_e\).
+\begin{questionanswerbox}[Probability of Correct Reception Example]
+\textbf{Q:}Prove that the probability of correct reception is \(1-P_e\).
 
-\paragraph*{Answer}
+\textbf{A:}
 Let \(P_c\) be the probability of correct reception and \(P_e\) be the probability of error.
 
 Since these are complementary events,
-\[
-P_c+P_e=1
-\]
-or,
-\[
-P_c=1-P_e
-\]
-
-Hence proved.
+\begin{align*}
+    &P_c+P_e=1\\
+    \text{or, } &P_c=1-P_e \text{  [Proved]}
+\end{align*}
 \end{questionanswerbox}
 
 % Source PDF page 22
@@ -1568,10 +1674,10 @@ then the channel matrix is
 
 \subsection{Average Information Rate of a Source}
 
-\begin{questionanswerbox}[Worked Example]
-The output of an information source consists of \(150\) symbols, \(32\) of which occur with a probability of \(\frac{1}{64}\), and the remaining with a probability of \(\frac{1}{236}\). The source emits \(2000\) symbols/sec. Assume the symbols are chosen independently. Find the average information rate of this source.
+\begin{questionanswerbox}[Example]
+\textbf{Q:} The output of an information source consists of \(150\) symbols, \(32\) of which occur with a probability of \(\frac{1}{64}\), and the remaining with a probability of \(\frac{1}{236}\). The source emits \(2000\) symbols/sec. Assume the symbols are chosen independently. Find the average information rate of this source.
 
-\paragraph*{Given}
+\textbf{A:} Given-
 \begin{itemize}
     \item \(p_1=\frac{1}{64}\)
     \item \(p_2=\frac{1}{236}\)
@@ -1579,59 +1685,65 @@ The output of an information source consists of \(150\) symbols, \(32\) of which
     \item \(n_2=150-32=118\)
 \end{itemize}
 
-\paragraph*{Total Entropy}
-\[
-H(X)=-\left(p_1\log_2 p_1 \times n_1 + p_2\log_2 p_2 \times n_2\right)
-\]
-\[
-= -\left(\frac{1}{64}\log_2\frac{1}{64}\times 32 + \frac{1}{236}\log_2\frac{1}{236}\times 118\right)
-\]
-\[
-= 6.9413 \text{ bit/symbol}
-\]
+\textbf{Total Entropy}
+\begin{align*}
+    H(X)&=-\left(p_1\log_2 p_1 \times n_1 + p_2\log_2 p_2 \times n_2\right)\\
+    &=-\left(\frac{1}{64}\log_2\frac{1}{64}\times 32 + \frac{1}{236}\log_2\frac{1}{236}\times 118\right)\\
+    &\approx 6.9413 \text{ bit/symbol}
+\end{align*}
 
-\paragraph*{Average Information Rate}
-\[
-R=H(X)\times r
-\]
-\[
-= 6.9413\times 2000
-\]
-\[
-= 13882.64305 \text{ bits/sec}
-\]
+\textbf{Average Information Rate}
+\begin{align*}
+    R&=H(X)\times r\\
+    &= 6.9413\times 2000\\
+    &\approx 13882.64305 \text{ bits/sec}
+\end{align*}
 \end{questionanswerbox}
 
 % Source PDF page 23
 \section{Additional Worked Problems}
 
-\begin{questionanswerbox}[Maximum Entropy for Two Messages]
-Consider a source that transmits two independent messages with probabilities \(p\) and \((1-p)\), respectively. Demonstrate that the entropy is maximized when the two messages are equally likely. Plot the entropy of source vs probability.
+\begin{questionanswerbox}[Maximum Entropy for Two Messages Example]
+\textbf{Q:} Consider a source that transmits two independent messages with probabilities \(p\) and \((1-p)\), respectively. Show that the entropy is maximum when the two messages are equally likely. Plot the entropy of source vs probability.
 
-\paragraph*{Answer}
-For equally likely messages, the probabilities are
+\textbf{A:}
+
+\textbf{Given,}
 \[
 p = 1-p = 0.5
 \]
 
-Entropy,
-\[
-H(p)=-p\log_2 p-(1-p)\log_2(1-p)
-\]
-\[
-= -0.5\log_2 0.5 - 0.5\log_2 0.5
-\]
-\[
-= 1
-\]
+\begin{align*}
+H(p) &= -p\log_2 p-(1-p)\log_2(1-p)\\
+     &= -0.5\log_2 0.5 - 0.5\log_2 0.5\\
+     &= 1
+\end{align*}
 
-Hence, the entropy is maximum when \(p=0.5\). When both terms are equally probable, the uncertainty is highest; hence the entropy is maximum. This represents the most information per message.
+Hence, the entropy is maximum when \(p=0.5\). When both messages are equally probable, the uncertainty is highest, so the information content is also highest.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+        \draw[->] (0,0) -- (4.6,0) node[right] {$P$};
+        \draw[->] (0,0) -- (0,3.1) node[above] {$H(P)$};
+        \draw[smooth,domain=0.05:0.95,samples=120,thick,color=chaptercolor]
+            plot (\x*4,{(-\x*ln(\x)/ln(2) - (1-\x)*ln(1-\x)/ln(2))*2.8});
+        \draw[dashed] (2,0) -- (2,2.8);
+        \node[below] at (0,0) {$0$};
+        \node[below] at (2,0) {$0.5$};
+        \node[below] at (4,0) {$1$};
+        \node[left] at (0,2.8) {$1$};
+    \end{tikzpicture}
+    \caption{Entropy of a binary source versus probability}
+\end{figure}
 \end{questionanswerbox}
 
-\begin{questionanswerbox}[B\&W TV Picture Information Rate]
-A B\&W TV picture consists of \(525\) lines of picture information. Assume that each element can have \(256\) brightness levels. If pictures are repeated at a rate of \(32\) frame/sec, calculate the average rate of information conveyed by a TV set to a viewer.
+\begin{questionanswerbox}[B\&W TV Picture Information Rate Example]
+\textbf{Q:} A B\&W TV picture consists of \(525\) lines of picture information. Assume that each element can have \(256\) brightness levels. If pictures are repeated at a rate of \(32\) frame/sec, calculate the average rate of information conveyed by a TV set to a viewer.
 
-\paragraph*{Given}
+\textbf{A:}
+
+\textbf{Given,}
 \begin{itemize}
     \item Number of lines per frame \(=525\)
     \item Brightness levels per picture element \(=256\)
@@ -1639,138 +1751,1252 @@ A B\&W TV picture consists of \(525\) lines of picture information. Assume that 
     \item Pixels per line \(=256\) (as used in the note)
 \end{itemize}
 
-\paragraph*{Pixels per Frame}
-\[
-525\times 256 = 13440 \text{ pixels/frame}
-\]
-
-\paragraph*{Bits per Pixel}
-\[
-\log_2 256 = 8 \text{ bits}
-\]
-
-\paragraph*{Bits per Frame}
-\[
-8\times 13440 = 107520 \text{ bits/frame}
-\]
-
-\paragraph*{Information Rate}
-\[
-107520\times 32 = 3440640 \text{ bps}
-\]
-\[
-= 3.44 \text{ Mbps}
-\]
+\begin{align*}
+\text{Pixels per frame} &= 525\times 256 = 13440 \text{ pixels/frame}\\
+\text{Bits per pixel} &= \log_2 256 = 8 \text{ bits}\\
+\text{Bits per frame} &= 8\times 13440 = 107520 \text{ bits/frame}\\
+\text{Information rate} &= 107520\times 32 = 3440640 \text{ bps}\\
+                        &= 3.44 \text{ Mbps}
+\end{align*}
 \end{questionanswerbox}
 
 % Source PDF pages 24-25 are unrelated inserts in the source PDF and are intentionally skipped.
 
 % Source PDF page 26
-\begin{questionanswerbox}[Finding \(H(X)\), \(H(Y)\), \(H(X \mid Y)\), and \(H(Y \mid X)\)]
-Calculate \(H(X)\), \(H(Y)\), \(H(X \mid Y)\), and \(H(Y \mid X)\) from the data given below.
+\begin{questionanswerbox}[Finding \(H(X)\), \(H(Y)\), \(H(X \mid Y)\), and \(H(Y \mid X)\) Example]
+\textbf{Q:} Calculate \(H(X)\), \(H(Y)\), \(H(X \mid Y)\), and \(H(Y \mid X)\) from the data given below.
 
-\renewcommand{\arraystretch}{1.3}
+\textbf{A:}
+
+\textbf{Given,}
+
+\renewcommand{\arraystretch}{1.8}
 \setlength{\tabcolsep}{6pt}
-\begin{longtable}{|C{2cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|}
+\begin{center}
+\begin{tabular}{|C{2cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|C{1.6cm}|}
     \hline
     \textbf{Y $\backslash$ X} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} \\ \hline
-    \endfirsthead
-    \hline
-    \textbf{Y $\backslash$ X} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} \\ \hline
-    \endhead
-    \endfoot
-    1 & \(\dfrac{1}{8}\)  & \(\dfrac{1}{16}\) & \(\dfrac{1}{32}\) & \(\dfrac{1}{32}\) \\ \hline
-    2 & \(\dfrac{1}{16}\) & \(\dfrac{1}{8}\)  & \(\dfrac{1}{32}\) & \(\dfrac{1}{32}\) \\ \hline
-    3 & \(\dfrac{1}{16}\) & \(\dfrac{1}{16}\) & \(\dfrac{1}{16}\) & \(\dfrac{1}{16}\) \\ \hline
-    4 & \(\dfrac{1}{4}\)  & 0                 & 0                 & 0                 \\ \hline
-\end{longtable}
+    1 & \(\frac{1}{8}\)  & \(\frac{1}{16}\) & \(\frac{1}{32}\) & \(\frac{1}{32}\) \\ \hline
+    2 & \(\frac{1}{16}\) & \(\frac{1}{8}\)  & \(\frac{1}{32}\) & \(\frac{1}{32}\) \\ \hline
+    3 & \(\frac{1}{16}\) & \(\frac{1}{16}\) & \(\frac{1}{16}\) & \(\frac{1}{16}\) \\ \hline
+    4 & \(\frac{1}{4}\)  & 0                 & 0                 & 0                 \\ \hline
+\end{tabular}
+\end{center}
 
-From the table above,
-\[
-P(x_1)=\frac{1}{8}+\frac{1}{16}+\frac{1}{16}+\frac{1}{4}=\frac{1}{2}
-\]
-\[
-P(x_2)=\frac{1}{16}+\frac{1}{8}+\frac{1}{16}+0=\frac{1}{4}
-\]
-\[
-P(x_3)=\frac{1}{32}+\frac{1}{32}+\frac{1}{16}=\frac{1}{8}
-\]
-\[
-P(x_4)=\frac{1}{32}+\frac{1}{32}+\frac{1}{16}=\frac{1}{8}
-\]
+\begin{align*}
+P(x_1)&=\frac{1}{8}+\frac{1}{16}+\frac{1}{16}+\frac{1}{4}=\frac{1}{2}\\
+P(x_2)&=\frac{1}{16}+\frac{1}{8}+\frac{1}{16}+0=\frac{1}{4}\\
+P(x_3)&=\frac{1}{32}+\frac{1}{32}+\frac{1}{16}=\frac{1}{8}\\
+P(x_4)&=\frac{1}{32}+\frac{1}{32}+\frac{1}{16}=\frac{1}{8}
+\end{align*}
 
-We have,
-\[
-H(X)=-\sum_{i=1}^{4} P(x_i)\log_2 P(x_i)
-\]
-\[
-= \frac{1}{2}\log_2 2 + \frac{1}{4}\log_2 2^2 + \frac{1}{8}\log_2 2^3 + \frac{1}{8}\log_2 2^3
-\]
-\[
-= \frac{1}{2}+\frac{1}{2}+\frac{3}{8}+\frac{3}{8}
-\]
-\[
-= \frac{7}{4} \text{ bits/symbol}
-\]
+\begin{align*}
+H(X)&=-\sum_{i=1}^{4} P(x_i)\log_2 P(x_i)\\
+    &= \frac{1}{2}\log_2 2 + \frac{1}{4}\log_2 2^2 + \frac{1}{8}\log_2 2^3 + \frac{1}{8}\log_2 2^3\\
+    &= \frac{1}{2}+\frac{1}{2}+\frac{3}{8}+\frac{3}{8}\\
+    &= \frac{7}{4} \text{ bits/symbol}
+\end{align*}
 
-Now,
-\[
-P(y_1)=\frac{1}{8}+\frac{1}{16}+\frac{1}{32}+\frac{1}{32}=\frac{1}{4}
-\]
-\[
-P(y_2)=\frac{1}{16}+\frac{1}{8}+\frac{1}{32}+\frac{1}{32}=\frac{1}{4}
-\]
-\[
-P(y_3)=\frac{4}{16}=\frac{1}{4}
-\]
-\[
-P(y_4)=\frac{1}{4}
-\]
+\begin{align*}
+P(y_1)&=\frac{1}{8}+\frac{1}{16}+\frac{1}{32}+\frac{1}{32}=\frac{1}{4}\\
+P(y_2)&=\frac{1}{16}+\frac{1}{8}+\frac{1}{32}+\frac{1}{32}=\frac{1}{4}\\
+P(y_3)&=\frac{4}{16}=\frac{1}{4}\\
+P(y_4)&=\frac{1}{4}
+\end{align*}
 
 % Source PDF page 27
-Now,
+\begin{align*}
+H(Y)&=-\sum_{i=1}^{4} P(y_i)\log_2 P(y_i)\\
+    &= \frac{4}{4}\log_2 4\\
+    &= \log_2 2^2\\
+    &= 2 \text{ bits/symbol}
+\end{align*}
+
+\begin{align*}
+H(X,Y)&=-\sum_{j=1}^{4}\sum_{i=1}^{4} P(x_i,y_j)\log_2 P(x_i,y_j)\\
+      &= -\Biggl[
+      \frac{1}{8}\log_2\frac{1}{8}
+      +\frac{1}{16}\log_2\frac{1}{16}
+      +\frac{1}{32}\log_2\frac{1}{32}
+      +\frac{1}{32}\log_2\frac{1}{32}\\
+      &\qquad
+      +\frac{1}{16}\log_2\frac{1}{16}
+      +\frac{1}{8}\log_2\frac{1}{8}
+      +\frac{1}{32}\log_2\frac{1}{32}
+      +\frac{1}{32}\log_2\frac{1}{32}\\
+      &\qquad
+      +\frac{1}{16}\log_2\frac{1}{16}
+      +\frac{1}{16}\log_2\frac{1}{16}
+      +\frac{1}{16}\log_2\frac{1}{16}
+      +\frac{1}{16}\log_2\frac{1}{16}\\
+      &\qquad
+      +\frac{1}{4}\log_2\frac{1}{4}
+      \Biggr]\\
+      &= \frac{2}{8}\log_2 8
+      + \frac{6}{16}\log_2 16
+      + \frac{4}{32}\log_2 32
+      + \frac{1}{4}\log_2 4\\
+      &= \frac{27}{8} \text{ bits/symbol}
+\end{align*}
+
+\begin{align*}
+H(X \mid Y)&=H(X,Y)-H(Y)=\frac{27}{8}-2=1.375 \text{ bits/symbol}\\
+H(Y \mid X)&=H(X,Y)-H(X)=\frac{27}{8}-\frac{7}{4}=1.625 \text{ bits/symbol}
+\end{align*}
+\end{questionanswerbox}
+
+% Source PDF page 28
+\clearpage
+\section{Source Coding}
+
+\begin{definitionbox}[Source Coding]
+Source coding is the process of compressing data to reduce redundancy while preserving the essential information.
+\end{definitionbox}
+
+It is used to represent data efficiently for transmission or storage. The goal is to minimize the number of bits required to encode the source symbols without losing information.
+
+\subsection{Types of Source Coding}
+
+There are two types of source coding:
+
+\subsubsection{Lossless Source Coding}
+
+\begin{definitionbox}[Lossless Source Coding]
+Ensures that the original data can be perfectly reconstructed from the compressed data without any loss of information.
+\end{definitionbox}
+
+\begin{itemize}
+    \item Examples: Huffman coding, run-length coding, arithmetic coding
+    \item Use case: text files, medical imaging
+\end{itemize}
+
+\subsubsection{Lossy Source Coding}
+
+\begin{definitionbox}[Lossy Source Coding]
+Reduces data size by discarding less important information, which may result in loss of quality.
+\end{definitionbox}
+
+\begin{itemize}
+    \item Examples: JPEG (images), MP3 (audio), MPEG (video)
+    \item Use case: multimedia applications where minor losses are acceptable
+\end{itemize}
+
+\subsection{Source Coding Theorem}
+
+\begin{definitionbox}[Source Coding Theorem]
+The source coding theorem introduced by Claude Shannon states that the average length \(L\) of the encoded message for a discrete memoryless source \(X\) cannot be less than the entropy \(H(X)\) of the source.
+\end{definitionbox}
+
+\begin{formulabox}[Source Coding Bound]
 \[
-H(Y)=-\sum_{i=1}^{4} P(y_i)\log_2 P(y_i)
+L \ge H(X)
 \]
+\begin{itemize}
+    \item \(L\) = average codeword length
+    \item \(H(X)\) = entropy of the source
+\end{itemize}
+\end{formulabox}
+
+Efficient encoding schemes like Huffman coding can achieve \(L \approx H(X)\), but cannot go below it. The theorem ensures optimal compression, minimizing redundancy in data transmission or storage.
+
+\begin{formulabox}[Average Codeword Length]
 \[
-= \frac{4}{4}\log_2 4
+L = \sum P(x_i)\,l(x_i)
 \]
+\begin{itemize}
+    \item \(L\) = average codeword length
+    \item \(P(x_i)\) = probability of symbol \(x_i\)
+    \item \(l(x_i)\) = length of the codeword assigned to symbol \(x_i\)
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}[Coding Efficiency]
 \[
-= \log_2 2^2
+\eta = \frac{H(X)}{L}\times 100\%
 \]
+\begin{itemize}
+    \item \(\eta\) = efficiency of the coding scheme
+    \item \(H(X)\) = source entropy
+    \item \(L\) = encoded average length. Length = Codeword $\times$ Probability
+\end{itemize}
+\end{formulabox}
+
+Coding efficiency measures how well a source-coding scheme performs compared to the theoretical limit of compression given by the source entropy. For a perfectly efficient coding scheme,
 \[
-= 2 \text{ bits/symbol}
+L = H(X)
 \]
 
-Now, joint entropy,
+\begin{formulabox}[Redundancy]
 \[
-H(X,Y)=-\sum_{j=1}^{4}\sum_{i=1}^{4} P(x_i,y_j)\log_2 P(x_i,y_j)
+R_e = 1-\eta
 \]
+\begin{itemize}
+    \item \(R_e\) = redundancy of the code
+    \item Use this form when \(\eta\) is written as a fraction, for example \(\eta=1\)
+    \item If efficiency is written in percent, then use \(R_e = 100\% - \eta\)
+\end{itemize}
+\end{formulabox}
+
+Redundancy tells us how much extra coding length remains beyond the ideal limit. If efficiency is high, redundancy is low. For a perfect code, \(\eta=1\) or \(100\%\), so redundancy becomes \(0\).
+
+% Source PDF page 29
+\subsection{Kraft-McMillan Inequality}
+
+\begin{formulabox}[Kraft-McMillan Inequality]
+The Kraft-McMillan inequality provides a necessary and sufficient condition for the existence of a prefix-free (uniquely decodable) code. For a set of codewords with lengths \(n_1,n_2,\ldots,n_n\),
 \[
-= \frac{2}{8}\log_2 8 + \frac{6}{16}\log_2 16 + \frac{4}{32}\log_2 32 + \frac{1}{4}\log_2 4
+\sum_{k=1}^{L} 2^{-n_k} \le 1
 \]
+\begin{itemize}
+    \item \(n_k\) = length of the \(k\)-th codeword
+    \item \(L\) = total number of codewords in the code
+    \item \(2^{-n_k}\) = contribution of a codeword of length \(n_k\) in a binary code
+    \item \(\sum_{k=1}^{L} 2^{-n_k}\) = total Kraft sum of all codewords
+\end{itemize}
+If the inequality is satisfied, a prefix-free code with those codeword lengths can be constructed. If the sum exceeds 1, such a code cannot exist. Equality implies an optimally efficient code.
+\end{formulabox}
+
+% Source PDF page 24 (inserted here for topic continuity)
+\subsubsection{What Prefix Means in Prefix-Free Code}
+
+A code is prefix-free if no complete codeword is the prefix of another complete codeword.
+
+\begin{infobox}[Simple Reading]
+\begin{itemize}
+    \item Having the same starting bits is allowed.
+    \item The real problem starts when one full codeword appears at the beginning of another full codeword.
+    \item So, we compare complete codewords, not just their first few bits.
+\end{itemize}
+\end{infobox}
+
+\paragraph{Checking a Valid Example}
+Suppose we have:
+\begin{itemize}
+    \item \(000\) for \(F\)
+    \item \(001\) for \(A\)
+    \item \(010\) for \(D\)
+    \item \(011\) for \(E\)
+    \item \(10\) for \(B\)
+    \item \(11\) for \(C\)
+\end{itemize}
+
+Now check:
+\begin{itemize}
+    \item Is \(000\) a prefix of \(001\)? No. They are both complete 3-bit codewords, and one does not fully contain the other.
+    \item Does any complete codeword appear at the start of a longer codeword? No.
+\end{itemize}
+
+So this is a prefix-free code.
+
+\paragraph{Example of a Bad Code}
+Suppose:
+\begin{itemize}
+    \item \(A \to 0\)
+    \item \(B \to 01\)
+\end{itemize}
+
+Here, \(0\) is a prefix of \(01\). So this is not prefix-free.
+
+\begin{questionanswerbox}[Prefix Code Condition Example]
+\textbf{Q:} Discuss the possibility of finding a prefix code with codeword lengths \(1,2,3,3\).
+
+\textbf{A:}
+
+\textbf{Given,}
 \[
-= \frac{2}{8}\log_2 2^3 + \frac{6}{16}\log_2 2^4 + \frac{4}{32}\log_2 2^5 + \frac{1}{4}\log_2 2^2
-\]
-\[
-= \frac{6}{8}\log_2 2 + \frac{24}{16}\log_2 2 + \frac{20}{32}\log_2 2 + \frac{2}{4}\log_2 2
-\]
-\[
-= \frac{6}{8} + \frac{24}{16} + \frac{20}{32} + \frac{1}{2}
-\]
-\[
-= \frac{27}{8} \text{ bits/symbol}
+n_1=1,\qquad n_2=2,\qquad n_3=3,\qquad n_4=3
 \]
 
-Now,
-\[
-H(X \mid Y)=H(X,Y)-H(Y)=\frac{27}{8}-2=1.375 \text{ bits/symbol}
-\]
+\begin{align*}
+\sum_{k=1}^{L} 2^{-n_k}
+&= 2^{-1}+2^{-2}+2^{-3}+2^{-3}\\
+&= 1 \le 1
+\end{align*}
 
-and,
+Hence, the Kraft inequality is satisfied. So the prefix-free code is possible.
+
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+\begin{center}
+\begin{tabular}{|C{1.6cm}|C{2.8cm}|C{1.8cm}|}
+    \hline
+    \textbf{X} & \textbf{Codeword} & \textbf{Length} \\ \hline
+    \(a\) & \(0\)   & \(1\) \\ \hline
+    \(b\) & \(10\)  & \(2\) \\ \hline
+    \(c\) & \(110\) & \(3\) \\ \hline
+    \(d\) & \(111\) & \(3\) \\ \hline
+\end{tabular}
+\end{center}
+
+The resulting prefix code is:
 \[
-H(Y \mid X)=H(X,Y)-H(X)=\frac{27}{8}-\frac{7}{4}=1.625 \text{ bits/symbol}
+\{0,10,110,111\}
 \]
 \end{questionanswerbox}
+
+\subsection{Huffman Coding}
+
+\begin{definitionbox}[Huffman Coding]
+Huffman coding is a lossless data-compression algorithm that assigns shorter binary codes to more frequent symbols and longer codes to less frequent ones, thereby minimizing the average code length.
+\end{definitionbox}
+
+It is generally useful for data with frequently occurring characters.
+
+\subsubsection{Steps / Algorithm}
+\begin{enumerate}
+    \item Arrange all the symbols with their probabilities in ascending order.
+    \item Combine the two least probable symbols into a node, summing their probabilities.
+    \item Repeat until a single tree (Huffman tree) is formed.
+    \item Assign binary codes: \(0\) to the left branch and \(1\) to the right branch.
+\end{enumerate}
+
+% Source PDF page 30
+\subsubsection{Worked Examples}
+
+\begin{questionanswerbox}[Huffman Coding with Source \(X\) Example]
+\textbf{Q:} Consider a source with symbols \(X=\{a,b,c,d,e\}\) having probabilities
+\[
+p=\{0.5,\,0.25,\,0.125,\,0.0625,\,0.0625\}
+\]
+Construct the Huffman tree and codewords, and determine \(\eta\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+p=\{0.5,\,0.25,\,0.125,\,0.0625,\,0.0625\}
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\linewidth]{Figures/generated/huffman_example_source_x.png}
+    \caption{Handwritten Huffman tree and codeword table for source \(X=\{a,b,c,d,e\}\)}
+\end{figure}
+
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+\begin{center}
+\begin{tabular}{|C{1.6cm}|C{2.4cm}|C{2.6cm}|C{1.4cm}|}
+    \hline
+    \textbf{Symbol} & \textbf{Probability} & \textbf{Codeword} & \textbf{\(l_i\)} \\ \hline
+    \(a\) & \(0.5\)    & \(0\)    & \(1\) \\ \hline
+    \(b\) & \(0.25\)   & \(10\)   & \(2\) \\ \hline
+    \(c\) & \(0.125\)  & \(110\)  & \(3\) \\ \hline
+    \(d\) & \(0.0625\) & \(1110\) & \(4\) \\ \hline
+    \(e\) & \(0.0625\) & \(1111\) & \(4\) \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{align*}
+L &= \sum P(x_i)\,l(x_i)\\
+  &= (0.5\times 1)+(0.25\times 2)+(0.125\times 3)+(0.0625\times 4)+(0.0625\times 4)\\
+  &= 1.875 \text{ bits/symbol}
+\end{align*}
+
+\begin{align*}
+H(X) &= 0.5\log_2\frac{1}{0.5}+0.25\log_2\frac{1}{0.25}+0.125\log_2\frac{1}{0.125}+2\times 0.0625\log_2\frac{1}{0.0625}\\
+     &= 1.875 \text{ bits/symbol}
+\end{align*}
+
+\begin{align*}
+\eta &= \frac{H(X)}{L}\times 100\%\\
+     &= \frac{1.875}{1.875}\times 100\%\\
+     &= 100\%
+\end{align*}
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Huffman Coding with Eight Symbols Example]
+\textbf{Q:} Consider a source with eight symbols \(s_1,s_2,s_3,\ldots,s_8\) having probabilities
+\[
+0.25,\,0.21,\,0.15,\,0.14,\,0.0625,\,0.0625,\,0.0625,\,0.0625
+\]
+Construct the Huffman tree with codeword lengths.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+0.25,\,0.21,\,0.15,\,0.14,\,0.0625,\,0.0625,\,0.0625,\,0.0625
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.96\linewidth]{Figures/generated/huffman_example_s1_s8.png}
+    \caption{Handwritten Huffman tree and codeword table for the eight-symbol example}
+\end{figure}
+
+\begin{center}
+\begin{tabular}{|C{1.5cm}|C{2.2cm}|C{2.5cm}|C{1.3cm}|}
+    \hline
+    \textbf{Symbol} & \textbf{Probability} & \textbf{Codeword} & \textbf{\(l_i\)} \\ \hline
+    \(s_1\) & \(0.25\)   & \(00\)   & \(2\) \\ \hline
+    \(s_2\) & \(0.21\)   & \(01\)   & \(2\) \\ \hline
+    \(s_3\) & \(0.15\)   & \(100\)  & \(3\) \\ \hline
+    \(s_4\) & \(0.14\)   & \(101\)  & \(3\) \\ \hline
+    \(s_5\) & \(0.0625\) & \(1100\) & \(4\) \\ \hline
+    \(s_6\) & \(0.0625\) & \(1101\) & \(4\) \\ \hline
+    \(s_7\) & \(0.0625\) & \(1110\) & \(4\) \\ \hline
+    \(s_8\) & \(0.0625\) & \(1111\) & \(4\) \\ \hline
+\end{tabular}
+\end{center}
+\end{questionanswerbox}
+
+% Source PDF page 31
+\begin{questionanswerbox}[Information Source \(U\) and Entropy Example]
+\textbf{Q:} Consider the information source \(U\) such that
+\[
+\begin{array}{|c|c|c|c|c|c|c|}
+\hline
+U   & U_1 & U_2 & U_3 & U_4 & U_5 & U_6 \\ \hline
+P_i & 0.05 & 0.10 & 0.15 & 0.27 & 0.20 & 0.23 \\ \hline
+\end{array}
+\]
+Draw the Huffman tree with the code and determine \(H(U)\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+\begin{array}{|c|c|c|c|c|c|c|}
+\hline
+U   & U_1 & U_2 & U_3 & U_4 & U_5 & U_6 \\ \hline
+P_i & 0.05 & 0.10 & 0.15 & 0.27 & 0.20 & 0.23 \\ \hline
+\end{array}
+\]
+
+Arranging the symbols \(U\) with their probabilities in ascending order:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.96\linewidth]{Figures/generated/huffman_example_u.pdf}
+    \caption{Handwritten Huffman tree and codeword table for information source \(U\)}
+\end{figure}
+
+\begin{center}
+\begin{tabular}{|C{1.5cm}|C{2.2cm}|C{2.5cm}|C{1.3cm}|}
+    \hline
+    \textbf{Symbol} & \textbf{Probability} & \textbf{Codeword} & \textbf{\(l_i\)} \\ \hline
+    \(U_4\) & \(0.27\) & \(00\)   & \(2\) \\ \hline
+    \(U_6\) & \(0.23\) & \(10\)   & \(2\) \\ \hline
+    \(U_5\) & \(0.20\) & \(11\)   & \(2\) \\ \hline
+    \(U_3\) & \(0.15\) & \(010\)  & \(3\) \\ \hline
+    \(U_2\) & \(0.10\) & \(0110\) & \(4\) \\ \hline
+    \(U_1\) & \(0.05\) & \(0111\) & \(4\) \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{align*}
+H(U)&=0.27\log_2\frac{1}{0.27}+0.23\log_2\frac{1}{0.23}+0.2\log_2\frac{1}{0.2}+0.15\log_2\frac{1}{0.15}+0.1\log_2\frac{1}{0.1}+0.05\log_2\frac{1}{0.05}\\
+    &= 2.2048 \text{ bits/symbol}
+\end{align*}
+\end{questionanswerbox}
+
+% Source PDF page 32
+\clearpage
+\section{Arithmetic Coding}
+
+\begin{definitionbox}[Arithmetic Coding]
+Arithmetic coding is a lossless data-compression technique that represents an entire message as a single number within the interval \([0,1)\).
+\end{definitionbox}
+
+Unlike traditional methods, it assigns fractional ranges to symbols based on their probabilities, enabling more efficient encoding for data with uneven symbol distributions.
+
+\subsection{Efficiency of Arithmetic Coding over Huffman Coding}
+\begin{itemize}
+    \item \textbf{Precision:} Arithmetic coding uses actual probabilities, avoiding the rounding errors of Huffman coding.
+    \item \textbf{Adaptability:} It encodes the entire message as a single fractional number, optimizing compression for skewed distributions.
+    \item \textbf{Variable Length:} It dynamically adjusts encoding based on the input, reducing redundancy.
+    \item \textbf{Handling Long Messages:} It considers the overall probability distribution and can achieve higher efficiency for long sequences.
+\end{itemize}
+
+Arithmetic coding can use codes of any length, which makes the encoding more precise and often more efficient than Huffman coding. However, it is more computationally complex and more sensitive to errors.
+
+\begin{infobox}[First-Timer Idea]
+\begin{itemize}
+    \item Arithmetic coding does not assign one fixed binary codeword to each symbol.
+    \item Instead, it keeps shrinking an interval according to the incoming symbols.
+    \item At the end, any number inside the final interval can be used as the tag for the whole message.
+\end{itemize}
+\end{infobox}
+
+\begin{formulabox}[Interval Update Rule]
+\[
+\text{Upper limit} = \text{Lower limit} + \text{Difference} \times \text{Probability}
+\]
+\begin{itemize}
+    \item \textbf{Lower limit} = the current starting point of the interval
+    \item \textbf{Difference} = current interval width
+    \item \textbf{Probability} = probability of the symbol used to split the interval
+\end{itemize}
+\end{formulabox}
+
+\subsection{Worked Examples}
+
+\begin{questionanswerbox}[Arithmetic Coding for Sequence \texttt{bac} Example]
+\textbf{Q:} Given \(A=\{a,b,c\}\), \(P(a)=0.2\), \(P(b)=0.5\), \(P(c)=0.3\). Find the codeword using arithmetic coding for the sequence \texttt{bac}.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+P(a)=0.2,\qquad P(b)=0.5,\qquad P(c)=0.3
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Figures/generated/arithmetic_example_bac.png}
+    \caption{Handwritten interval refinement for the sequence \texttt{bac}}
+\end{figure}
+
+Firstly for b, the lower limit is \(0.2\), the difference is \(0.5\), and \(P(b)=0.5\).\\
+\medskip
+For next stage the upper limits of-
+
+\begin{align*}
+a_{up}&=0.2+(0.5\times 0.2)=0.3\\
+b_{up}&=0.3+(0.5\times 0.5)=0.55\\
+c_{up}&=0.55+(0.5\times 0.3)=0.7
+\end{align*}
+
+Now for a, the lower limit is \(0.2\), so the difference becomes \(0.1\).
+
+\begin{align*}
+a_{up}&=0.2+(0.1\times 0.2)=0.22\\
+b_{up}&=0.22+(0.1\times 0.5)=0.27\\
+c_{up}&=0.27+(0.1\times 0.3)=0.3
+\end{align*}
+
+Now for c, this is the last stage. Hence,
+\begin{align*}
+0.27 < \text{codeword} < 0.30
+\end{align*}
+
+\begin{align*}
+\text{Tag}&=\frac{0.30+0.27}{2}=0.285
+\end{align*}
+
+So the arithmetic code for \texttt{bac} is \(\boxed{0.285}\).
+\end{questionanswerbox}
+
+% Source PDF pages 33-34
+\begin{questionanswerbox}[Arithmetic Coding for Sequence \texttt{bcda} Example]
+\textbf{Q:} Given \(P(a)=0.4\), \(P(b)=0.3\), \(P(c)=0.2\), \(P(d)=0.1\). Find the tag using arithmetic coding for the sequence \texttt{bcda}.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+P(a)=0.4,\qquad P(b)=0.3,\qquad P(c)=0.2,\qquad P(d)=0.1
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Figures/generated/arithmetic_example_bcda.png}
+    \caption{Handwritten interval refinement for the sequence \texttt{bcda}}
+\end{figure}
+
+For the sequence \texttt{bcda}:
+
+\textbf{For \(b\),}
+\begin{align*}
+d&=0.3+(0.3\times 0.1)=0.33\\
+c&=0.33+(0.3\times 0.2)=0.39\\
+b&=0.39+(0.3\times 0.3)=0.48\\
+a&=0.48+(0.3\times 0.4)=0.6
+\end{align*}
+
+\textbf{For \(c\),}
+\begin{align*}
+d&=0.33+(0.06\times 0.1)=0.336\\
+c&=0.33+(0.06\times 0.2)=0.348\\
+b&=0.348+(0.06\times 0.3)=0.366\\
+a&=0.366+(0.06\times 0.4)=0.39
+\end{align*}
+
+\textbf{For \(d\),}
+\begin{align*}
+d&=0.33+(0.006\times 0.1)=0.3306\\
+c&=0.3306+(0.006\times 0.2)=0.3318\\
+b&=0.3318+(0.006\times 0.3)=0.3336\\
+a&=0.3336+(0.006\times 0.4)=0.336
+\end{align*}
+
+a is the last symbol, so we stop here. Then-
+\begin{align*}
+0.3336 < \text{codeword} < 0.336
+\end{align*}
+
+\begin{align*}
+\text{Tag}&=\frac{0.336+0.3336}{2}=0.3348
+\end{align*}
+
+So the arithmetic code for \texttt{bcda} is \(\boxed{0.3348}\).
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Arithmetic Coding for Sequence \texttt{bdab} Example]
+\textbf{Q:} Given the frequencies of \(a=2\), \(b=3\), \(c=1\), \(d=4\), find the tag using arithmetic coding for the sequence \texttt{bdab}.
+
+\textbf{A:}
+
+\textbf{Given,}
+\begin{align*}
+\text{Total length} &= 2+3+1+4=10
+\end{align*}
+
+\begin{align*}
+P(a)&=\frac{2}{10}=0.2,\qquad P(b)=\frac{3}{10}=0.3,\qquad P(c)=\frac{1}{10}=0.1,\qquad P(d)=\frac{4}{10}=0.4
+\end{align*}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Figures/generated/arithmetic_example_bdab.png}
+    \caption{Handwritten interval refinement for the sequence \texttt{bdab}}
+\end{figure}
+
+\textbf{For \(b\),}
+\begin{align*}
+a&=0.2+(0.3\times 0.2)=0.26\\
+b&=0.26+(0.3\times 0.3)=0.35\\
+c&=0.35+(0.3\times 0.1)=0.38\\
+d&=0.38+(0.3\times 0.4)=0.5
+\end{align*}
+
+\textbf{For \(d\),}
+\begin{align*}
+a&=0.38+(0.12\times 0.2)=0.404\\
+b&=0.404+(0.12\times 0.3)=0.44\\
+c&=0.44+(0.12\times 0.1)=0.452\\
+d&=0.452+(0.12\times 0.4)=0.5
+\end{align*}
+
+\textbf{For \(a\),}
+\begin{align*}
+a&=0.38+(0.024\times 0.2)=0.3848\\
+b&=0.3848+(0.024\times 0.3)=0.392\\
+c&=0.392+(0.024\times 0.1)=0.3944\\
+d&=0.3944+(0.024\times 0.4)=0.4032
+\end{align*}
+
+b is the last symbol, so we stop here. Then-
+\begin{align*}
+0.3848 < \text{codeword} < 0.392
+\end{align*}
+
+\begin{align*}
+\text{Tag}&=\frac{0.392+0.3848}{2}=0.3884
+\end{align*}
+
+So the arithmetic code for \texttt{bdab} is \(\boxed{0.3884}\).
+\end{questionanswerbox}
+
+% Source PDF page 35
+\clearpage
+\section{Shannon-Fano Coding}
+
+\begin{definitionbox}[Shannon-Fano Coding]
+Shannon-Fano coding is a lossless data-compression technique that assigns binary codes to symbols based on their probabilities.
+\end{definitionbox}
+
+The goal is to create prefix-free codes with minimal average length.
+
+\subsection{Steps}
+\begin{enumerate}
+    \item Arrange the symbols in decreasing order of probability.
+    \item Split the list into two parts with nearly equal total probability.
+    \item Assign \(0\) to the first half and \(1\) to the second half.
+    \item Recursively apply the process to each half until individual symbols are assigned codes.
+\end{enumerate}
+
+\begin{infobox}[First-Timer Idea]
+\begin{itemize}
+    \item Huffman coding builds a tree by combining the smallest probabilities.
+    \item Shannon-Fano coding starts from the top and repeatedly splits the list into two nearly equal-probability groups.
+    \item Both are lossless, but Huffman coding is usually more optimal.
+\end{itemize}
+\end{infobox}
+
+\begin{questionanswerbox}[Shannon-Fano with Four Symbols Example]
+\textbf{Q:} Find the codewords for the probability set \(\left\{\frac12,\frac14,\frac18,\frac18\right\}\) for symbols \(s_1,s_2,s_3,s_4\). Also find efficiency and redundancy.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+\left\{\frac12,\frac14,\frac18,\frac18\right\}
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.96\linewidth]{Figures/generated/shannon_fano_example_s1_s4.png}
+    \caption{Handwritten Shannon-Fano partitioning for symbols \(s_1\) to \(s_4\)}
+\end{figure}
+
+\begin{align*}
+\text{Entropy, } H(X)&=\frac12\log_2 2+\frac14\log_2 4+\frac18\log_2 8+\frac18\log_2 8\\
+    &=1.75\ \text{bits/symbol}
+\end{align*}
+
+\begin{align*}
+L&=\left(1\times \frac12\right)+\left(2\times \frac14\right)+\left(3\times \frac18\right)+\left(3\times \frac18\right)\\
+ &=1.75\ \text{bits/symbol}
+\end{align*}
+
+\begin{align*}
+\text{Efficiency, } \eta&=\frac{H(X)}{L}\times 100\%\\
+    &=\frac{1.75}{1.75}\times 100\%\\
+    &=100\%
+\end{align*}
+
+\begin{align*}
+\text{Redundancy, } R_e&=100\%-\eta\\
+    &=100\%-100\%\\
+    &=0\%
+\end{align*}
+\end{questionanswerbox}
+
+% Source PDF page 36
+\begin{questionanswerbox}[Shannon-Fano with Eight Messages Example]
+\textbf{Q:} Find the codewords for the probability set
+\[
+\{0.5,\,0.125,\,0.125,\,0.0625,\,0.0625,\,0.0625,\,0.03125,\,0.03125\}
+\]
+for symbols \(m_1\) to \(m_8\). Also find efficiency and redundancy.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+\{0.5,\,0.125,\,0.125,\,0.0625,\,0.0625,\,0.0625,\,0.03125,\,0.03125\}
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.96\linewidth]{Figures/generated/shannon_fano_example_m1_m8.png}
+    \caption{Handwritten Shannon-Fano partitioning for messages \(m_1\) to \(m_8\)}
+\end{figure}
+
+\begin{align*}
+H(X)&=-\Bigl[0.5\log_2 0.5 + 2(0.125\log_2 0.125) + 3(0.0625\log_2 0.0625) + 2(0.03125\log_2 0.03125)\Bigr]\\
+    &= 2.3125\ \text{bits/symbol}
+\end{align*}
+
+\begin{align*}
+L &= 1\times 0.5 + (3\times 0.125)\times 2 + (4\times 0.0625)\times 3 + (0.03125\times 5)\times 2\\
+  &= 2.3125\ \text{bits/symbol}
+\end{align*}
+
+\begin{align*}
+\eta &= \frac{H(X)}{L}\times 100\% = \frac{2.3125}{2.3125}\times 100\% = 100\%
+\end{align*}
+
+\begin{align*}
+R_e &= 100\% - \eta\\
+    &= 100\% - 100\%\\
+    &= 0\%
+\end{align*}
+\end{questionanswerbox}
+
+% Source PDF page 37
+\clearpage
+\section{Lempel-Ziv Coding}
+
+\begin{definitionbox}[Lempel-Ziv Encoding]
+Lempel-Ziv encoding is a lossless data-compression method that replaces repeated occurrences of data by references to dictionary entries instead of writing the same pattern again and again.
+\end{definitionbox}
+
+It works by building a dictionary of substrings during encoding. Used in formats like GIF, ZIP, PNG and in PDF or some image files.
+
+\subsection{Steps}
+\begin{enumerate}
+    \item Start with an empty or initialized dictionary.
+    \item Read characters and check whether the current substring already exists in the dictionary.
+    \item If it is not found, add the new substring to the dictionary and output the index of the previous known substring.
+    \item Continue until the whole input message is processed.
+\end{enumerate}
+
+\begin{questionanswerbox}[Lempel-Ziv Encoding Example]
+\textbf{Q:} Encode \texttt{baca caba baba caba} using variable indexing with the initialized dictionary \((1)\ a,\ (2)\ b,\ (3)\ c\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+(1)\ a,\qquad (2)\ b,\qquad (3)\ c
+\]
+
+The handwritten construction steps are shown below.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Figures/generated/lzw_encoding_baca_caba_baba_caba.png}
+    \caption{Handwritten Lempel-Ziv encoding steps for \texttt{baca caba baba caba}}
+\end{figure}
+
+So, the produced code stream is
+\[
+\boxed{2\ 1\ 3\ 5\ 1\ 4\ 9\ 7\ 4}
+\]
+\end{questionanswerbox}
+
+% Source PDF pages 38-39
+\clearpage
+\section{Arithmetic Decoding}
+
+\begin{definitionbox}[Arithmetic Decoding]
+Arithmetic decoding is the reverse process of arithmetic coding. Starting from the tag value, we repeatedly find which probability interval contains the tag and then zoom into that interval until the original message is recovered.
+\end{definitionbox}
+
+\subsection{Steps}
+\begin{enumerate}
+    \item Construct the arithmetic-coded diagram using the given symbol probabilities.
+    \item Find the symbol whose interval contains the tag value.
+    \item Backtrace or renormalize inside that interval and continue decoding.
+\end{enumerate}
+
+\begin{infobox}[First-Timer Idea]
+\begin{itemize}
+    \item In arithmetic encoding, many symbols shrink one interval again and again.
+    \item In arithmetic decoding, we do the opposite: we see where the tag sits, identify the symbol, then zoom into that smaller interval.
+    \item Repeat this until the whole message is obtained.
+\end{itemize}
+\end{infobox}
+
+\begin{questionanswerbox}[Arithmetic Decoding with Tag \(0.572\) Example]
+\textbf{Q:} Decode the message for tag value \(0.572\) when \(P(C)=0.4\), \(P(E)=0.5\), and \(P(!)=0.1\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+P(C)=0.4,\qquad P(E)=0.5,\qquad P(!)=0.1
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Figures/generated/arithmetic_decoding_tag_0572.pdf}
+    \caption{Handwritten arithmetic decoding steps for tag \(0.572\)}
+\end{figure}
+
+From the handwritten construction, the decoded message is
+\[
+\boxed{\texttt{ECE!}}
+\]
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Arithmetic Decoding with Tag \(0.3884\) Example]
+\textbf{Q:} There are four symbols \(a,b,c,d\) with frequencies \(a=2\), \(b=3\), \(c=1\), and \(d=4\). Find the decoded message for tag \(0.3884\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\begin{align*}
+P(a)&=\frac{2}{10}=0.2, &
+P(b)&=\frac{3}{10}=0.3,\\
+P(c)&=\frac{1}{10}=0.1, &
+P(d)&=\frac{4}{10}=0.4
+\end{align*}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\linewidth]{Figures/generated/arithmetic_decoding_tag_03884.png}
+    \caption{Handwritten arithmetic decoding steps for tag \(0.3884\)}
+\end{figure}
+
+Hence, the decoded message is
+\[
+\boxed{\texttt{bdaa}}
+\]
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Arithmetic Decoding with Tag \(0.07348\) Example]
+\textbf{Q:} By using arithmetic decoding, find the compressed word for tag \(0.07348\) when \(P(M)=0.2\), \(P(E)=0.3\), \(P(S)=0.1\), and \(P(I)=0.4\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+P(M)=0.2,\qquad P(E)=0.3,\qquad P(S)=0.1,\qquad P(I)=0.4
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\linewidth]{Figures/generated/arithmetic_decoding_tag_07348_messi.png}
+    \caption{Handwritten arithmetic decoding steps for tag \(0.07348\)}
+\end{figure}
+
+Hence, the decoded message is
+\[
+\boxed{\texttt{MESSI}}
+\]
+\end{questionanswerbox}
+
+% Source PDF page 40
+\clearpage
+\section{Additional Huffman Example}
+
+\begin{questionanswerbox}[Bits Saved by Huffman Coding Example]
+\textbf{Q:} A networking company uses a compression technique before transmission. The message contains the characters
+\[
+a\to 5,\quad b\to 9,\quad c\to 12,\quad d\to 13,\quad e\to 16,\quad f\to 45
+\]
+and each character in the original message takes \(1\) byte. If Huffman coding is used, how many bits are saved?
+
+\textbf{A:}
+
+\textbf{Given,}
+\begin{align*}
+\text{Total frequency} &= 5+9+12+13+16+45 = 100
+\end{align*}
+
+\begin{align*}
+P(a)&=\frac{5}{100}=0.05, &
+P(b)&=\frac{9}{100}=0.09,\\
+P(c)&=\frac{12}{100}=0.12, &
+P(d)&=\frac{13}{100}=0.13,\\
+P(e)&=\frac{16}{100}=0.16, &
+P(f)&=\frac{45}{100}=0.45
+\end{align*}
+
+\begin{align*}
+\text{Total uncompressed bits} &= 1\text{ byte}\times 100 = 8 \text{ bit}\times 100 = 800 \text{ bits}
+\end{align*}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Figures/generated/huffman_bits_saved_networking_example.png}
+    \caption{Handwritten Huffman coding construction for the networking example}
+\end{figure}
+
+\begin{center}
+\begin{tabular}{|C{1.4cm}|C{1.9cm}|C{2cm}|C{2.2cm}|C{1.4cm}|C{2.2cm}|}
+    \hline
+    \textbf{Symbol} & \textbf{Frequency} & \textbf{Probability} & \textbf{Codeword} & \textbf{Length} & \textbf{Compressed Bits} \\ \hline
+    \(f\) & \(45\) & \(0.45\) & \(0\)    & \(1\) & \(45\times 1=45\) \\ \hline
+    \(e\) & \(16\) & \(0.16\) & \(10\)   & \(2\) & \(16\times 2=32\) \\ \hline
+    \(d\) & \(13\) & \(0.13\) & \(1100\) & \(4\) & \(13\times 4=52\) \\ \hline
+    \(c\) & \(12\) & \(0.12\) & \(1101\) & \(4\) & \(12\times 4=48\) \\ \hline
+    \(b\) & \(9\)  & \(0.09\) & \(1110\) & \(4\) & \(9\times 4=36\) \\ \hline
+    \(a\) & \(5\)  & \(0.05\) & \(1111\) & \(4\) & \(5\times 4=20\) \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{align*}
+\text{Total compressed bits} &= 45+32+52+48+36+20 = 233 \text{ bits}
+\end{align*}
+
+\begin{align*}
+\text{Bits saved} &= \text{Total uncompressed bits} - \text{Total compressed bits}\\
+                  &= 800-233\\
+                  &= 567 \text{ bits}
+\end{align*}
+\end{questionanswerbox}
+
+% Source PDF page 41
+\clearpage
+\section{LZW Decoding and Compression}
+
+\begin{questionanswerbox}[LZW Decoding Example]
+\textbf{Q:} With the initialized dictionary \((1)\ a,\ (2)\ b,\ (3)\ c\), decode the code stream \(\texttt{3 1 2 5 1 4 6 6}\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+(1)\ a,\qquad (2)\ b,\qquad (3)\ c
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\linewidth]{Figures/generated/lzw_decoding_31251466.png}
+    \caption{Handwritten LZW decoding steps for code stream \(\texttt{3 1 2 5 1 4 6 6}\)}
+\end{figure}
+
+So, the decoded output is
+\[
+\boxed{\texttt{cababacababa}}
+\]
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[LZW Compression for String \texttt{ABABBABCABABBA} Example]
+\textbf{Q:} Determine LZW compression for the string \(\texttt{ABABBABCABABBA}\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+(1)\ A,\qquad (2)\ B,\qquad (3)\ C
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.94\linewidth]{Figures/generated/lzw_compression_ababbabcababba.png}
+    \caption{Handwritten LZW compression and verification for \(\texttt{ABABBABCABABBA}\)}
+\end{figure}
+
+So, the encoded output is
+\[
+\boxed{\texttt{124523461}}
+\]
+
+The decoded output is
+\[
+\boxed{\texttt{ABABBABCABABBA}}
+\]
+\end{questionanswerbox}
+
+% Source PDF page 42
+\clearpage
+\section{Run Length Encoding}
+
+\begin{definitionbox}[Run Length Encoding]
+Run Length Encoding (RLE) is a simple lossless compression technique that reduces repetitive data by storing consecutive repeated symbols as a count together with the symbol value.
+\end{definitionbox}
+
+\subsection{Steps}
+\begin{enumerate}
+    \item Read the input data sequentially.
+    \item Count consecutive repetitions of the same symbol.
+    \item Replace the repeated sequence by a pair like \((\text{count}, \text{symbol})\).
+    \item If flags are used, add the flag before the repetitive symbol.
+    \item Remove trivial single counts if the chosen format requires it.
+\end{enumerate}
+
+\begin{questionanswerbox}[Run Length Encoding Example]
+\textbf{Q:} Compress the text \texttt{aaaa bbbbbb c ddddd} using run length encoding.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+\texttt{aaaa\ bbbbbb\ c\ ddddd}
+\]
+
+The code is \(16\) bytes of data and the repetitions are:
+\begin{itemize}
+    \item \(a\): \(4\) times
+    \item \(b\): \(6\) times
+    \item \(c\): \(1\) time
+    \item \(d\): \(5\) times
+\end{itemize}
+
+\textbf{Count-character pairs}
+\[
+(4,a),\ (6,b),\ (1,c),\ (5,d)
+\]
+
+\textbf{Using ASCII values,}
+\begin{align*}
+a &\to (4,a)\to (4,97)\\
+b &\to (6,b)\to (6,98)\\
+c &\to (1,c)\to (1,99)\\
+d &\to (5,d)\to (5,100)
+\end{align*}
+
+\textbf{Stored byte sequence without a flag}
+\[
+04\ 97\ 06\ 98\ 01\ 99\ 05\ 100
+\]
+So the compressed data becomes \(8\) bytes.
+
+\textbf{Flag-based form shown in the note}
+\[
+255\ 04\ 97\quad 255\ 06\ 98\quad 99\quad 255\ 05\ 100
+\]
+
+Here \(255\) is used as a flag before repeated runs, while the single symbol \(c\) is written directly as \(99\).
+
+\textbf{Simple Reading}
+\begin{itemize}
+    \item RLE works well when the same symbol repeats many times.
+    \item A run is stored as \((\text{count}, \text{symbol})\).
+    \item If a symbol appears only once, RLE may not help much unless a smarter flag rule is used.
+\end{itemize}
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Run Length Encoding for Mixed Data Example]
+\textbf{Q:} Show why RLE may become inefficient when the data contains many single symbols.
+
+\textbf{A:}
+
+The lower half of the note gives a mixed string with:
+\begin{itemize}
+    \item \(10\) consecutive \(a\)'s,
+    \item \(6\) consecutive \(b\)'s,
+    \item many alternating single \(e\) and \(c\) symbols,
+    \item \(15\) consecutive \(d\)'s,
+    \item then a few more single symbols at the end.
+\end{itemize}
+
+So the RLE count-character form starts like:
+\[
+(10,a),\ (6,b),\ (1,e),\ (1,c),\ (1,e),\ (1,c),\ \ldots,\ (15,d),\ (1,e),\ (1,c),\ (1,b)
+\]
+
+\textbf{What the note is showing}
+\begin{itemize}
+    \item Long runs such as \(a^{10}\), \(b^6\), and \(d^{15}\) compress well.
+    \item Alternating symbols like \(e,c,e,c,\ldots\) are mostly single-count runs.
+    \item If every single symbol is still stored as \((1,\text{symbol})\), the encoded stream becomes large.
+\end{itemize}
+
+The note therefore compares two ideas:
+\begin{itemize}
+    \item \textbf{No-flag RLE:} even single symbols carry their count, so the representation becomes bulky.
+    \item \textbf{Flag-value RLE:} only repeated runs are marked with a flag, so single symbols can be written directly and the result becomes shorter.
+\end{itemize}
+
+This is the key lesson of the page: RLE is effective for long repetitions, but it can perform poorly on data with many isolated symbols.
+\end{questionanswerbox}
+
+% Source PDF page 43
+\begin{questionanswerbox}[RLE Representation of a Bit Stream Example]
+\textbf{Q:} Consider the bit stream shown in the note. Represent its redundancy using RLE.
+
+\textbf{A:}
+
+The handwritten stream has alternating runs:
+\begin{itemize}
+    \item \(15\) zeros
+    \item \(7\) ones
+    \item \(7\) zeros
+    \item \(11\) ones
+\end{itemize}
+
+Using \(4\)-bit counts, the representation becomes:
+\begin{align*}
+15 &\to 1111\\
+7  &\to 0111\\
+7  &\to 0111\\
+11 &\to 1011
+\end{align*}
+
+So the RLE form is
+\[
+\boxed{1111\ 0111\ 0111\ 1011}
+\]
+
+The note remarks that this uses \(16\) bits instead of \(40\) bits.
+\end{questionanswerbox}
+
+% Source PDF page 44
+\clearpage
+\section{Effective and Prefix-Free Codes}
+
+\begin{questionanswerbox}[Effective Codes Example]
+\textbf{Q:} What are effective codes?
+
+\textbf{A:}
+Effective codes are codes that represent information efficiently using the least possible number of bits while keeping communication reliable.
+
+They are designed to:
+\begin{itemize}
+    \item maximize information carried per bit,
+    \item reduce redundancy,
+    \item use bandwidth and memory efficiently,
+    \item maintain a balance between compression, error detection, and error correction.
+\end{itemize}
+
+The note also points out that the effectiveness of a code is often judged by:
+\begin{itemize}
+    \item how close its average length is to source entropy,
+    \item and how reliably it works over a noisy channel.
+\end{itemize}
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Prefix-Free Code Properties Example]
+\textbf{Q:} What is a prefix-free code? Write its properties.
+
+\textbf{A:}
+A prefix-free code is a code in which no codeword is the prefix of any other codeword. This allows each codeword to be identified as soon as it ends.
+
+\textbf{Properties:}
+\begin{itemize}
+    \item Uniquely decodable: each codeword can be decoded without ambiguity.
+    \item Instantaneous decoding: symbols can be decoded as soon as the codeword ends.
+    \item Satisfies Kraft's inequality:
+    \[
+    \sum 2^{-n_k}\le 1
+    \]
+    where \(n_k\) is the length of a codeword.
+    \item Efficient for variable-length coding, such as Huffman coding.
+\end{itemize}
+\end{questionanswerbox}
+
+% Source PDF page 45
+\clearpage
+\section{Additional Coding Concepts}
+
+\begin{questionanswerbox}[Kraft's Inequality Example]
+\textbf{Q:} Explain Kraft's inequality.
+
+\textbf{A:}
+Kraft's inequality gives a necessary and sufficient condition for the existence of a prefix-free code for a given set of codeword lengths.
+
+For a \(D\)-ary code, usually binary with \(D=2\), the inequality is:
+\[
+\sum_{k=1}^{m} D^{-n_k}\le 1
+\]
+
+\textbf{Here,}
+\begin{itemize}
+    \item \(n_k\) = length of the \(k\)-th codeword
+    \item \(m\) = total number of codewords
+    \item \(D\) = size of the code alphabet
+\end{itemize}
+
+\textbf{Significance:}
+\begin{itemize}
+    \item If the inequality holds, a prefix-free code exists for those lengths.
+    \item If it does not hold, such a prefix-free code cannot be constructed.
+\end{itemize}
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Critical Rate and Majority Decoding Example]
+\textbf{Q:} Define critical rate and majority decoding.
+
+\textbf{A:}
+
+\textbf{Critical rate:}
+Critical rate refers to the maximum rate below which a coding scheme can achieve arbitrarily low probability of error as the code length tends to infinity.
+
+It separates:
+\begin{itemize}
+    \item the region where reliable communication is possible,
+    \item from the region where error probability remains bounded away from zero.
+\end{itemize}
+
+\textbf{Majority decoding:}
+Majority decoding is an error-correction method in which each bit is decided from the majority of its repeated received values.
+
+\textbf{Example:}
+If a bit \(1\) is sent using repetition code as \(\texttt{1110}\), the receiver checks the majority value and decodes it as \(1\).
+
+The note states that this method can correct one error in repeated transmission.
+\end{questionanswerbox}
+
+% Source PDF page 46 (inserted here as a supporting note)
+\clearpage
+\section{Binary Entropy Plot Verification}
+
+\begin{infobox}[Plot Verification]
+The inserted page verifies the graph of the binary entropy function
+\[
+H(p)=-p\log_2 p-(1-p)\log_2(1-p)
+\]
+using a plotting tool.
+\end{infobox}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.72\linewidth]{Figures/generated/binary_entropy_plot_verification.png}
+    \caption{Inserted plot verification for the binary entropy function}
+\end{figure}
+
+The note below the plot says:
+\begin{itemize}
+    \item the curve looks parabolic because of symmetry,
+    \item but it is not a true parabola,
+    \item it is the binary entropy curve, which has logarithmic nature.
+\end{itemize}
 
 \end{document}

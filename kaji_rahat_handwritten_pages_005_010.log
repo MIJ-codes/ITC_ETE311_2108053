@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.17.1 (MiKTeX 24.1) (format=lualatex 2025.9.2)  4 APR 2026 17:10
+This is LuaHBTeX, Version 1.17.1 (MiKTeX 24.1) (format=lualatex 2025.9.2)  5 APR 2026 18:40
  restricted system commands enabled.
  file:line:error style messages enabled.
 **kaji_rahat_handwritten_pages_005_010.tex
@@ -1137,22 +1137,23 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
 
 (C:/Users/miadu/AppData/Local/Programs/MiKTeX/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
-\tf@toc=\write5
-
-\openout5 = kaji_rahat_handwritten_pages_005_010.toc
+)
 LaTeX Font Info:    Font shape `T1/calligra/m/n' will be
-(Font)              scaled to size 8.64001pt on input line 227.
+(Font)              scaled to size 8.64001pt on input line 64.
 
 [1
 
 
-{C:/Users/miadu/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2
+{C:/Users/miadu/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}])
+\tf@toc=\write5
 
-
-]
+\openout5 = kaji_rahat_handwritten_pages_005_010.toc
+ [2]
 Chapter 1.
-[3] [4] [5
+[3
+
+
+] [4] [5
 
 ] [6
 
@@ -1162,91 +1163,298 @@ Chapter 1.
 
 ] [11] [12
 
-] [13]
+] [13] [14
+
+] [15] [16
+
+] [17] [18
+
+]
+[19] [20
+
+] [21] [22
+
+] [23]
+<Figures/jensens-inequality.pdf, id=448, 276.85674pt x 252.05226pt>
+File: Figures/jensens-inequality.pdf Graphic file (type pdf)
+<use Figures/jensens-inequality.pdf>
+Package luatex.def Info: Figures/jensens-inequality.pdf  used on input line 122
+7.
+(luatex.def)             Requested size: 204.85672pt x 186.50806pt.
+
+Underfull \vbox (badness 4341) has occurred while \output is active []
+
+ [24
+
+]
+[25<./Figures/jensens-inequality.pdf>] [26
+
+] [27] [28
+
+] [29
+
+] [30]
+Underfull \hbox (badness 10000) in paragraph at lines 1614--1616
+
+ []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [14
+ [31
 
 ]
-[15]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [16
-
-]
-[17] [18
-
-] [19] [20
-
-] [21]
-Underfull \vbox (badness 4686) has occurred while \output is active []
-
- [22
-
-]
-[23] [24
-
-] [25
-
-] [26
-
-] [27
-
-] [28]
-Underfull \vbox (badness 1776) has occurred while \output is active []
-
- [29
-
-]
-[30] [31]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 7081) has occurred while \output is active []
 
  [32]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [33]
-[34] [35] (./kaji_rahat_handwritten_pages_005_010.aux)
+[34] [35] [36] [37
+
+] [38] [39]
+<Figures/generated/huffman_example_source_x.png, id=546, 600.74437pt x 243.9112
+5pt>
+File: Figures/generated/huffman_example_source_x.png Graphic file (type png)
+<use Figures/generated/huffman_example_source_x.png>
+Package luatex.def Info: Figures/generated/huffman_example_source_x.png  used o
+n input line 2072.
+(luatex.def)             Requested size: 449.38147pt x 182.46031pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [40]
+<Figures/generated/huffman_example_s1_s8.png, id=558, 796.47563pt x 229.60782pt
+>
+File: Figures/generated/huffman_example_s1_s8.png Graphic file (type png)
+<use Figures/generated/huffman_example_s1_s8.png>
+Package luatex.def Info: Figures/generated/huffman_example_s1_s8.png  used on i
+nput line 2124.
+(luatex.def)             Requested size: 468.92401pt x 135.18015pt.
+
+[41<./Figures/generated/huffman_example_source_x.png>]
+<Figures/generated/huffman_example_u.pdf, id=567, 528.24954pt x 204.72244pt>
+File: Figures/generated/huffman_example_u.pdf Graphic file (type pdf)
+<use Figures/generated/huffman_example_u.pdf>
+Package luatex.def Info: Figures/generated/huffman_example_u.pdf  used on input
+ line 2171.
+(luatex.def)             Requested size: 468.92401pt x 181.74007pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [42<./Figures/generated/huffman_example_s1_s8.png>] [43<./Figures/generated/huf
+fman_example_u.pdf>]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
+235.
+ (C:/Users/miadu/AppData/Local/Programs/MiKTeX/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 2235.
+<Figures/generated/arithmetic_example_bac.png, id=588, 709.14937pt x 263.48438p
+t>
+File: Figures/generated/arithmetic_example_bac.png Graphic file (type png)
+<use Figures/generated/arithmetic_example_bac.png>
+Package luatex.def Info: Figures/generated/arithmetic_example_bac.png  used on 
+input line 2247.
+(luatex.def)             Requested size: 439.61021pt x 163.33852pt.
+ [44
+
+]
+<Figures/generated/arithmetic_example_bcda.png, id=596, 1178.15157pt x 510.4068
+8pt>
+File: Figures/generated/arithmetic_example_bcda.png Graphic file (type png)
+<use Figures/generated/arithmetic_example_bcda.png>
+Package luatex.def Info: Figures/generated/arithmetic_example_bcda.png  used on
+ input line 2294.
+(luatex.def)             Requested size: 439.61021pt x 190.45195pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [45<./Figures/generated/arithmetic_example_bac.png>]
+<Figures/generated/arithmetic_example_bdab.png, id=604, 521.69907pt x 313.17pt>
+
+File: Figures/generated/arithmetic_example_bdab.png Graphic file (type png)
+<use Figures/generated/arithmetic_example_bdab.png>
+Package luatex.def Info: Figures/generated/arithmetic_example_bdab.png  used on
+ input line 2352.
+(luatex.def)             Requested size: 439.61021pt x 263.89725pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [46<./Figures/generated/arithmetic_example_bcda.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [47<./Figures/generated/arithmetic_example_bdab.png>] [48]
+<Figures/generated/shannon_fano_example_s1_s4.png, id=622, 1238.37656pt x 373.3
+95pt>
+File: Figures/generated/shannon_fano_example_s1_s4.png Graphic file (type png)
+<use Figures/generated/shannon_fano_example_s1_s4.png>
+Package luatex.def Info: Figures/generated/shannon_fano_example_s1_s4.png  used
+ on input line 2430.
+(luatex.def)             Requested size: 468.92401pt x 141.39018pt.
+ [49
+
+<./Figures/generated/shannon_fano_example_s1_s4.png>]
+<Figures/generated/shannon_fano_example_m1_m8.png, id=635, 757.32938pt x 340.27
+126pt>
+File: Figures/generated/shannon_fano_example_m1_m8.png Graphic file (type png)
+<use Figures/generated/shannon_fano_example_m1_m8.png>
+Package luatex.def Info: Figures/generated/shannon_fano_example_m1_m8.png  used
+ on input line 2474.
+(luatex.def)             Requested size: 468.92401pt x 210.69081pt.
+ [50<./Figures/generated/shannon_fano_example_m1_m8.png>] [51]
+Underfull \hbox (badness 5817) in paragraph at lines 2518--2519
+[]\T1/lmr/bx/n/10.95 Q: \T1/lmr/m/n/10.95 En-code \T1/lmtt/m/n/10.95 baca caba 
+baba caba \T1/lmr/m/n/10.95 us-ing vari-able in-dex-ing with the ini-tial-ized 
+dic-tio-nary
+ []
+
+<Figures/generated/lzw_encoding_baca_caba_baba_caba.png, id=648, 1030.60031pt x
+ 695.59875pt>
+File: Figures/generated/lzw_encoding_baca_caba_baba_caba.png Graphic file (type
+ png)
+<use Figures/generated/lzw_encoding_baca_caba_baba_caba.png>
+Package luatex.def Info: Figures/generated/lzw_encoding_baca_caba_baba_caba.png
+  used on input line 2531.
+(luatex.def)             Requested size: 390.76877pt x 263.7465pt.
+[52
+
+<./Figures/generated/lzw_encoding_baca_caba_baba_caba.png>]
+<Figures/generated/arithmetic_decoding_tag_0572.pdf, id=660, 686.40219pt x 332.
+59708pt>
+File: Figures/generated/arithmetic_decoding_tag_0572.pdf Graphic file (type pdf
+)
+<use Figures/generated/arithmetic_decoding_tag_0572.pdf>
+Package luatex.def Info: Figures/generated/arithmetic_decoding_tag_0572.pdf  us
+ed on input line 2576.
+(luatex.def)             Requested size: 488.4591pt x 236.6886pt.
+ [53
+
+<./Figures/generated/arithmetic_decoding_tag_0572.pdf>]
+<Figures/generated/arithmetic_decoding_tag_03884.png, id=678, 890.5772pt x 398.
+99063pt>
+File: Figures/generated/arithmetic_decoding_tag_03884.png Graphic file (type pn
+g)
+<use Figures/generated/arithmetic_decoding_tag_03884.png>
+Package luatex.def Info: Figures/generated/arithmetic_decoding_tag_03884.png  u
+sed on input line 2601.
+(luatex.def)             Requested size: 420.07512pt x 188.2014pt.
+<Figures/generated/arithmetic_decoding_tag_07348_messi.png, id=679, 1180.41pt x
+ 499.11469pt>
+File: Figures/generated/arithmetic_decoding_tag_07348_messi.png Graphic file (t
+ype png)
+<use Figures/generated/arithmetic_decoding_tag_07348_messi.png>
+Package luatex.def Info: Figures/generated/arithmetic_decoding_tag_07348_messi.
+png  used on input line 2623.
+(luatex.def)             Requested size: 420.07512pt x 177.61723pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [54<./Figures/generated/arithmetic_decoding_tag_03884.png>] [55<./Figures/gener
+ated/arithmetic_decoding_tag_07348_messi.png>]
+<Figures/generated/huffman_bits_saved_networking_example.png, id=694, 1141.2637
+5pt x 411.78844pt>
+File: Figures/generated/huffman_bits_saved_networking_example.png Graphic file 
+(type png)
+<use Figures/generated/huffman_bits_saved_networking_example.png>
+Package luatex.def Info: Figures/generated/huffman_bits_saved_networking_exampl
+e.png  used on input line 2666.
+(luatex.def)             Requested size: 439.61021pt x 158.61757pt.
+ [56
+
+<./Figures/generated/huffman_bits_saved_networking_example.png>] [57]
+<Figures/generated/lzw_decoding_31251466.png, id=706, 861.2175pt x 666.23906pt>
+
+File: Figures/generated/lzw_decoding_31251466.png Graphic file (type png)
+<use Figures/generated/lzw_decoding_31251466.png>
+Package luatex.def Info: Figures/generated/lzw_decoding_31251466.png  used on i
+nput line 2710.
+(luatex.def)             Requested size: 420.07512pt x 324.97575pt.
+<Figures/generated/lzw_compression_ababbabcababba.png, id=707, 1204.5pt x 785.1
+8344pt>
+File: Figures/generated/lzw_compression_ababbabcababba.png Graphic file (type p
+ng)
+<use Figures/generated/lzw_compression_ababbabcababba.png>
+Package luatex.def Info: Figures/generated/lzw_compression_ababbabcababba.png  
+used on input line 2732.
+(luatex.def)             Requested size: 459.15274pt x 299.30733pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [58
+
+<./Figures/generated/lzw_decoding_31251466.png>] [59<./Figures/generated/lzw_com
+pression_ababbabcababba.png>] [60
+
+] [61] [62] [63
+
+] [64
+
+]
+<Figures/generated/binary_entropy_plot_verification.png, id=755, 1606.0pt x 301
+1.25pt>
+File: Figures/generated/binary_entropy_plot_verification.png Graphic file (type
+ png)
+<use Figures/generated/binary_entropy_plot_verification.png>
+Package luatex.def Info: Figures/generated/binary_entropy_plot_verification.png
+  used on input line 2991.
+(luatex.def)             Requested size: 368.74835pt x 691.3783pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [65
+
+]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [66<./Figures/generated/binary_entropy_plot_verification.png>] [67]
+(./kaji_rahat_handwritten_pages_005_010.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `kaji_rahat_handwritten_pages_005_010.out' ha
 s not changed.
-(rerunfilecheck)             Checksum: 94B1F69C2D9E65066539A3F8DBC2DA93;6255.
+(rerunfilecheck)             Checksum: 3EC0C97B257B69307DB267678CF2C178;9379.
 )
 
 Here is how much of LuaTeX's memory you used:
- 32486 strings out of 476497
+ 32909 strings out of 476497
  125027,1977958 words of node,token memory allocated
- 2099 words of node memory still in use:
-   31 hlist, 2 vlist, 14 rule, 2 glue, 4 kern, 1 glyph, 270 attribute, 63 glue_s
-pec, 270 attribute_list, 2 write, 24 pdf_literal, 24 pdf_colorstack nodes
-   avail lists: 1:1,2:2154,3:1281,4:463,5:700,6:164,7:5169,8:69,9:1601,10:13,11:
-387
- 53606 multiletter control sequences out of 65536+600000
- 75 fonts using 4803119 bytes
- 91i,14n,115p,469b,1106s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 2123 words of node memory still in use:
+   31 hlist, 2 vlist, 14 rule, 2 glue, 4 kern, 1 glyph, 276 attribute, 63 glue_s
+pec, 276 attribute_list, 2 write, 24 pdf_literal, 24 pdf_colorstack nodes
+   avail lists: 1:1,2:3166,3:1281,4:599,5:932,6:211,7:6605,8:95,9:2442,10:18,11:
+444
+ 53857 multiletter control sequences out of 65536+600000
+ 84 fonts using 5538663 bytes
+ 91i,15n,115p,469b,1105s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}<C:/U
 sers/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/calligra-type1/calli
 g15.pfb><C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
 s/cm/cmbx10.pfb><C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public
 /amsfonts/cm/cmex10.pfb><C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type
 1/public/amsfonts/cm/cmmi10.pfb><C:/Users/miadu/AppData/Local/Programs/MiKTeX/fo
-nts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/miadu/AppData/Local/Programs/Mi
-KTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/miadu/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/miadu/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/miadu/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/miad
-u/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Use
-rs/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/User
-s/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users
-/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/m
-iadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/miad
-u/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb>
-Output written on kaji_rahat_handwritten_pages_005_010.pdf (35 pages, 393095 byt
-es).
+nts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/miadu/AppData/Local/Programs/Mi
+KTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/miadu/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/miadu/AppData/Loc
+al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/miadu/AppDa
+ta/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/miadu
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users
+/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
+C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy
+8.pfb><C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10
+.pfb><C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.
+pfb><C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pf
+b><C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><
+C:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C
+:/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb><C:
+/Users/miadu/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb>
+Output written on kaji_rahat_handwritten_pages_005_010.pdf (67 pages, 7731853 by
+tes).
 
-PDF statistics: 474 PDF objects out of 1000 (max. 8388607)
- 113 named destinations out of 1000 (max. 131072)
- 536 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 840 PDF objects out of 1000 (max. 8388607)
+ 229 named destinations out of 1000 (max. 131072)
+ 688 words of extra memory for PDF output out of 10000 (max. 100000000)
 

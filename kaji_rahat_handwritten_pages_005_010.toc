@@ -29,15 +29,42 @@
 \contentsline {section}{\numberline {1.8}Relative Entropy}{20}{section.1.8}%
 \contentsline {subsection}{\numberline {1.8.1}Mutual Information as Relative Entropy}{22}{subsection.1.8.1}%
 \contentsline {subsection}{\numberline {1.8.2}Convexity and Jensen's Inequality}{24}{subsection.1.8.2}%
-\contentsline {subsection}{\numberline {1.8.3}Gibbs Information Inequality}{25}{subsection.1.8.3}%
-\contentsline {subsection}{\numberline {1.8.4}Example: Asymmetric Nature of Relative Entropy}{26}{subsection.1.8.4}%
-\contentsline {section}{\numberline {1.9}Chain Rule}{27}{section.1.9}%
-\contentsline {subsection}{\numberline {1.9.1}Entropy}{27}{subsection.1.9.1}%
-\contentsline {subsection}{\numberline {1.9.2}Conditional Entropy}{27}{subsection.1.9.2}%
-\contentsline {subsection}{\numberline {1.9.3}Mutual Information}{27}{subsection.1.9.3}%
-\contentsline {subsection}{\numberline {1.9.4}Worked Examples}{27}{subsection.1.9.4}%
-\contentsline {section}{\numberline {1.10}Worked Problems}{29}{section.1.10}%
-\contentsline {section}{\numberline {1.11}Channel Interpretation}{30}{section.1.11}%
-\contentsline {section}{\numberline {1.12}Discrete Memoryless Channel}{30}{section.1.12}%
-\contentsline {subsection}{\numberline {1.12.1}Average Information Rate of a Source}{31}{subsection.1.12.1}%
-\contentsline {section}{\numberline {1.13}Additional Worked Problems}{32}{section.1.13}%
+\contentsline {subsection}{\numberline {1.8.3}Gibbs Information Inequality}{26}{subsection.1.8.3}%
+\contentsline {subsection}{\numberline {1.8.4}Example: Asymmetric Nature of Relative Entropy}{28}{subsection.1.8.4}%
+\contentsline {section}{\numberline {1.9}Chain Rule}{29}{section.1.9}%
+\contentsline {subsection}{\numberline {1.9.1}Entropy}{29}{subsection.1.9.1}%
+\contentsline {subsection}{\numberline {1.9.2}Conditional Entropy}{29}{subsection.1.9.2}%
+\contentsline {subsection}{\numberline {1.9.3}Mutual Information}{30}{subsection.1.9.3}%
+\contentsline {subsubsection}{\numberline {1.9.3.1}Worked Examples}{30}{subsubsection.1.9.3.1}%
+\contentsline {section}{\numberline {1.10}Worked Problems}{31}{section.1.10}%
+\contentsline {section}{\numberline {1.11}Discrete Memoryless Channel}{32}{section.1.11}%
+\contentsline {subsection}{\numberline {1.11.1}Average Information Rate of a Source}{33}{subsection.1.11.1}%
+\contentsline {section}{\numberline {1.12}Additional Worked Problems}{34}{section.1.12}%
+\contentsline {section}{\numberline {1.13}Source Coding}{37}{section.1.13}%
+\contentsline {subsection}{\numberline {1.13.1}Types of Source Coding}{37}{subsection.1.13.1}%
+\contentsline {subsubsection}{\numberline {1.13.1.1}Lossless Source Coding}{37}{subsubsection.1.13.1.1}%
+\contentsline {subsubsection}{\numberline {1.13.1.2}Lossy Source Coding}{37}{subsubsection.1.13.1.2}%
+\contentsline {subsection}{\numberline {1.13.2}Source Coding Theorem}{37}{subsection.1.13.2}%
+\contentsline {subsection}{\numberline {1.13.3}Kraft-McMillan Inequality}{38}{subsection.1.13.3}%
+\contentsline {subsubsection}{\numberline {1.13.3.1}What Prefix Means in Prefix-Free Code}{39}{subsubsection.1.13.3.1}%
+\contentsline {paragraph}{\numberline {1.13.3.1.1}Checking a Valid Example}{39}{paragraph.1.13.3.1.1}%
+\contentsline {paragraph}{\numberline {1.13.3.1.2}Example of a Bad Code}{39}{paragraph.1.13.3.1.2}%
+\contentsline {subsection}{\numberline {1.13.4}Huffman Coding}{40}{subsection.1.13.4}%
+\contentsline {subsubsection}{\numberline {1.13.4.1}Steps / Algorithm}{40}{subsubsection.1.13.4.1}%
+\contentsline {subsubsection}{\numberline {1.13.4.2}Worked Examples}{40}{subsubsection.1.13.4.2}%
+\contentsline {section}{\numberline {1.14}Arithmetic Coding}{44}{section.1.14}%
+\contentsline {subsection}{\numberline {1.14.1}Efficiency of Arithmetic Coding over Huffman Coding}{44}{subsection.1.14.1}%
+\contentsline {subsection}{\numberline {1.14.2}Worked Examples}{44}{subsection.1.14.2}%
+\contentsline {section}{\numberline {1.15}Shannon-Fano Coding}{49}{section.1.15}%
+\contentsline {subsection}{\numberline {1.15.1}Steps}{49}{subsection.1.15.1}%
+\contentsline {section}{\numberline {1.16}Lempel-Ziv Coding}{52}{section.1.16}%
+\contentsline {subsection}{\numberline {1.16.1}Steps}{52}{subsection.1.16.1}%
+\contentsline {section}{\numberline {1.17}Arithmetic Decoding}{53}{section.1.17}%
+\contentsline {subsection}{\numberline {1.17.1}Steps}{53}{subsection.1.17.1}%
+\contentsline {section}{\numberline {1.18}Additional Huffman Example}{56}{section.1.18}%
+\contentsline {section}{\numberline {1.19}LZW Decoding and Compression}{58}{section.1.19}%
+\contentsline {section}{\numberline {1.20}Run Length Encoding}{60}{section.1.20}%
+\contentsline {subsection}{\numberline {1.20.1}Steps}{60}{subsection.1.20.1}%
+\contentsline {section}{\numberline {1.21}Effective and Prefix-Free Codes}{63}{section.1.21}%
+\contentsline {section}{\numberline {1.22}Additional Coding Concepts}{64}{section.1.22}%
+\contentsline {section}{\numberline {1.23}Binary Entropy Plot Verification}{65}{section.1.23}%
