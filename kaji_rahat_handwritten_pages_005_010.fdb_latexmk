@@ -1,5 +1,5 @@
 # Fdb version 4
-["lualatex"] 1775434930.84586 "kaji_rahat_handwritten_pages_005_010.tex" "kaji_rahat_handwritten_pages_005_010.pdf" "kaji_rahat_handwritten_pages_005_010" 1775434947.69469 0
+["lualatex"] 1775435041.02708 "kaji_rahat_handwritten_pages_005_010.tex" "kaji_rahat_handwritten_pages_005_010.pdf" "kaji_rahat_handwritten_pages_005_010" 1775435067.94773 0
   "C:/Users/miadu/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1775136280 82539 62115ed969a4a35d872016bfff207198 ""
   "C:/Users/miadu/AppData/Local/MiKTeX/fonts/tfm/public/calligra/callig15.tfm" 1774796727 1764 b825de14b77999deb4f4ada360048a54 ""
   "C:/Users/miadu/AppData/Local/MiKTeX/luatex-cache/generic/fonts/otl/lmroman10-regular.luc" 1756782120 127341 4a4b72fcb57ec4f29e992ec092e2c929 ""
@@ -317,10 +317,10 @@
   "Figures/generated/shannon_fano_example_m1_m8.png" 1775375139 314174 e33bcf3caaa3a013ab424b63d938f51c ""
   "Figures/generated/shannon_fano_example_s1_s4.png" 1775374449 432608 0c5ef2428b65c21e83af5a381b2e5972 ""
   "Figures/jensens-inequality.pdf" 1775302305 104201 fc2a5f15e8a2d5ae35bfa35c9d1c1e9c ""
-  "kaji_rahat_handwritten_pages_005_010.aux" 1775434946 18517 f23bfaaeda9191de7837bbfb95819a96 "lualatex"
-  "kaji_rahat_handwritten_pages_005_010.out" 1775434946 13039 c2ab4b3083a4956955a3882025a257c0 "lualatex"
-  "kaji_rahat_handwritten_pages_005_010.tex" 1775434706 135028 64cc1f22976779a646b9e8ca1df449f9 ""
-  "kaji_rahat_handwritten_pages_005_010.toc" 1775434946 8310 8ad043984d6aa6a791da3a557e3bf13b "lualatex"
+  "kaji_rahat_handwritten_pages_005_010.aux" 1775435066 18772 189c45489e2742203813dda7142035f0 "lualatex"
+  "kaji_rahat_handwritten_pages_005_010.out" 1775435066 13324 eab5281ba12f8a8b3b3db3236534f79f "lualatex"
+  "kaji_rahat_handwritten_pages_005_010.tex" 1775435039 135045 1a4e1ec1a40c20bc7cdd88446365ed1f ""
+  "kaji_rahat_handwritten_pages_005_010.toc" 1775435066 8483 a0f58806f8fb58de54f103caf350f07e "lualatex"
   (generated)
   "kaji_rahat_handwritten_pages_005_010.aux"
   "kaji_rahat_handwritten_pages_005_010.log"
