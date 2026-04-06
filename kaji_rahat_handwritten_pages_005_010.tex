@@ -226,7 +226,7 @@
 \tableofcontents
 \clearpage
 
-\chapter{Introduction}
+\chapter{Information Theory}
 
 % Source PDF page 5
 \section{Information}
@@ -1748,7 +1748,7 @@ Hence, the entropy is maximum when \(p=0.5\). When both messages are equally pro
     \item Number of lines per frame \(=525\)
     \item Brightness levels per picture element \(=256\)
     \item Frame rate \(=32\) fps
-    \item Pixels per line \(=256\) (as used in the note)
+    \item Pixels per line \(=256\) for this worked example
 \end{itemize}
 
 \begin{align*}
@@ -1847,6 +1847,8 @@ H(Y \mid X)&=H(X,Y)-H(X)=\frac{27}{8}-\frac{7}{4}=1.625 \text{ bits/symbol}
 
 % Source PDF page 28
 \clearpage
+\chapter{Source Coding and Compression}
+
 \section{Source Coding}
 
 \begin{definitionbox}[Source Coding]
@@ -2524,7 +2526,7 @@ It works by building a dictionary of substrings during encoding. Used in formats
 (1)\ a,\qquad (2)\ b,\qquad (3)\ c
 \]
 
-The handwritten construction steps are shown below.
+The construction steps are shown below.
 
 \begin{figure}[H]
     \centering
@@ -2577,7 +2579,7 @@ P(C)=0.4,\qquad P(E)=0.5,\qquad P(!)=0.1
     \caption{Handwritten arithmetic decoding steps for tag \(0.572\)}
 \end{figure}
 
-From the handwritten construction, the decoded message is
+From the construction, the decoded message is
 \[
 \boxed{\texttt{ECE!}}
 \]
@@ -2798,7 +2800,7 @@ d &\to (5,d)\to (5,100)
 \]
 So the compressed data becomes \(8\) bytes.
 
-\textbf{Flag-based form shown in the note}
+\textbf{Flag-based form}
 \[
 255\ 04\ 97\quad 255\ 06\ 98\quad 99\quad 255\ 05\ 100
 \]
@@ -2814,47 +2816,55 @@ Here \(255\) is used as a flag before repeated runs, while the single symbol \(c
 \end{questionanswerbox}
 
 \begin{questionanswerbox}[Run Length Encoding for Mixed Data Example]
-\textbf{Q:} Show why RLE may become inefficient when the data contains many single symbols.
+\textbf{Q:} Encode the mixed text shown using RLE, then compare no-flag RLE and flag-value RLE.
 
 \textbf{A:}
 
-The lower half of the note gives a mixed string with:
-\begin{itemize}
-    \item \(10\) consecutive \(a\)'s,
-    \item \(6\) consecutive \(b\)'s,
-    \item many alternating single \(e\) and \(c\) symbols,
-    \item \(15\) consecutive \(d\)'s,
-    \item then a few more single symbols at the end.
-\end{itemize}
-
-So the RLE count-character form starts like:
+\textbf{Given,}
 \[
-(10,a),\ (6,b),\ (1,e),\ (1,c),\ (1,e),\ (1,c),\ \ldots,\ (15,d),\ (1,e),\ (1,c),\ (1,b)
+\texttt{aaaaaaaaaa\ bbbbbb\ ecececececec\ ddddddddddddddd\ ecb}
 \]
 
-\textbf{What the note is showing}
-\begin{itemize}
-    \item Long runs such as \(a^{10}\), \(b^6\), and \(d^{15}\) compress well.
-    \item Alternating symbols like \(e,c,e,c,\ldots\) are mostly single-count runs.
-    \item If every single symbol is still stored as \((1,\text{symbol})\), the encoded stream becomes large.
-\end{itemize}
+\textbf{RLE count-character pairs}
+\begin{align*}
+&(10,a)\ (6,b)\ (1,e)\ (1,c)\ (1,e)\ (1,c)\ (1,e)\ (1,c)\\
+&(1,e)\ (1,c)\ (1,e)\ (1,c)\ (1,e)\ (1,c)\ (15,d)\ (1,e)\ (1,c)\ (1,b)
+\end{align*}
 
-The note therefore compares two ideas:
-\begin{itemize}
-    \item \textbf{No-flag RLE:} even single symbols carry their count, so the representation becomes bulky.
-    \item \textbf{Flag-value RLE:} only repeated runs are marked with a flag, so single symbols can be written directly and the result becomes shorter.
-\end{itemize}
+\textbf{No flag RLE}
+\[
+10\ 97\ 06\ 98\ 1\ 101\ 1\ 99\ 1\ 101\ 1\ 99\ 1\ 101\ 1\ 99\ 1\ 101\ 1\ 99\ 1\ 101\ 1\ 99\ 1\ 101\ 1\ 99\ 15\ 100\ 1\ 101\ 1\ 99\ 1\ 98
+\]
+\begin{align*}
+\text{Total runs} &= 18\\
+\text{Each run} &= 2\text{ bytes}\ (\text{count} + \text{character})\\
+\therefore\ \text{Total size} &= 18 \times 2 = 36\text{ bytes}
+\end{align*}
+\[
+\Rightarrow 36\ \text{bytes}
+\]
 
-This is the key lesson of the page: RLE is effective for long repetitions, but it can perform poorly on data with many isolated symbols.
+\textbf{Flag values RLE}
+\[
+255\ 10\ 97\quad 255\ 06\ 98\quad 101\ 99\ 101\ 99\ 101\ 99\ 101\ 99\ 101\ 99\ 101\ 99\quad 255\ 15\ 100\quad 101\ 99\ 98
+\]
+
+\textbf{Short Reading}
+\begin{itemize}
+    \item Long runs such as \(a^{10}\), \(b^6\), and \(d^{15}\) are worth encoding with a count.
+    \item The alternating \(e,c,e,c,\ldots\) part mostly contains single symbols, so writing \((1,\text{symbol})\) again and again wastes space.
+    \item That is why the no-flag version becomes large, while the flag-value version is more compact.
+\end{itemize}
 \end{questionanswerbox}
 
 % Source PDF page 43
 \begin{questionanswerbox}[RLE Representation of a Bit Stream Example]
-\textbf{Q:} Consider the bit stream shown in the note. Represent its redundancy using RLE.
+\textbf{Q:} Consider the bit stream given. Represent its redundancy using RLE.
 
 \textbf{A:}
-
-The handwritten stream has alternating runs:
+\textbf{Given,}
+\[\texttt{000000000000000\ 1111111\ 0000000\ 11111111111}\]
+The stream starts with \(0\), and the runs alternate between \(0\) and \(1\). So the counts alone are enough only because the starting bit is known. The counts of each run are:
 \begin{itemize}
     \item \(15\) zeros
     \item \(7\) ones
@@ -2862,13 +2872,20 @@ The handwritten stream has alternating runs:
     \item \(11\) ones
 \end{itemize}
 
-Using \(4\)-bit counts, the representation becomes:
+Using \(4\)-bit binary counts, the representation becomes:
 \begin{align*}
 15 &\to 1111\\
 7  &\to 0111\\
 7  &\to 0111\\
 11 &\to 1011
 \end{align*}
+
+\textbf{Note:}
+\begin{itemize}
+    \item \(0111\) by itself only means the count \(7\).
+    \item It becomes \(7\) ones or \(7\) zeros depending on the run position.
+    \item Since the first run is known to be zeros, the later runs are decoded by alternating the symbol automatically.
+\end{itemize}
 
 So the RLE form is
 \[
@@ -2885,9 +2902,9 @@ The note remarks that this uses \(16\) bits instead of \(40\) bits.
 \begin{questionanswerbox}[Effective Codes Example]
 \textbf{Q:} What are effective codes?
 
-\textbf{A:}
+\textbf{A:}\\
 Effective codes are codes that represent information efficiently using the least possible number of bits while keeping communication reliable.
-
+\par\vspace{\baselineskip}
 They are designed to:
 \begin{itemize}
     \item maximize information carried per bit,
@@ -2895,8 +2912,8 @@ They are designed to:
     \item use bandwidth and memory efficiently,
     \item maintain a balance between compression, error detection, and error correction.
 \end{itemize}
-
-The note also points out that the effectiveness of a code is often judged by:
+\par\vspace{\baselineskip}
+The effectiveness of a code is often judged by:
 \begin{itemize}
     \item how close its average length is to source entropy,
     \item and how reliably it works over a noisy channel.
@@ -2906,9 +2923,9 @@ The note also points out that the effectiveness of a code is often judged by:
 \begin{questionanswerbox}[Prefix-Free Code Properties Example]
 \textbf{Q:} What is a prefix-free code? Write its properties.
 
-\textbf{A:}
+\textbf{A:}\\
 A prefix-free code is a code in which no codeword is the prefix of any other codeword. This allows each codeword to be identified as soon as it ends.
-
+\par\vspace{\baselineskip}
 \textbf{Properties:}
 \begin{itemize}
     \item Uniquely decodable: each codeword can be decoded without ambiguity.
@@ -2923,15 +2940,13 @@ A prefix-free code is a code in which no codeword is the prefix of any other cod
 \end{questionanswerbox}
 
 % Source PDF page 45
-\clearpage
-\section{Additional Coding Concepts}
 
 \begin{questionanswerbox}[Kraft's Inequality Example]
 \textbf{Q:} Explain Kraft's inequality.
 
-\textbf{A:}
+\textbf{A:}\\
 Kraft's inequality gives a necessary and sufficient condition for the existence of a prefix-free code for a given set of codeword lengths.
-
+\par\vspace{\baselineskip}
 For a \(D\)-ary code, usually binary with \(D=2\), the inequality is:
 \[
 \sum_{k=1}^{m} D^{-n_k}\le 1
@@ -2943,7 +2958,7 @@ For a \(D\)-ary code, usually binary with \(D=2\), the inequality is:
     \item \(m\) = total number of codewords
     \item \(D\) = size of the code alphabet
 \end{itemize}
-
+\par\vspace{\baselineskip}
 \textbf{Significance:}
 \begin{itemize}
     \item If the inequality holds, a prefix-free code exists for those lengths.
@@ -2951,44 +2966,39 @@ For a \(D\)-ary code, usually binary with \(D=2\), the inequality is:
 \end{itemize}
 \end{questionanswerbox}
 
-\begin{questionanswerbox}[Critical Rate and Majority Decoding Example]
-\textbf{Q:} Define critical rate and majority decoding.
-
-\textbf{A:}
-
-\textbf{Critical rate:}
-Critical rate refers to the maximum rate below which a coding scheme can achieve arbitrarily low probability of error as the code length tends to infinity.
-
-It separates:
+\begin{definitionbox}[Critical Rate]
+The critical rate is the maximum rate below which a coding scheme can achieve arbitrarily low probability of error as the code length tends to infinity.
+\end{definitionbox}
+\begin{infobox}[Simple Reading]
+Think of critical rate here as a boundary rate.
 \begin{itemize}
-    \item the region where reliable communication is possible,
-    \item from the region where error probability remains bounded away from zero.
+    \item If the transmission rate is below this boundary, we can use long enough codes to make the error probability very small.
+    \item If the transmission rate goes above this boundary, errors do not disappear.
+    \item So it separates the safe region from the unsafe region for reliable communication.
 \end{itemize}
+\end{infobox}
 
-\textbf{Majority decoding:}
+\begin{definitionbox}[Majority Decoding]
 Majority decoding is an error-correction method in which each bit is decided from the majority of its repeated received values.
-
+\par\vspace{\baselineskip}
 \textbf{Example:}
 If a bit \(1\) is sent using repetition code as \(\texttt{1110}\), the receiver checks the majority value and decodes it as \(1\).
 
-The note states that this method can correct one error in repeated transmission.
-\end{questionanswerbox}
+This method can correct one error in repeated transmission.
+\end{definitionbox}
 
 % Source PDF page 46 (inserted here as a supporting note)
 \clearpage
 \section{Binary Entropy Plot Verification}
 
-\begin{infobox}[Plot Verification]
-The inserted page verifies the graph of the binary entropy function
+The graph verifies the binary entropy function
 \[
 H(p)=-p\log_2 p-(1-p)\log_2(1-p)
 \]
-using a plotting tool.
-\end{infobox}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.72\linewidth]{Figures/generated/binary_entropy_plot_verification.png}
+    \includegraphics[width=0.4\linewidth]{Figures/generated/binary_entropy_plot_verification.png}
     \caption{Inserted plot verification for the binary entropy function}
 \end{figure}
 
@@ -2998,5 +3008,1483 @@ The note below the plot says:
     \item but it is not a true parabola,
     \item it is the binary entropy curve, which has logarithmic nature.
 \end{itemize}
+
+% Source PDF page 47 (inserted page)
+\clearpage
+\section{Additional Coding Worked Examples}
+
+\begin{questionanswerbox}[Prefix-Free Code Check Example]
+\textbf{Q:} Check whether the set \(\{0,10,110,1110,11110,11111\}\) is prefix-free.
+
+\textbf{A:}
+
+A code is prefix-free if no codeword is the prefix of any other codeword.
+
+\begin{itemize}
+    \item \(0\) is not a prefix of the other codewords because all the remaining codewords start with \(1\).
+    \item \(10\) is not a prefix of \(110,1110,11110,11111\).
+    \item \(110\) is not a prefix of \(1110,11110,11111\).
+    \item \(1110\) is not a prefix of \(11110\) or \(11111\).
+\end{itemize}
+
+Hence, the code set is prefix-free.
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Another Prefix-Free Code Check Example]
+\textbf{Q:} Check whether the set \(\{00,01,10,110,1111\}\) is prefix-free.
+
+\textbf{A:}
+
+\begin{itemize}
+    \item \(00\) is not a prefix of any other codeword.
+    \item \(01\) is not a prefix of any other codeword.
+    \item \(10\) is not a prefix of any other codeword.
+    \item \(110\) is not a prefix of \(1111\).
+    \item No codeword starts with \(1111\).
+\end{itemize}
+
+So this set is also prefix-free.
+\end{questionanswerbox}
+
+% Source PDF page 48
+\begin{questionanswerbox}[Lossless JPEG Standard Example]
+\textbf{Q:} Describe the JPEG standard for lossless compression.
+
+\textbf{A:}
+
+The lossless JPEG standard uses \textbf{predictive coding} instead of the discrete cosine transform (DCT).
+
+\begin{itemize}
+    \item Each pixel is predicted from neighboring pixels such as the left, upper, or diagonal pixel.
+    \item The encoder stores the difference between the actual value and the predicted value.
+    \item Since this difference is usually small, it can be compressed efficiently, often with Huffman coding.
+\end{itemize}
+\par\vspace{\baselineskip}
+Lossless JPEG supports up to \(16\)-bit grayscale or color images and is suitable where exact reconstruction is necessary, such as medical and scientific imaging.
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Kraft Inequality Check Example]
+\textbf{Q:} Does a binary prefix-free code with codeword lengths \(1,2,2,3,4\) exist?
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+n_1=1,\quad n_2=2,\quad n_3=2,\quad n_4=3,\quad n_5=4
+\]
+
+Using Kraft inequality,
+\begin{align*}
+\sum 2^{-n_k} &= 2^{-1}+2^{-2}+2^{-2}+2^{-3}+2^{-4}\\
+              &= \frac12+\frac14+\frac14+\frac18+\frac1{16}\\
+              &= 1.1875
+\end{align*}
+
+Since \(1.1875>1\), Kraft inequality is not satisfied.
+
+Hence, no binary prefix-free code exists for these codeword lengths.
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Generate a Prefix-Free Code Example]
+\textbf{Q:} Generate a prefix-free codeword set for any source with probabilities \(0.1, 0.3, 0.3, 0.1, 0.12, 0.083\)
+
+\textbf{A:}
+
+To generate prefix free code, we could use Huffman coding. The probabilities are:
+\[
+P(x_1)=0.1,\quad P(x_2)=0.3,\quad P(x_3)=0.3,\quad P(x_4)=0.1,\quad P(x_5)=0.12,\quad P(x_6)=0.083
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\linewidth]{Figures/generated/prefix_free_generation_example.png}
+    \caption{Handwritten Huffman construction for generating a prefix-free code}
+\end{figure}
+
+One codeword assignment from the construction is:
+\[
+x_1\to 00,\quad x_2\to 01,\quad x_3\to 110,\quad x_4\to 1110,\quad x_5\to 11110,\quad x_6\to 11111
+\]
+\end{questionanswerbox}
+
+% Source PDF pages 49-50
+\begin{questionanswerbox}[Raster Image Huffman Coding Example]
+\textbf{Q:} Suppose a \(5\times 5\) raster image uses \(8\)-bit color and has four pixel values \((A,B,C,D)\) with frequencies \(A=14\), \(B=6\), \(C=3\), and \(D=2\).
+\begin{itemize}
+    \item How many bits are needed for the uncompressed image?
+    \item Assign Huffman codewords to the pixel values.
+    \item Determine the compression ratio.
+\end{itemize}
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+\text{Image size}=5\times 5,\qquad \text{bits per pixel}=8
+\]
+\begin{align*}
+\text{Uncompressed size} &= 5\times 5\times 8\\
+                         &= 200\text{ bits}
+\end{align*}
+
+\textbf{Probabilities,}
+\begin{align*}
+P(A) &= \frac{14}{25}=0.56 &
+P(B) &= \frac{6}{25}=0.24\\
+P(C) &= \frac{3}{25}=0.12  &
+P(D) &= \frac{2}{25}=0.08
+\end{align*}
+
+\textbf{Huffman codewords}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Figures/generated/raster_image_huffman_example.png}
+    \caption{Handwritten Huffman construction for the raster-image example}
+\end{figure}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{10pt}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Pixel} & \textbf{Codeword} & \textbf{Length} & \textbf{Total bits} \\
+\hline
+\(A\) & \(0\)   & \(1\) & \(14\times 1=14\) \\
+\hline
+\(B\) & \(10\)  & \(2\) & \(6\times 2=12\) \\
+\hline
+\(C\) & \(110\) & \(3\) & \(3\times 3=9\) \\
+\hline
+\(D\) & \(111\) & \(3\) & \(2\times 3=6\) \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{align*}
+\text{Compressed size} &= 14+12+9+6\\
+                       &= 41\text{ bits}
+\end{align*}
+
+\begin{align*}
+\text{Compression ratio} &= \frac{\text{Uncompressed size}}{\text{Compressed size}}\\
+                         &= \frac{200}{41}\\
+                         &\approx 4.88:1
+\end{align*}
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Eight Messages with Huffman and Shannon-Fano Example]
+\textbf{Q:} Let there be eight possible messages \(m_1\) through \(m_8\). Their frequencies are \(25,25,50,50,50,100,100,400\) times respectively. Using Huffman coding and Shannon-Fano coding, find the coded bits of each message.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+\text{Total frequency}=25+25+50+50+50+100+100+400=800
+\]
+
+\begin{align*}
+P(m_1) &= \frac{25}{800}=0.03125 &
+P(m_5) &= \frac{50}{800}=0.0625\\
+P(m_2) &= \frac{25}{800}=0.03125 &
+P(m_6) &= \frac{100}{800}=0.125\\
+P(m_3) &= \frac{50}{800}=0.0625  &
+P(m_7) &= \frac{100}{800}=0.125\\
+P(m_4) &= \frac{50}{800}=0.0625  &
+P(m_8) &= \frac{400}{800}=0.5
+\end{align*}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\linewidth]{Figures/generated/eight_messages_huffman_shannon_fano.png}
+    \caption{Handwritten Huffman and Shannon-Fano constructions for the eight-message example}
+\end{figure}
+
+\textbf{Kraft check}
+\begin{align*}
+\sum 2^{-n_k} &= 2^{-1}+2^{-3}+2^{-3}+2^{-4}+2^{-4}+2^{-4}+2^{-5}+2^{-5}\\
+              &= 1
+\end{align*}
+
+So the resulting code is prefix-free. The note also remarks that both Huffman coding and Shannon-Fano coding produce matching codeword lengths for this example.
+\end{questionanswerbox}
+
+% Source PDF page 51
+\clearpage
+\chapter{Channel Coding}
+
+\section{Digital Communication}
+
+\subsection{Elements of Digital Communication}
+
+The main elements of a digital communication system are shown below.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=1.35cm,>=latex, every node/.style={font=\small}]
+        \tikzstyle{blk}=[draw, minimum width=1.9cm, minimum height=1.1cm, align=center]
+
+        \node (src) [left] at (-1.8,1.4) {Source};
+        \node (adc1) [blk] at (0,1.4) {ADC};
+        \node (se) [blk] at (2.5,1.4) {Source\\Encoder};
+        \node (ce) [blk] at (5.2,1.4) {Channel\\Encoder};
+        \node (dac1) [blk] at (7.9,1.4) {DAC};
+        \node (chan) [blk] at (10.8,0) {Channel};
+        \node (adc2) [blk] at (7.9,-1.4) {ADC};
+        \node (cd) [blk] at (5.2,-1.4) {Channel\\Decoder};
+        \node (sd) [blk] at (2.5,-1.4) {Source\\Decoder};
+        \node (dac2) [blk] at (0,-1.4) {DAC};
+        \node (dst) [left] at (-1.9,-1.4) {Destination};
+
+        \draw[->] (src) -- (adc1);
+        \draw[->] (adc1) -- (se);
+        \draw[->] (se) -- (ce);
+        \draw[->] (ce) -- (dac1);
+        \draw[->] (dac1) -- (10.8,1.4) -- (chan.north);
+        \draw[->] (chan.south) -- (10.8,-0.6) -- (10.8,-1.4) -- (adc2);
+        \draw[->] (adc2) -- (cd);
+        \draw[->] (cd) -- (sd);
+        \draw[->] (sd) -- (dac2);
+        \draw[->] (dac2) -- (dst);
+    \end{tikzpicture}
+    \caption{Block diagram of a digital communication system}
+\end{figure}
+
+\begin{itemize}
+    \item \textbf{Source:} origin of the signal to be transmitted. Example: audio, image, or text.
+    \item \textbf{ADC:} converts analog data into digital form.
+    \item \textbf{Source encoder:} compresses the data and \textbf{removes unnecessary redundancy}.
+    \item \textbf{Channel encoder:} \textbf{adds controlled redundancy} for error detection and correction.
+    \item \textbf{DAC:} converts digital data into analog form for transmission through a physical channel.
+    \item \textbf{Channel:} medium through which the signal is transmitted.
+    \item \textbf{Channel decoder:} detects and corrects transmission errors as much as possible.
+    \item \textbf{Source decoder:} reconstructs the original source data.
+    \item \textbf{Destination:} final receiver of the message.
+\end{itemize}
+
+% Source PDF page 52
+\begin{questionanswerbox}[Unreliable Channel Causes Data Loss Example]
+\textbf{Q:} Why does an unreliable channel cause data loss?
+
+\textbf{A:}\\
+An unreliable channel introduces noise or distortion during transmission. Because of this:
+\begin{itemize}
+    \item transmitted bits may be altered,
+    \item the receiver may read incorrect data,
+    \item information may be lost or corrupted.
+\end{itemize}
+\par\vspace{\baselineskip}
+To reduce this problem, channel coding adds redundant bits so that the receiver can detect and sometimes correct errors.
+\end{questionanswerbox}
+
+\begin{definitionbox}[Channel Coding]
+    \textbf{Channel coding} is the process of \textbf{adding redundant (extra)} information to a message before transmission so that errors caused by noise in the communication channel can be \textbf{detected} and \textbf{corrected} at the receiver.
+\end{definitionbox}
+
+\begin{questionanswerbox}[What Is Channel Coding Example]
+\textbf{Q:} What is channel coding?
+
+\textbf{A:}\\
+Channel coding is used in the channel-encoder block of a digital communication system.
+\par\vspace{\baselineskip}
+\textbf{Purpose:}
+\begin{itemize}
+    \item protect transmitted data from noise and distortion,
+    \item make error detection possible,
+    \item make error correction possible.
+\end{itemize}
+\par\vspace{\baselineskip}
+\textbf{Function:}
+\begin{itemize}
+    \item It adds extra bits to the data.
+    \item These extra bits are called redundancy bits.
+    \item They help the receiver recover the original message more reliably.
+\end{itemize}
+\end{questionanswerbox}
+
+\begin{formulabox}[Channel Capacity]
+\[
+C = B\log_2\left(1+\frac{S}{N}\right)
+\]
+\begin{itemize}
+    \item \(C\) = channel capacity
+    \item \(B\) = bandwidth
+    \item \(S/N\) = signal-to-noise ratio
+\end{itemize}
+\end{formulabox}
+
+\begin{questionanswerbox}[Channel Capacity Theorem Example]
+\textbf{Q:} Explain the channel capacity theorem.
+
+\textbf{A:}\\
+Claude Shannon's theorem gives the maximum rate at which information can be transmitted over a channel for a given amount of noise.
+
+\[
+C = B\log_2\left(1+\frac{S}{N}\right)
+\]
+
+\begin{itemize}
+    \item \(C\) = channel capacity
+    \item \(B\) = bandwidth
+    \item \(S/N\) = signal-to-noise ratio
+\end{itemize}
+\par\vspace{\baselineskip}
+\textbf{Significance:}
+\begin{enumerate}
+    \item It sets the theoretical upper limit of data transmission.
+    \item If the transmission rate is at most \(C\), coding techniques can make communication reliable.
+    \item If the transmission rate is greater than \(C\), errors become unavoidable.
+    \item It helps in designing efficient communication systems by balancing bandwidth and error control.
+\end{enumerate}
+\end{questionanswerbox}
+
+% Source PDF page 53
+\section{Block Codes and Parity Check}
+
+\subsection{Block Code}
+
+\begin{definitionbox}[Block Code]
+Block code is an error-detecting and error-correcting code in which data is divided into fixed-size codewords.
+\end{definitionbox}
+
+\begin{formulabox}[Block Code Notation]
+\[
+n = k + r
+\]
+\begin{itemize}
+    \item \(n\) = total codeword length
+    \item \(k\) = number of information bits
+    \item \(r\) = number of redundant bits
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}[Block Code Parameters]
+The notation- 
+\[(n, k)\]
+\begin{itemize}
+    \item \(n\) bits in the complete codeword,
+    \item \(k\) information bits,
+    \item \(r=n-k\) redundancy bits.
+\end{itemize}
+\end{formulabox}
+
+\textbf{Example:} for a \((4,3)\) code,
+\[
+n=4,\qquad k=3,\qquad r=1
+\]
+\begin{align*}
+\text{Total possible }n\text{-bit words} &= 2^n = 2^4 = 16\\
+\text{Valid information words} &= 2^k = 2^3 = 8\\
+\text{Remaining redundant words} &= 2^n-2^k = 16-8 = 8
+\end{align*}
+
+\begin{questionanswerbox}[(4,3) Even Parity Block Code Example]
+\textbf{Q:} Describe a \((4,3)\) even parity block code.
+
+\textbf{A:}
+
+A \((4,3)\) block code has:
+\begin{itemize}
+    \item \(k=3\) information bits,
+    \item \(r=1\) parity bit,
+    \item \(n=4\) total bits in each codeword.
+\end{itemize}
+
+Even parity means the total number of \(1\)'s in the codeword must be even. So we add parity bit in such a way so that there are even 1's in the code word.
+\par\vspace{\baselineskip}
+\textbf{Generated codewords}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Info bits \(K\)} & \textbf{Parity \(P\)} & \textbf{Codewords \(n\)} \\
+\hline
+\(000\) & \(0\) & \(0000\quad (1)\) \\
+\hline
+\(000\) & \(1\) & \\
+\hline
+\(001\) & \(0\) & \\
+\hline
+\(001\) & \(1\) & \(0011\quad (2)\) \\
+\hline
+\(010\) & \(0\) & \\
+\hline
+\(010\) & \(1\) & \(0101\quad (3)\) \\
+\hline
+\(011\) & \(0\) & \(0110\quad (4)\) \\
+\hline
+\(011\) & \(1\) & \\
+\hline
+\(100\) & \(0\) & \\
+\hline
+\(100\) & \(1\) & \(1001\quad (5)\) \\
+\hline
+\(101\) & \(0\) & \(1010\quad (6)\) \\
+\hline
+\(101\) & \(1\) & \\
+\hline
+\(110\) & \(0\) & \(1100\quad (7)\) \\
+\hline
+\(110\) & \(1\) & \\
+\hline
+\(111\) & \(0\) & \\
+\hline
+\(111\) & \(1\) & \(1111\quad (8)\) \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Observation:}
+\begin{itemize}
+    \item The table lists all possible information-bit and parity-bit combinations.
+    \item Only the rows that satisfy even parity produce valid codewords.
+    \item So there are \(8\) valid even-parity codewords and \(8\) invalid combinations.
+\end{itemize}
+\par\vspace{\baselineskip}
+\textbf{Error example}
+\begin{itemize}
+    \item Suppose \(1010\) is transmitted.
+    \item If \(1110\) is received, parity becomes odd.
+    \item So the error can be detected.
+    \item But it cannot be corrected uniquely, because more than one original codeword could lead to that received word by a one-bit error.
+\end{itemize}
+\end{questionanswerbox}
+
+% Source PDF page 54
+\subsection{Vector Representation of Codewords}
+
+In digital communication, a codeword can be represented as a vector in \(n\)-dimensional space.
+
+\begin{formulabox}[Received Vector]
+    The received codeword V is the sum of transmitted codeword C and error vector E.
+\[
+V = C + E
+\]
+\begin{itemize}
+    \item \(V=(v_1,v_2,\ldots,v_n)\) = received code vector
+    \item \(C=(c_1,c_2,\ldots,c_n)\) = transmitted codeword
+    \item \(E=(e_1,e_2,\ldots,e_n)\) = error vector
+\end{itemize}
+\end{formulabox}
+
+\begin{infobox}[Error Vector Properties]
+    \begin{itemize}
+        \item Each \(e_i\) is either \(0\) (no error in that bit) or \(1\) (error in that bit).
+        \item If no error occurs, \(E=(0,0,\ldots,0)\), so \(V=C\).
+        \item The error vector indicates which bits were flipped during transmission.
+        \item If an error occurs in bit \(i\), then \(e_i=1\), which flips that bit.
+    \end{itemize}
+\end{infobox}
+
+\textbf{Example:}
+\begin{align*}
+C &= 1010\\
+E &= 0100\\
+V &= C+E = 1010 + 0100 = 1110
+\end{align*}
+where the addition is bitwise modulo-\(2\).
+
+% Source PDF page 55
+\subsection{Single Parity Check Code}
+
+\begin{definitionbox}[Single Parity Check Code]
+A single parity check code is an error-detection method in which one redundant bit is added to a group of information bits so that the total number of \(1\)'s becomes even or odd, depending on the chosen rule.
+\end{definitionbox}
+
+\begin{infobox}[Core idea]
+    You take your data and Add one extra bit (parity bit) so that total number of 1s is
+    \begin{itemize}
+        \item even (even parity)
+        \item odd (odd parity)
+    \end{itemize}
+\end{infobox}
+
+\begin{formulabox}[Parity Bit Calculation]
+
+For an \((n+1)\) even parity check code with information bits \(i_1,i_2,\ldots,i_n\),
+\begin{align*}
+p &= i_1+i_2+\cdots+i_n \pmod 2 \text{ (Count number of 1s $\rightarrow$ take remainder when divided by 2)}\\
+C &= i_1\,i_2\,\cdots\,i_n\,p
+\end{align*}
+\begin{itemize}
+    \item p = parity bit
+    \item C = complete codeword with parity bit
+\end{itemize}
+\end{formulabox}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{1.5cm}|p{4cm}|p{2cm}|p{1.5cm}|}
+\hline
+\centering Start &
+\centering Information bits &
+\centering Parity &
+\centering Stop \tabularnewline
+\hline
+\end{tabular}
+\caption{Simple frame view of a parity-coded word}
+\end{table}
+
+\begin{questionanswerbox}[(5,4) Even Parity Block Code Example]
+\textbf{Q:} Given the \((5,4)\) even parity block code, find the codewords corresponding to \(i_1=(1011)\) and \(i_2=(1010)\).
+
+\textbf{A:}
+
+For \(i_1=1011\),
+\begin{align*}
+p_1 &= 1+0+1+1 \pmod 2\\
+    &= 3 \pmod 2\\
+    &= 1
+\end{align*}
+So the generated codeword is
+\[
+C_1 = i_1p_1 = 10111
+\]
+
+For \(i_2=1010\),
+\begin{align*}
+p_2 &= 1+0+1+0 \pmod 2\\
+    &= 2 \pmod 2\\
+    &= 0
+\end{align*}
+So the generated codeword is
+\[
+C_2 = i_2p_2 = 10100
+\]
+
+\textbf{Decoding rule:}
+\begin{align*}
+S &= v_1+v_2+\cdots+v_n \pmod 2
+\end{align*}
+\begin{itemize}
+    \item \(S=0\): even parity, so no parity error is detected.
+    \item \(S=1\): odd parity, so an error is detected.
+\end{itemize}
+\end{questionanswerbox}
+
+% Source PDF page 56
+\begin{questionanswerbox}[(8,7) Even Parity Check Example]
+\textbf{Q:} Given the \((8,7)\) even parity code, determine whether \(V_1=10110110\) and \(V_2=01101001\) give parity check failures.
+
+\textbf{A:}
+
+For even parity, the parity check value should satisfy
+\[
+S=0
+\]
+
+For \(V_1=10110110\),
+\begin{align*}
+S &= 1+0+1+1+0+1+1+0 \pmod 2\\
+  &= 1
+\end{align*}
+Since \(S=1\), \(V_1\) gives parity check failure.
+
+\par\vspace{\baselineskip}
+
+For \(V_2=01101001\),
+\begin{align*}
+S &= 0+1+1+0+1+0+0+1 \pmod 2\\
+  &= 0
+\end{align*}
+Since \(S=0\), \(V_2\) satisfies the parity check condition.
+\end{questionanswerbox}
+
+\section{Product Code}
+
+\begin{definitionbox}[Product Code]
+Product codes are \textbf{error-correction} codes formed by \textbf{combining two linear block codes in a two-dimensional array}. One code is applied row-wise and the other is applied column-wise.
+\end{definitionbox}
+
+As we have seen, a single parity check code has no error-correction capability by itself. Better correction can be achieved by combining two single parity check codes in a rectangular array.
+
+\begin{itemize}
+    \item Product codes improve both error detection and error correction.
+    \item They are used where \textbf{stronger reliability} is needed, such as \textbf{deep-space communication} and \textbf{storage systems}.
+    \item \textbf{Row parity} and \textbf{column parity} together help locate the error position.
+\end{itemize}
+
+\begin{infobox}[Reading the Array]
+If a \((5,4)\) code is used row-wise and a \((7,6)\) code is used column-wise, then the combined array has:
+\begin{itemize}
+    \item \(5\times 7 = 35\) total bits,
+    \item \(4\times 6 = 24\) information bits,
+    \item \(35-24=11\) redundant bits.
+\end{itemize}
+\end{infobox}
+
+\begin{questionanswerbox}[Product Code Error Correction Example]
+\textbf{Q:} Explain how a product code detects and corrects errors.
+
+\textbf{A:}
+
+In a product code, parity is checked both row-wise and column-wise.
+
+\textbf{Step 1: Build the combined array}
+\begin{itemize}
+    \item First arrange the data bits in a rectangle.
+    \item Then add one parity bit to each row.
+    \item Then add one parity bit to each column.
+\end{itemize}
+\par\vspace{\baselineskip}
+So if the row code is \((5,4)\) and the column code is \((7,6)\), then:
+\begin{itemize}
+    \item each row has \(4\) information bits and \(1\) row-parity bit,
+    \item each column has \(6\) information bits and \(1\) column-parity bit,
+    \item the full array size becomes \(5\times 7=35\) bits,
+    \item the actual information content is \(4\times 6=24\) bits,
+    \item hence the redundant bits are \(35-24=11\) bits.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Figures/generated/product_code_case_setup.png}
+    \caption{Forming the product-code array with row and column parity bits}
+\end{figure}
+\par\vspace{\baselineskip}
+\textbf{Step 2: How a single-bit error is corrected}
+\begin{itemize}
+    \item Check every row for even parity.
+    \item Check every column for even parity.
+    \item If exactly one row fails and exactly one column fails, then their crossing point is the error bit.
+    \item Flip that bit to correct the error.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Figures/generated/product_code_case_single_error.png}
+    \caption{Single-bit error correction using row and column parity checks}
+\end{figure}
+\par\vspace{\baselineskip}
+\textbf{Step 3: Why two-bit errors are difficult}
+\begin{itemize}
+    \item If two rows and two columns fail, then there are four possible crossing points.
+    \item So the decoder knows an error happened, but it cannot tell which two bits are actually wrong.
+    \item That is why a product code can correct a single-bit error, but two-bit errors are not always uniquely correctable.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Figures/generated/product_code_case_two_error.png}
+    \caption{Two-error case where the correction is not unique}
+\end{figure}
+
+\begin{infobox}[Simple Reading]
+\begin{itemize}
+    \item One bad row + one bad column \(\rightarrow\) one clear crossing point \(\rightarrow\) correctable.
+    \item Two bad rows + two bad columns \(\rightarrow\) four possible crossing points \(\rightarrow\) not uniquely correctable.
+\end{itemize}
+\end{infobox}
+\end{questionanswerbox}
+
+% Source PDF page 58
+\section{Repetitive Codes}
+
+\begin{definitionbox}[Repetitive Code]
+Repetitive codes are simple \textbf{error-detecting} and \textbf{error-correcting} codes in which each information bit is transmitted multiple times.
+\end{definitionbox}
+
+They work by repeating each bit so that the receiver can use majority voting to detect and correct some errors.
+
+\begin{formulabox}[Repetitive Code Example for a (3:1) Code]
+\[
+0 \rightarrow 000,\qquad 1 \rightarrow 111
+\]
+\begin{itemize}
+    \item The first number tells the codeword length.
+    \item The second number tells the number of information bits.
+\end{itemize}
+\end{formulabox}
+
+At the receiver end, if one bit is corrupted, majority voting can still recover the original bit.
+
+\subsection{Error detection}
+\begin{itemize}
+    \item If an odd number of errors occurs in a repetitive codeword, the received pattern differs from the expected majority.
+    \item Example: if \(111\) is received as \(101\), an error is detected.
+\end{itemize}
+
+\subsection{Error correction}
+\begin{itemize}
+    \item After detecting the error, the receiver chooses the majority bit.
+    \item Example: for \(101\), the majority bits are \(1,1\), so the corrected codeword is \(111\).
+    \item \textbf{If more than half of the bits are corrupted, the code cannot correct the error}.
+\end{itemize}
+
+% Source PDF page 59
+\section{Linear Coding}
+
+\begin{definitionbox}[Linear Code]
+Linear codes are error-correcting codes in which any linear combination of codewords is also a valid codeword. They are represented as \((n,k)\) linear codes.
+\end{definitionbox}
+
+\begin{formulabox}[Closure Property of Linear Codes]
+\[
+C_i + C_j = C_k
+\]
+\begin{itemize}
+    \item \(C_i\) and \(C_j\) are codewords,
+    \item the addition is bitwise modulo-\(2\),
+    \item \(C_k\) is also a codeword in the same code.
+\end{itemize}
+\end{formulabox}
+
+Linear coding is useful for:
+\begin{itemize}
+    \item efficient encoding and decoding using matrix operations,
+    \item error detection and correction,
+    \item digital transmission systems such as Hamming, BCH, and Reed-Solomon codes.
+\end{itemize}
+
+\subsubsection{Properties of Linear Code}
+\begin{enumerate}
+    \item The all-zero codeword is always present in a linear code.
+    \item If \(C_k=C_i+C_j\), then the distance between \(C_i\) and \(C_j\) equals the weight of \(C_k\).
+    \item For a linear code, the minimum distance satisfies \(d_{\min}=W_{\min}\), where \(W_{\min}\) is the minimum non-zero weight.
+\end{enumerate}
+
+\begin{definitionbox}[Distance and Weight]
+\begin{itemize}
+    \item \textbf{Distance:} the number of positions in which two codewords differ.
+    \item \textbf{Weight:} the number of non-zero bits in a codeword.
+\end{itemize}
+\end{definitionbox}
+
+\begin{infobox}[Simple Reading]
+Why does \(d_{\min}=W_{\min}\) matter?
+\begin{itemize}
+    \item Subtracting one codeword from another in binary is the same as modulo-\(2\) addition.
+    \item That difference is itself another codeword in a linear code.
+    \item So the distance between two codewords can be measured by counting the \(1\)'s in their sum.
+\end{itemize}
+\end{infobox}
+
+% Source PDF page 60
+\begin{questionanswerbox}[(4,3) Even and Odd Parity Linearity Example]
+\textbf{Q:} Show that \((4,3)\) even parity code is a linear code and \((4,3)\) odd parity code is non-linear.
+
+\textbf{A:}
+
+\textbf{Even parity \((4,3)\) codewords}
+\[
+\{0000,0011,0110,1100,0101,1010,1001,1111\}
+\]
+
+\textbf{Odd parity \((4,3)\) codewords}
+\[
+\{0001,0010,0100,1000,0111,1110,1011,1101\}
+\]
+
+\textbf{Even parity case}
+\begin{itemize}
+    \item The minimum distance is \(d_{\min}=2\).
+    \item Bitwise addition of any two even-parity codewords gives another even-parity codeword.
+\end{itemize}
+
+For example,
+\begin{align*}
+0011 + 0110 &= 0101
+\end{align*}
+The sum \(0101\) has weight
+\[
+W_{\min}=2
+\]
+So,
+\[
+d_{\min}=W_{\min}
+\]
+Hence, the \((4,3)\) even parity code is linear.
+
+\par\vspace{\baselineskip}
+
+\textbf{Odd parity case}
+\begin{itemize}
+    \item The minimum distance is \(d_{\min}=1\).
+    \item But modulo-\(2\) addition of two odd-parity codewords gives an even-parity word, which is outside the odd-parity set.
+\end{itemize}
+
+For example,
+\begin{align*}
+0010 + 1110 &= 1100
+\end{align*}
+The result \(1100\) has weight
+\[
+W_{\min}=2
+\]
+So,
+\[
+d_{\min}\ne W_{\min}
+\]
+Hence, the \((4,3)\) odd parity code is non-linear.
+\end{questionanswerbox}
+
+\section{Hamming Code}
+
+\begin{definitionbox}[Hamming Code]
+Hamming code is an error-detecting and error-correcting code that adds redundant bits, called parity bits, to data so that single-bit errors can be detected and corrected.
+\end{definitionbox}
+
+Hamming codes are \((n,k)\) linear block codes with the following properties:
+\begin{enumerate}
+    \item Codeword length:
+    \[
+    n = 2^q - 1
+    \]
+    where \(q=n-k\) is the number of parity bits.
+
+    \item Number of information bits:
+    \[
+    k = 2^q - 1 - q = n-q
+    \]
+
+    \item Minimum number of parity bits:
+    \[
+    q \ge 3
+    \]
+\end{enumerate}
+
+\begin{definitionbox}[Hamming Weight and Minimum Distance]
+\begin{itemize}
+    \item \textbf{Hamming weight:} the number of non-zero bits in a binary codeword.
+    \item \textbf{Minimum distance:} the smallest Hamming distance between any two distinct codewords in a code.
+\end{itemize}
+\end{definitionbox}
+
+\subsection{Systematic Code}
+
+For a \((7,4)\) systematic Hamming code, the information bits are written first and the parity bits are appended after them:
+\[
+C=i_1i_2i_3i_4p_1p_2p_3
+\]
+
+\begin{formulabox}[Parity Equations for the 7:4 Systematic Hamming Code]
+\begin{align*}
+p_1 &= i_1+i_2+i_3 \pmod 2\\
+p_2 &= i_2+i_3+i_4 \pmod 2\\
+p_3 &= i_1+i_2+i_4 \pmod 2
+\end{align*}
+\begin{itemize}
+    \item \(i_1,i_2,i_3,i_4\) are the information bits.
+    \item \(p_1,p_2,p_3\) are the parity bits.
+    \item All additions are modulo-\(2\).
+\end{itemize}
+\end{formulabox}
+
+\begin{questionanswerbox}[Systematic Hamming Codeword Example]
+\textbf{Q:} For the information word \(i=0101\), generate the systematic codeword.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+i=(i_1i_2i_3i_4)=0101
+\]
+
+\begin{align*}
+p_1 &= i_1+i_2+i_3 = 0+1+0 = 1\\
+p_2 &= i_2+i_3+i_4 = 1+0+1 = 0\\
+p_3 &= i_1+i_2+i_4 = 0+1+1 = 0
+\end{align*}
+
+So the generated codeword is
+\[
+C=0101100
+\]
+\end{questionanswerbox}
+
+\subsection{Syndrome Decoding}
+
+If the received data is
+\[
+V=(V_1,V_2,V_3,V_4,V_5,V_6,V_7)
+\]
+then the three parity-check sums are:
+
+\begin{formulabox}[Syndrome for the 7:4 Systematic Hamming Code]
+\begin{align*}
+S_1 &= (V_1+V_2+V_3)+V_5\\
+S_2 &= (V_2+V_3+V_4)+V_6\\
+S_3 &= (V_1+V_2+V_4)+V_7
+\end{align*}
+\[
+S=(S_1,S_2,S_3)
+\]
+\begin{itemize}
+    \item \(S\) is called the syndrome.
+    \item \(S=000\) means no single-bit parity error is detected.
+    \item A non-zero syndrome points to the error position.
+\end{itemize}
+\end{formulabox}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Error} & \textbf{Bit Sequence} & \textbf{Syndrome} \\
+\hline
+\(e_0\) & \((0000001)\) & \(1\ (001)\) \\
+\hline
+\(e_1\) & \((0000010)\) & \(2\ (010)\) \\
+\hline
+\(e_2\) & \((0000100)\) & \(4\ (100)\) \\
+\hline
+\(e_3\) & \((0001000)\) & \(3\ (011)\) \\
+\hline
+\(e_4\) & \((0010000)\) & \(6\ (110)\) \\
+\hline
+\(e_5\) & \((0100000)\) & \(7\ (111)\) \\
+\hline
+\(e_6\) & \((1000000)\) & \(5\ (101)\) \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Bit-flip idea}
+\begin{itemize}
+    \item Receive a codeword with a single-bit error.
+    \item Calculate the syndrome.
+    \item Match the syndrome with the error table.
+    \item Flip the bit at that error position to correct it.
+\end{itemize}
+
+\begin{questionanswerbox}[Parity Check Sum Example]
+\textbf{Q:} If \(C_7=0111010\) is sent over a channel, calculate the parity check sum and decide whether an error occurred.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+V=C_7=0111010
+\]
+
+\begin{align*}
+S_1 &= (V_1+V_2+V_3)+V_5 = 0+1+1+0 = 0\\
+S_2 &= (V_2+V_3+V_4)+V_6 = 1+1+1+1 = 0\\
+S_3 &= (V_1+V_2+V_4)+V_7 = 0+1+1+0 = 0
+\end{align*}
+
+So,
+\[
+S=(S_1,S_2,S_3)=000
+\]
+
+Hence, no error is detected.
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Finding the Codeword from a Received Word Example]
+\textbf{Q:} If the received codeword is \(V=1011001\), find the corrected codeword.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+V=1011001
+\]
+
+\begin{align*}
+S_1 &= (V_1+V_2+V_3)+V_5 = 1+0+1+0 = 0\\
+S_2 &= (V_2+V_3+V_4)+V_6 = 0+1+1+0 = 0\\
+S_3 &= (V_1+V_2+V_4)+V_7 = 1+0+1+1 = 1
+\end{align*}
+
+So,
+\[
+S=001
+\]
+
+From the syndrome table,
+\[
+S=001 \longrightarrow e=(0000001)
+\]
+
+Now,
+\begin{align*}
+C &= V \oplus e\\
+  &= 1011001 \oplus 0000001\\
+  &= 1011000
+\end{align*}
+
+So the corrected codeword is
+\[
+C=1011000
+\]
+\end{questionanswerbox}
+
+\begin{infobox}[Can an Error Give Zero Syndrome?]
+Yes, it is possible for a multi-bit error to give zero syndrome.
+\begin{itemize}
+    \item If the error pattern itself behaves like a valid codeword, the received word may still satisfy all parity checks.
+    \item For example, the note checks \(V=0110001\) and gets \(S=000\).
+    \item So zero syndrome guarantees only that no \emph{detectable single-bit parity error} is found. It does not guarantee that every possible error is absent.
+\end{itemize}
+\end{infobox}
+
+\subsection{Generator Matrix}
+
+\begin{definitionbox}[Generator Matrix]
+A generator matrix \(G\) is used to generate codewords from input message bits in a linear code.
+\end{definitionbox}
+
+\begin{formulabox}[Codeword from Generator Matrix]
+\[
+C=iG
+\]
+\begin{itemize}
+    \item \(i\) = \(1\times k\) information row vector
+    \item \(G\) = \(k\times n\) generator matrix
+    \item \(C\) = \(1\times n\) generated codeword
+\end{itemize}
+\end{formulabox}
+
+For the \((7,4)\) systematic Hamming code,
+\[
+G=
+\begin{bmatrix}
+1&0&0&0&1&0&1\\
+0&1&0&0&1&1&1\\
+0&0&1&0&1&1&0\\
+0&0&0&1&0&1&1
+\end{bmatrix}
+\]
+
+For the \((4,3)\) even-parity code, one generator matrix is
+\[
+G=
+\begin{bmatrix}
+1&0&0&1\\
+0&1&0&1\\
+0&0&1&1
+\end{bmatrix}
+\]
+
+\begin{questionanswerbox}[Generator Matrix Codeword Example]
+\textbf{Q:} Generate the codeword for \(i=1110\) using the \((7,4)\) coding scheme.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+i=[1110]
+\]
+
+\begin{align*}
+C &= iG\\
+  &= [1110]
+\begin{bmatrix}
+1&0&0&0&1&0&1\\
+0&1&0&0&1&1&1\\
+0&0&1&0&1&1&0\\
+0&0&0&1&0&1&1
+\end{bmatrix}\\
+  &= 1110100
+\end{align*}
+
+So the generated codeword is
+\[
+C=1110100
+\]
+\end{questionanswerbox}
+
+\section{Code Rate and Redundancy}
+
+\begin{questionanswerbox}[Information Rate and Redundancy Example]
+\textbf{Q:} Explain how adding more parity increases redundancy but reduces information rate.
+
+\textbf{A:}
+
+Adding more parity bits increases redundancy because more bits are used for error detection and correction rather than carrying new information.
+
+In an \((n,k)\) block code,
+\[
+R=\frac{k}{n}
+\]
+where:
+\begin{itemize}
+    \item \(k\) = number of information bits
+    \item \(n\) = total number of transmitted bits
+    \item \(r=n-k\) = number of redundant bits
+\end{itemize}
+
+As \(r\) increases, \(n\) increases while \(k\) stays the same. So the information rate \(R\) decreases.
+
+\textbf{Examples}
+\begin{align*}
+(3,1):\quad R&=\frac{1}{3}\approx 33\%\\
+(5,1):\quad R&=\frac{1}{5}=20\%\\
+(7,1):\quad R&=\frac{1}{7}\approx 14\%
+\end{align*}
+
+So more parity improves error resilience, but reduces transmission efficiency.
+\end{questionanswerbox}
+
+\section{Additional Repetitive Code Example}
+
+\begin{questionanswerbox}[Repetitive Code Stream Example]
+\textbf{Q:} For \(10110\), generate the code stream using a repetitive code with repetition factor \(3\).
+
+\textbf{A:}
+
+For repetition factor \(3\),
+\[
+1\rightarrow 111,\qquad 0\rightarrow 000
+\]
+
+So,
+\begin{align*}
+1 &\rightarrow 111\\
+0 &\rightarrow 000\\
+1 &\rightarrow 111\\
+1 &\rightarrow 111\\
+0 &\rightarrow 000
+\end{align*}
+
+Hence, the generated repetitive code stream is
+\[
+111\ 000\ 111\ 111\ 000
+\]
+\end{questionanswerbox}
+
+\section{Minimum Distance Decoding}
+
+\begin{questionanswerbox}[Finding the Appropriate Codeword Example]
+\textbf{Q:} Consider the code
+\[
+C=\{0000,1010,0101,1111\}
+\]
+If the received word is \(V=1101\), find the appropriate codeword.
+
+\textbf{A:}
+
+We calculate the Hamming distance from \(1101\) to each codeword:
+\begin{align*}
+d(1101,0000)&=3\\
+d(1101,1010)&=3\\
+d(1101,0101)&=2\\
+d(1101,1111)&=1
+\end{align*}
+
+Since the minimum distance is obtained for \(1111\), the most likely transmitted codeword is
+\[
+1111
+\]
+if only one error has occurred.
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Linear Block Code Distance Example]
+\textbf{Q:} Show that the code
+\[
+C=\{0000,1010,0101,1111\}
+\]
+is a linear block code of length \(n=4\), and determine its minimum distance.
+
+\textbf{A:}
+
+This is a \((4,2)\) code because there are \(4=2^2\) codewords.
+
+\textbf{Closure under modulo-2 addition}
+\begin{align*}
+0000+0000&=0000,& 0000+1010&=1010,\\
+0000+0101&=0101,& 0000+1111&=1111,\\
+1010+1010&=0000,& 1010+0101&=1111,\\
+1010+1111&=0101,& 0101+0101&=0000,\\
+0101+1111&=1010,& 1111+1111&=0000
+\end{align*}
+
+All sums remain inside \(C\), and the all-zero codeword is present. So the code is linear.
+
+\textbf{Pairwise distances}
+\begin{align*}
+d(0000,1010)&=2,& d(0000,0101)&=2,& d(0000,1111)&=4,\\
+d(1010,0101)&=4,& d(1010,1111)&=2,& d(0101,1111)&=2
+\end{align*}
+
+Therefore, the minimum distance is
+\[
+d_{\min}=2
+\]
+\end{questionanswerbox}
+
+\section{Systematic and Non-Systematic Codes}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{|L{6.2cm}|L{6.2cm}|}
+\hline
+\textbf{Systematic Codes} & \textbf{Non-Systematic Codes} \\
+\hline
+Codewords consist of information bits followed by redundant bits. & Codewords consist of a combination of information and redundant bits. \\
+\hline
+The information bits appear in the same positions as the original message. & The information bits are mixed with the redundant bits. \\
+\hline
+Easier to encode and decode because the structure is simple. & More complex to decode because information and redundancy are interleaved. \\
+\hline
+Example: Hamming code, where the information bits are explicitly visible. & Example: Reed-Solomon type constructions where redundancy is not directly visible. \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Non-Systematic Generator Matrix}
+
+\begin{definitionbox}[Non-Systematic Generator Matrix]
+A non-systematic generator matrix is one in which the message bits do not appear directly in the same positions inside the generated codeword. Instead, data bits and parity bits are mixed through linear combination.
+\end{definitionbox}
+
+For a \((6,3)\) code, one possible non-systematic generator matrix is
+\[
+G=
+\begin{bmatrix}
+1&1&0&1&0&0\\
+0&1&1&0&1&0\\
+1&0&1&0&0&1
+\end{bmatrix}
+\]
+
+So none of the \(3\) input bits directly appears as a visible copy in the output codeword.
+
+\begin{questionanswerbox}[Non-Systematic Generator Matrix Encoding Example]
+\textbf{Q:} Using the non-systematic \((6,3)\) generator matrix, encode the message \([111]\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+G=
+\begin{bmatrix}
+1&0&1&0&0\\
+0&1&0&0&1\\
+0&1&1&1&0
+\end{bmatrix},
+\qquad
+m=[111]
+\]
+
+\begin{align*}
+C &= mG\\
+  &= [111]
+\begin{bmatrix}
+1&0&1&0&0\\
+0&1&0&0&1\\
+0&1&1&1&0
+\end{bmatrix}\\
+  &= [10011]
+\end{align*}
+
+So the encoded codeword is
+\[
+C=10011
+\]
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Systematic Form of a Generator Matrix Example]
+\textbf{Q:} The \((5,3)\) linear code has the generator matrix
+\[
+G=
+\begin{bmatrix}
+1&0&1&0&0\\
+0&1&0&0&1\\
+0&1&1&1&0
+\end{bmatrix}
+\]
+Determine its systematic form.
+
+\textbf{A:}
+
+Apply row operations over modulo-\(2\):
+\begin{align*}
+R_3 &\leftarrow R_3+R_2
+\end{align*}
+
+Then,
+\[
+\begin{bmatrix}
+1&0&1&0&0\\
+0&1&0&0&1\\
+0&0&1&1&1
+\end{bmatrix}
+\]
+
+So the systematic form is
+\[
+G_s=
+\begin{bmatrix}
+1&0&0&1&1\\
+0&1&0&0&1\\
+0&0&1&1&1
+\end{bmatrix}
+\]
+\end{questionanswerbox}
+
+\section{Parity Check Matrix}
+
+\begin{definitionbox}[Parity Check Matrix]
+A parity check matrix \(H\) is used in decoding to test whether a received word satisfies the parity constraints of the code.
+\end{definitionbox}
+
+For a systematic generator matrix written as
+\[
+G=[I_k\mid P]
+\]
+the parity check matrix is
+\[
+H=[P^T\mid I_{n-k}]
+\]
+where:
+\begin{itemize}
+    \item \(P^T\) is the transpose of the parity part,
+    \item \(I_{n-k}\) is the identity matrix of order \(n-k\).
+\end{itemize}
+
+\begin{questionanswerbox}[Parity Check Matrix for the Hamming Code Example]
+\textbf{Q:} Determine the parity check matrix for the \((7,4)\) Hamming code.
+
+\textbf{A:}
+
+For the systematic generator matrix
+\[
+G=
+\begin{bmatrix}
+1&0&0&0&1&0&1\\
+0&1&0&0&1&1&1\\
+0&0&1&0&1&1&0\\
+0&0&0&1&0&1&1
+\end{bmatrix}
+=
+[I_4\mid P]
+\]
+the parity part is
+\[
+P=
+\begin{bmatrix}
+1&0&1\\
+1&1&1\\
+1&1&0\\
+0&1&1
+\end{bmatrix}
+\]
+
+So,
+\[
+P^T=
+\begin{bmatrix}
+1&1&1&0\\
+0&1&1&1\\
+1&1&0&1
+\end{bmatrix}
+\]
+
+Hence,
+\[
+H=
+\left[
+\begin{array}{c|c}
+P^T & I_3
+\end{array}
+\right]
+=
+\begin{bmatrix}
+1&1&1&0&1&0&0\\
+0&1&1&1&0&1&0\\
+1&1&0&1&0&0&1
+\end{bmatrix}
+\]
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Parity Check Matrix for a 6:3 Linear Code Example]
+\textbf{Q:} Generate the parity check matrix for the \((6,3)\) linear code.
+
+\textbf{A:}
+
+For the systematic generator matrix
+\[
+G=
+\begin{bmatrix}
+1&0&0&1&0&1\\
+0&1&0&1&0&1\\
+0&0&1&1&1&0
+\end{bmatrix}
+=
+[I_3\mid P]
+\]
+we have
+\[
+P=
+\begin{bmatrix}
+1&0&1\\
+1&0&1\\
+1&1&0
+\end{bmatrix}
+\]
+
+So,
+\[
+P^T=
+\begin{bmatrix}
+1&1&1\\
+0&0&1\\
+1&1&0
+\end{bmatrix}
+\]
+
+Therefore,
+\[
+H=
+\left[
+\begin{array}{c|c}
+P^T & I_3
+\end{array}
+\right]
+=
+\begin{bmatrix}
+1&1&1&1&0&0\\
+0&0&1&0&1&0\\
+1&1&0&0&0&1
+\end{bmatrix}
+\]
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Proving the Relation \(GH^T=0\) Example]
+\textbf{Q:} Prove that \(GH^T=0=C H^T\).
+
+\textbf{A:}
+
+Using the systematic forms
+\[
+G=[I_k\mid P],\qquad H=[P^T\mid I_{n-k}]
+\]
+we get
+\begin{align*}
+GH^T
+&=
+[I_k\mid P]
+\begin{bmatrix}
+P\\
+I_{n-k}
+\end{bmatrix}\\
+&= I_kP + PI_{n-k}\\
+&= P+P\\
+&=0
+\end{align*}
+because all operations are modulo-\(2\).
+
+Now if a codeword is
+\[
+C=iG
+\]
+then
+\begin{align*}
+CH^T &= (iG)H^T\\
+     &= i(GH^T)\\
+     &= i\cdot 0\\
+     &= 0
+\end{align*}
+
+Hence,
+\[
+GH^T=0
+\qquad\text{and}\qquad
+CH^T=0
+\]
+\end{questionanswerbox}
 
 \end{document}
