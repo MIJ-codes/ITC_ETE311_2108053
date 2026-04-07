@@ -15,6 +15,7 @@
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{multirow}
+\usepackage{emoji}
 \usepackage{tikz}
 \usepackage{float}
 \usepackage{calligra}
@@ -3452,6 +3453,20 @@ Even parity means the total number of \(1\)'s in the codeword must be even. So w
 \end{itemize}
 \end{questionanswerbox}
 
+\begin{formulabox}[Code Rate of an n by k Block Code]
+In an \((n,k)\) block code,
+\[
+R=\frac{k}{n}
+\]
+where:
+\begin{itemize}
+    \item \(R\) = code rate or information rate
+    \item \(k\) = number of information bits
+    \item \(n\) = total number of transmitted bits
+    \item \(r=n-k\) = number of redundant bits
+\end{itemize}
+\end{formulabox}
+
 % Source PDF page 54
 \subsection{Vector Representation of Codewords}
 
@@ -3485,6 +3500,17 @@ E &= 0100\\
 V &= C+E = 1010 + 0100 = 1110
 \end{align*}
 where the addition is bitwise modulo-\(2\).
+
+\begin{formulabox}[What Is Modulo-2 Addition?]
+Modulo-\(2\) addition means ordinary addition without carrying. It is the same as XOR.
+\[
+0+0=0,\qquad 0+1=1,\qquad 1+0=1,\qquad 1+1=0
+\]
+\begin{itemize}
+    \item \(1+1=0\) because \(2 \bmod 2 = 0\).
+    \item This is why binary code operations become simple in linear coding and parity checking.
+\end{itemize}
+\end{formulabox}
 
 % Source PDF page 55
 \subsection{Single Parity Check Code}
@@ -3714,49 +3740,70 @@ At the receiver end, if one bit is corrupted, majority voting can still recover 
 \section{Linear Coding}
 
 \begin{definitionbox}[Linear Code]
-Linear codes are error-correcting codes in which any linear combination of codewords is also a valid codeword. They are represented as \((n,k)\) linear codes.
+Linear codes are \textbf{error-correcting} codes in which any linear combination of codewords is also a valid codeword. They are represented as \((n,k)\) linear codes.
 \end{definitionbox}
 
-\begin{formulabox}[Closure Property of Linear Codes]
-\[
-C_i + C_j = C_k
-\]
-\begin{itemize}
-    \item \(C_i\) and \(C_j\) are codewords,
-    \item the addition is bitwise modulo-\(2\),
-    \item \(C_k\) is also a codeword in the same code.
-\end{itemize}
-\end{formulabox}
-
+\begin{infobox}[Core ideas]
+One key idea of a linear code is the closure property: adding two valid codewords using modulo-\(2\) gives another valid codeword.\\
+\par\vspace{\baselineskip}
 Linear coding is useful for:
 \begin{itemize}
     \item efficient encoding and decoding using matrix operations,
     \item error detection and correction,
     \item digital transmission systems such as Hamming, BCH, and Reed-Solomon codes.
 \end{itemize}
-
-\subsubsection{Properties of Linear Code}
-\begin{enumerate}
-    \item The all-zero codeword is always present in a linear code.
-    \item If \(C_k=C_i+C_j\), then the distance between \(C_i\) and \(C_j\) equals the weight of \(C_k\).
-    \item For a linear code, the minimum distance satisfies \(d_{\min}=W_{\min}\), where \(W_{\min}\) is the minimum non-zero weight.
-\end{enumerate}
+\end{infobox}
 
 \begin{definitionbox}[Distance and Weight]
 \begin{itemize}
-    \item \textbf{Distance:} the number of positions in which two codewords differ.
-    \item \textbf{Weight:} the number of non-zero bits in a codeword.
+    \item \textbf{Distance:} the number of positions in which two codewords differ. (Number of bits that are different between two codewords)
+    \item \textbf{Weight:} the number of non-zero bits in a codeword. (How many bits are \(1\) in a codeword)
 \end{itemize}
 \end{definitionbox}
 
-\begin{infobox}[Simple Reading]
+\subsection{Properties of Linear Code}
+
+\begin{enumerate}
+    \item The all-zero codeword is always present in a linear code.
+    \item Closure Property of Linear Codes: The summation of two codewords \(C_i\) and \(C_j\) is another codeword \(C_k\).
+    \begin{formulabox}
+        \[
+C_i + C_j = C_k
+\]
+\begin{itemize}
+    \item \(C_i\) and \(C_j\) are valid codewords.
+    \item The addition is modulo-\(2\).
+    \item The result \(C_k\) is also a valid codeword of the same code.
+\end{itemize}
+\end{formulabox}
+    \item \begin{formulabox}
+        If \(C_k=C_i+C_j\), then
+    \[
+    d(C_i,C_j)=W(C_i+C_j)=W(C_k)
+    \]
+    \end{formulabox}
+    That means the distance between two codewords is equal to the weight of their modulo-\(2\) sum.
+    \item For a linear code, the minimum distance satisfies \(d_{\min}=W_{\min}\), where:
+    \begin{itemize}
+        \item \(d_{\min}\) = the smallest distance between any two valid codewords
+        \item \(W_{\min}\) = the smallest number of \(1\)'s in any non-zero codeword
+    \end{itemize}
+    Here, the all-zero codeword is excluded when finding \(W_{\min}\), not necessarily \(1111\).
+\end{enumerate}
+
+
+\begin{questionanswerbox}
 Why does \(d_{\min}=W_{\min}\) matter?
 \begin{itemize}
-    \item Subtracting one codeword from another in binary is the same as modulo-\(2\) addition.
-    \item That difference is itself another codeword in a linear code.
-    \item So the distance between two codewords can be measured by counting the \(1\)'s in their sum.
+    \item Take any two codewords and add them using modulo-\(2\).
+    \item The result shows where the two codewords are different: different bits give \(1\), same bits give \(0\).
+    \item So,
+    \[
+    d(C_i,C_j)=W(C_i+C_j)
+    \]
+    \item That means the distance between two codewords is just the number of \(1\)'s in their modulo-\(2\) sum.
 \end{itemize}
-\end{infobox}
+\end{questionanswerbox}
 
 % Source PDF page 60
 \begin{questionanswerbox}[(4,3) Even and Odd Parity Linearity Example]
@@ -3817,11 +3864,43 @@ d_{\min}\ne W_{\min}
 Hence, the \((4,3)\) odd parity code is non-linear.
 \end{questionanswerbox}
 
+\begin{questionanswerbox}[All-Zero Codeword and Linearity Example]
+\textbf{Q:} Does the presence of the all-zero codeword guarantee that a code is linear?
+
+\textbf{A:}
+
+No. The all-zero codeword is necessary for a linear code, but it is not enough by itself.
+
+To check linearity, the main test is the \textbf{closure property}:
+\begin{itemize}
+    \item if two valid codewords are added using modulo-\(2\),
+    \item the result must also be a valid codeword.
+\end{itemize}
+
+\textbf{Example:}
+\[
+1010 + 1111 = 0101
+\]
+
+If \(1010\) and \(1111\) are valid codewords but \(0101\) is \textbf{not} a valid codeword, then the code is \textbf{not linear}.
+
+So a code may contain \(0000\) and still be non-linear if closure under modulo-\(2\) addition fails.
+\end{questionanswerbox}
+
 \section{Hamming Code}
 
 \begin{definitionbox}[Hamming Code]
-Hamming code is an error-detecting and error-correcting code that adds redundant bits, called parity bits, to data so that single-bit errors can be detected and corrected.
+Hamming code is an \textbf{error-detecting} and \textbf{error-correcting} code that adds redundant bits, called parity bits, to data so that single-bit errors can be detected and corrected.
 \end{definitionbox}
+
+\begin{definitionbox}[Hamming Weight and Minimum Distance]
+\begin{itemize}
+    \item \textbf{Hamming weight:} the number of non-zero bits in a binary codeword. (How many bits are \(1\) in a codeword)
+    \item \textbf{Minimum distance:} the smallest Hamming distance between any two distinct codewords in a code. (Number of bits that differ between the two closest codewords)
+\end{itemize}
+\end{definitionbox}
+
+\begin{infobox}[Key properties of Hamming codes]
 
 Hamming codes are \((n,k)\) linear block codes with the following properties:
 \begin{enumerate}
@@ -3841,22 +3920,21 @@ Hamming codes are \((n,k)\) linear block codes with the following properties:
     q \ge 3
     \]
 \end{enumerate}
-
-\begin{definitionbox}[Hamming Weight and Minimum Distance]
-\begin{itemize}
-    \item \textbf{Hamming weight:} the number of non-zero bits in a binary codeword.
-    \item \textbf{Minimum distance:} the smallest Hamming distance between any two distinct codewords in a code.
-\end{itemize}
-\end{definitionbox}
+\end{infobox}
 
 \subsection{Systematic Code}
 
-For a \((7,4)\) systematic Hamming code, the information bits are written first and the parity bits are appended after them:
+\begin{definitionbox}[Systematic Code]
+A systematic code is a type of code in which the information bits are transmitted in their original form.\\
+For a systematic Hamming code, the information bits are written first and the parity bits are appended after them.
+\end{definitionbox}
+
+\begin{formulabox}[Parity Equations for the 7:4 Systematic Hamming Code]
+    For a \((7,4)\) systematic Hamming code,
 \[
 C=i_1i_2i_3i_4p_1p_2p_3
 \]
 
-\begin{formulabox}[Parity Equations for the 7:4 Systematic Hamming Code]
 \begin{align*}
 p_1 &= i_1+i_2+i_3 \pmod 2\\
 p_2 &= i_2+i_3+i_4 \pmod 2\\
@@ -3891,15 +3969,15 @@ C=0101100
 \]
 \end{questionanswerbox}
 
-\subsection{Syndrome Decoding}
+\subsection{Received Data (Syndrome Decoding)}
 
+\begin{formulabox}[Syndrome for the 7:4 Systematic Hamming Code]
 If the received data is
 \[
 V=(V_1,V_2,V_3,V_4,V_5,V_6,V_7)
 \]
 then the three parity-check sums are:
 
-\begin{formulabox}[Syndrome for the 7:4 Systematic Hamming Code]
 \begin{align*}
 S_1 &= (V_1+V_2+V_3)+V_5\\
 S_2 &= (V_2+V_3+V_4)+V_6\\
@@ -3913,9 +3991,9 @@ S=(S_1,S_2,S_3)
     \item \(S=000\) means no single-bit parity error is detected.
     \item A non-zero syndrome points to the error position.
 \end{itemize}
-\end{formulabox}
 
-\begin{center}
+\begin{table}[H]
+\centering
 \renewcommand{\arraystretch}{1.15}
 \setlength{\tabcolsep}{8pt}
 \begin{tabular}{|c|c|c|}
@@ -3937,11 +4015,14 @@ S=(S_1,S_2,S_3)
 \(e_6\) & \((1000000)\) & \(5\ (101)\) \\
 \hline
 \end{tabular}
-\end{center}
+\caption{Syndrome table for single-bit errors in a (7,4) Hamming code}
+\label{Syndrome_table_for_single-bit_errors_in_a_(7,4)_Hamming_code}
+\end{table}
+\end{formulabox}
 
-\textbf{Bit-flip idea}
+\subsubsection{Bit-flip idea}
 \begin{itemize}
-    \item Receive a codeword with a single-bit error.
+    \item Receive a codeword with a \textbf{single-bit error}.
     \item Calculate the syndrome.
     \item Match the syndrome with the error table.
     \item Flip the bit at that error position to correct it.
@@ -3994,12 +4075,12 @@ S=001
 
 From the syndrome table,
 \[
-S=001 \longrightarrow e=(0000001)
+S=001 \longrightarrow E=(0000001)
 \]
 
 Now,
 \begin{align*}
-C &= V \oplus e\\
+C &= V \oplus E\\
   &= 1011001 \oplus 0000001\\
   &= 1011000
 \end{align*}
@@ -4010,19 +4091,97 @@ C=1011000
 \]
 \end{questionanswerbox}
 
-\begin{infobox}[Can an Error Give Zero Syndrome?]
-Yes, it is possible for a multi-bit error to give zero syndrome.
+\begin{questionanswerbox}
+\textbf{Q: } Can an Error Give Zero Syndrome?\\
+\textbf{A: } \\
+Yes. A multi-bit error can still give zero syndrome.
+
+\textbf{Here,}
 \begin{itemize}
-    \item If the error pattern itself behaves like a valid codeword, the received word may still satisfy all parity checks.
-    \item For example, the note checks \(V=0110001\) and gets \(S=000\).
-    \item So zero syndrome guarantees only that no \emph{detectable single-bit parity error} is found. It does not guarantee that every possible error is absent.
+    \item \(S\) = syndrome
+    \item \(V\) = received codeword
+    \item \(C\) = transmitted valid codeword
+    \item \(E\) = error pattern
+    \item \(H\) = parity-check matrix
+    \item \(H^T\) = transpose of the parity-check matrix
+\end{itemize}
+
+If the received word is
+\[
+V=C+E
+\]
+then
+\begin{align*}
+S &= VH^T\\
+  &= (C+E)H^T\\
+  &= CH^T+EH^T\\
+  &= EH^T
+\end{align*}
+because \(CH^T=0\) for a valid codeword.
+
+For zero syndrome, we check whether
+\[
+S=(S_1,S_2,S_3)=(000)
+\]
+
+This happens when
+\[
+EH^T = 0
+\]
+i.e., the error pattern \(E\) itself satisfies the parity-check equations.
+\par\vspace{\baselineskip}
+\textbf{Example:}
+
+Let the transmitted codeword be
+\[
+C=0000000
+\]
+
+Let the error pattern be
+\[
+E=0110001
+\]
+
+Then the received word is
+\[
+V=C+E=0110001
+\]
+
+Now check the syndrome:
+
+\begin{align*}
+S_1 &= V_1+V_2+V_3+V_5 \\
+    &= 0+1+1+0 \\
+    &= 0 \\
+S_2 &= V_2+V_3+V_4+V_6 \\
+    &= 1+1+0+0 \\
+    &= 0 \\
+S_3 &= V_1+V_2+V_4+V_7 \\
+    &= 0+1+0+1 \\
+    &= 0
+\end{align*}
+
+Thus,
+\[
+S=000
+\]
+
+So even though an error occurred, the syndrome is zero.
+
+\begin{infobox}[What This Means]
+\begin{itemize}
+    \item Zero syndrome does \textbf{not} always mean that no error occurred.
+    \item It only means that the received word is a \textbf{valid codeword}.
+    \item A multi-bit error can go undetected if the error pattern itself is also a valid codeword.
+    \item This is called an \textbf{undetected error}.
 \end{itemize}
 \end{infobox}
+\end{questionanswerbox}
 
 \subsection{Generator Matrix}
 
 \begin{definitionbox}[Generator Matrix]
-A generator matrix \(G\) is used to generate codewords from input message bits in a linear code.
+A generator matrix \(G\) is used to generate codewords from input message bits in a \textbf{linear code}.
 \end{definitionbox}
 
 \begin{formulabox}[Codeword from Generator Matrix]
@@ -4033,21 +4192,293 @@ C=iG
     \item \(i\) = \(1\times k\) information row vector
     \item \(G\) = \(k\times n\) generator matrix
     \item \(C\) = \(1\times n\) generated codeword
+    \item \(n\) = total number of bits in the codeword
+    \item \(k\) = number of information bits
 \end{itemize}
 \end{formulabox}
 
-For the \((7,4)\) systematic Hamming code,
+\subsubsection{The Systematic Generator Matrix Structure}
+
+\begin{formulabox}[Structure of the Systematic Generator Matrix]
+For a $(7,4)$ systematic Hamming code, the Generator Matrix $G$ is composed of the data identity and the parity recipe:
+\[
+G = [I_4 \mid P]
+\]
+\begin{itemize}
+    \item \textbf{$I_4$ ($4 \times 4$ Identity):} Preserves the 4 original information bits.
+    \item \textbf{$P$ ($4 \times 3$ Parity):} Generates the 3 check bits.
+    \item \textbf{Systematic:} The resulting codeword follows the format $[\text{Data} \mid \text{Parity}]$.
+\end{itemize}
+\end{formulabox}
+
+\[
+G = \left[ \begin{array}{cccc|ccc}
+1 & 0 & 0 & 0 & 1 & 0 & 1 \\
+0 & 1 & 0 & 0 & 1 & 1 & 1 \\
+0 & 0 & 1 & 0 & 1 & 1 & 0 \\
+0 & 0 & 0 & 1 & 0 & 1 & 1
+\end{array} \right]
+\]
+
+\subsubsection{Deriving the Parity Matrix ($P$)}
+
+\begin{formulabox}[Building the Parity Matrix Part]
+The $P$ matrix is constructed by treating each parity equation as a vertical column. 
+
+\textbf{1. Write the Parity Equations:}
+\begin{align*}
+p_1 &= i_1 + i_2 + i_3 \\
+p_2 &= i_2 + i_3 + i_4 \\
+p_3 &= i_1 + i_2 + i_4
+\end{align*}
+
+\textbf{2. Map Coefficients to Columns:}
+For each equation, a coefficient is $1$ if the bit is included and $0$ if it is absent.
+\begin{itemize}
+    \item \textbf{Col 1 (from $p_1$):} Contains $i_1, i_2, i_3$ does not contain $i_4$ $\rightarrow [1, 1, 1, 0]^T$
+    \item \textbf{Col 2 (from $p_2$):} Contains $i_2, i_3, i_4$ does not contain $i_1$ $\rightarrow [0, 1, 1, 1]^T$
+    \item \textbf{Col 3 (from $p_3$):} Contains $i_1, i_2, i_4$ does not contain $i_3$ $\rightarrow [1, 1, 0, 1]^T$
+\end{itemize}
+
+\textbf{3. Resulting Parity Matrix:}
+\[
+P = \begin{bmatrix}
+1 & 0 & 1 \\
+1 & 1 & 1 \\
+1 & 1 & 0 \\
+0 & 1 & 1
+\end{bmatrix}
+\]
+\end{formulabox}
+
+\subsubsection{Encoding and Application}
+
+\begin{formulabox}[Using the Generator Matrix]
+To encode a 4-bit information vector $i = (i_1, i_2, i_3, i_4)$, multiply by $G$:
+\[
+C = iG = [i \mid iP]
+\]
+The parity bits $p = (p_1, p_2, p_3)$ are calculated specifically as:
+\[
+p = iP
+\]
+\textit{Note: All calculations are performed using modulo-2 arithmetic ($1+1=0$).}
+\end{formulabox}
+
+\begin{infobox}[Exam Tip: Rebuilding $G$]
+Don't memorize the numbers in the matrix. Instead:
+\begin{itemize}
+    \item Sketch a $4 \times 4$ Identity matrix first.
+    \item Use your parity equations to "tick off" which row gets a $1$ for each parity column.
+    \item This ensures you can rebuild the matrix even if the specific parity equations change.
+\end{itemize}
+\end{infobox}
+
+\subsubsection{Step-by-Step Derivation of the \((7,4)\) Generator Matrix}
+
+For a systematic \((7,4)\) code, we want
+\[
+G=[I_4\mid P]
+\]
+So the main work is to build the parity part \(P\).
+
+\paragraph{Step 1}
+Write the parity equations:
+\begin{align*}
+p_1 &= i_1+i_2+i_3\\
+p_2 &= i_2+i_3+i_4\\
+p_3 &= i_1+i_2+i_4
+\end{align*}
+
+\paragraph{Step 2}
+Turn each parity equation into one column of \(P\):
+\begin{enumerate}
+    \item For \(p_1\), the bits used are \(i_1,i_2,i_3\), but not \(i_4\). So the first column is
+    \[
+    \begin{bmatrix}
+    1\\1\\1\\0
+    \end{bmatrix}
+    \]
+    \item For \(p_2\), the bits used are \(i_2,i_3,i_4\), but not \(i_1\). So the second column is
+    \[
+    \begin{bmatrix}
+    0\\1\\1\\1
+    \end{bmatrix}
+    \]
+    \item For \(p_3\), the bits used are \(i_1,i_2,i_4\), but not \(i_3\). So the third column is
+    \[
+    \begin{bmatrix}
+    1\\1\\0\\1
+    \end{bmatrix}
+    \]
+\end{enumerate}
+
+\paragraph{Step 3}
+Place those columns side by side:
+\[
+P=
+\begin{bmatrix}
+1&0&1\\
+1&1&1\\
+1&1&0\\
+0&1&1
+\end{bmatrix}
+\]
+
+\paragraph{Step 4}
+Attach \(P\) to the right of \(I_4\):
 \[
 G=
-\begin{bmatrix}
+\left[
+\begin{array}{cccc|ccc}
 1&0&0&0&1&0&1\\
 0&1&0&0&1&1&1\\
 0&0&1&0&1&1&0\\
 0&0&0&1&0&1&1
+\end{array}
+\right]
+\]
+
+\paragraph{Short Reading}
+The left side keeps the information bits. The right side tells how parity bits are formed from those information bits.
+
+\subsubsection{Step-by-Step Derivation of the \((6,3)\) Generator Matrix}
+
+For a systematic \((6,3)\) code, we want
+\[
+G=[I_3\mid P]
+\]
+
+\paragraph{Step 1}
+Write the parity equations:
+\begin{align*}
+p_1 &= i_1+i_2+i_3\\
+p_2 &= i_3\\
+p_3 &= i_1+i_2
+\end{align*}
+
+\paragraph{Step 2}
+Turn them into columns:
+\begin{enumerate}
+    \item From \(p_1\), the first column is
+    \[
+    \begin{bmatrix}
+    1\\1\\1
+    \end{bmatrix}
+    \]
+    \item From \(p_2\), only \(i_3\) appears, so the second column is
+    \[
+    \begin{bmatrix}
+    0\\0\\1
+    \end{bmatrix}
+    \]
+    \item From \(p_3\), only \(i_1,i_2\) appear, so the third column is
+    \[
+    \begin{bmatrix}
+    1\\1\\0
+    \end{bmatrix}
+    \]
+\end{enumerate}
+
+\paragraph{Step 3}
+So,
+\[
+P=
+\begin{bmatrix}
+1&0&1\\
+1&0&1\\
+1&1&0
 \end{bmatrix}
 \]
 
-For the \((4,3)\) even-parity code, one generator matrix is
+\paragraph{Step 4}
+Attach \(P\) to the right of \(I_3\):
+\[
+G=
+\left[
+\begin{array}{ccc|ccc}
+1&0&0&1&0&1\\
+0&1&0&1&0&1\\
+0&0&1&1&1&0
+\end{array}
+\right]
+\]
+
+\paragraph{Short Reading}
+This is the same \((6,3)\) generator matrix used later when deriving the parity-check matrix.
+
+\subsubsection{Step-by-Step Derivation of the \((4,2)\) Generator Matrix}
+
+For the \((4,2)\) linear code used later, the codewords are
+\[
+\{0000,1010,0101,1111\}
+\]
+This fits a systematic form with two information bits and two parity bits:
+\[
+G=[I_2\mid P]
+\]
+
+\paragraph{Step 1}
+Write the parity equations:
+\begin{align*}
+p_1 &= i_1\\
+p_2 &= i_2
+\end{align*}
+
+\paragraph{Step 2}
+Build the parity columns:
+\begin{enumerate}
+    \item Since \(p_1\) depends only on \(i_1\), the first column is
+    \[
+    \begin{bmatrix}
+    1\\0
+    \end{bmatrix}
+    \]
+    \item Since \(p_2\) depends only on \(i_2\), the second column is
+    \[
+    \begin{bmatrix}
+    0\\1
+    \end{bmatrix}
+    \]
+\end{enumerate}
+
+\paragraph{Step 3}
+So,
+\[
+P=
+\begin{bmatrix}
+1&0\\
+0&1
+\end{bmatrix}
+\]
+
+\paragraph{Step 4}
+Attach \(P\) to the right of \(I_2\):
+\[
+G=
+\left[
+\begin{array}{cc|cc}
+1&0&1&0\\
+0&1&0&1
+\end{array}
+\right]
+\]
+
+\paragraph{Short Reading}
+Here the parity bits are just copies of the two information bits, which is why the final codewords become \(0000,1010,0101,1111\).
+
+\subsubsection{Generator matrix for \((4,3)\) coding}
+For \((4,3)\) coding, the systematic form is
+\[
+G=
+\left[
+\begin{array}{c|c}
+I_3 & P
+\end{array}
+\right]
+\]
+
+If even parity is used, then one generator matrix is
 \[
 G=
 \begin{bmatrix}
@@ -4056,6 +4487,7 @@ G=
 0&0&1&1
 \end{bmatrix}
 \]
+because the parity column is chosen so that the generated codewords satisfy even parity.
 
 \begin{questionanswerbox}[Generator Matrix Codeword Example]
 \textbf{Q:} Generate the codeword for \(i=1110\) using the \((7,4)\) coding scheme.
@@ -4069,13 +4501,14 @@ i=[1110]
 
 \begin{align*}
 C &= iG\\
-  &= [1110]
+  &= \begin{bmatrix}1&1&1&0\end{bmatrix}
 \begin{bmatrix}
 1&0&0&0&1&0&1\\
 0&1&0&0&1&1&1\\
 0&0&1&0&1&1&0\\
 0&0&0&1&0&1&1
 \end{bmatrix}\\
+  &= \begin{bmatrix}1&1&1&0&1&0&0\end{bmatrix}\\
   &= 1110100
 \end{align*}
 
@@ -4085,28 +4518,27 @@ C=1110100
 \]
 \end{questionanswerbox}
 
-\section{Code Rate and Redundancy}
-
 \begin{questionanswerbox}[Information Rate and Redundancy Example]
 \textbf{Q:} Explain how adding more parity increases redundancy but reduces information rate.
 
 \textbf{A:}
 
 Adding more parity bits increases redundancy because more bits are used for error detection and correction rather than carrying new information.
-
+\par\vspace{\baselineskip}
 In an \((n,k)\) block code,
 \[
 R=\frac{k}{n}
 \]
 where:
 \begin{itemize}
+    \item \(R\) = code rate or information rate
     \item \(k\) = number of information bits
     \item \(n\) = total number of transmitted bits
     \item \(r=n-k\) = number of redundant bits
 \end{itemize}
-
+\par\vspace{\baselineskip}
 As \(r\) increases, \(n\) increases while \(k\) stays the same. So the information rate \(R\) decreases.
-
+\par\vspace{\baselineskip}
 \textbf{Examples}
 \begin{align*}
 (3,1):\quad R&=\frac{1}{3}\approx 33\%\\
@@ -4180,8 +4612,8 @@ is a linear block code of length \(n=4\), and determine its minimum distance.
 \textbf{A:}
 
 This is a \((4,2)\) code because there are \(4=2^2\) codewords.
-
-\textbf{Closure under modulo-2 addition}
+\par\vspace{\baselineskip}
+\textbf{Closure property under modulo-2 addition}
 \begin{align*}
 0000+0000&=0000,& 0000+1010&=1010,\\
 0000+0101&=0101,& 0000+1111&=1111,\\
@@ -4191,7 +4623,7 @@ This is a \((4,2)\) code because there are \(4=2^2\) codewords.
 \end{align*}
 
 All sums remain inside \(C\), and the all-zero codeword is present. So the code is linear.
-
+\par\vspace{\baselineskip}
 \textbf{Pairwise distances}
 \begin{align*}
 d(0000,1010)&=2,& d(0000,0101)&=2,& d(0000,1111)&=4,\\
@@ -4207,9 +4639,9 @@ d_{\min}=2
 \section{Systematic and Non-Systematic Codes}
 
 \begin{center}
-\renewcommand{\arraystretch}{1.2}
+\renewcommand{\arraystretch}{1.6}
 \setlength{\tabcolsep}{8pt}
-\begin{tabular}{|L{6.2cm}|L{6.2cm}|}
+\begin{tabular}{|L{8cm}|L{8cm}|}
 \hline
 \textbf{Systematic Codes} & \textbf{Non-Systematic Codes} \\
 \hline
@@ -4225,6 +4657,9 @@ Example: Hamming code, where the information bits are explicitly visible. & Exam
 \end{center}
 
 \section{Non-Systematic Generator Matrix}
+\begin{definitionbox}[Non-Systematic Code]
+A non-systematic code is a linear code where the information bits do not appear directly in the same positions inside the generated codeword.
+\end{definitionbox}
 
 \begin{definitionbox}[Non-Systematic Generator Matrix]
 A non-systematic generator matrix is one in which the message bits do not appear directly in the same positions inside the generated codeword. Instead, data bits and parity bits are mixed through linear combination.
@@ -4240,10 +4675,10 @@ G=
 \end{bmatrix}
 \]
 
-So none of the \(3\) input bits directly appears as a visible copy in the output codeword.
+So none of the \(3\) information bits directly appears as a visible copy in the output codeword.
 
 \begin{questionanswerbox}[Non-Systematic Generator Matrix Encoding Example]
-\textbf{Q:} Using the non-systematic \((6,3)\) generator matrix, encode the message \([111]\).
+\textbf{Q:} Using the non-systematic \((6,3)\) generator matrix, encode the information word \([111]\).
 
 \textbf{A:}
 
@@ -4256,11 +4691,11 @@ G=
 0&1&1&1&0
 \end{bmatrix},
 \qquad
-m=[111]
+i=[111]
 \]
 
 \begin{align*}
-C &= mG\\
+C &= iG\\
   &= [111]
 \begin{bmatrix}
 1&0&1&0&0\\
@@ -4276,6 +4711,24 @@ C=10011
 \]
 \end{questionanswerbox}
 
+\subsection{Process of Making a Non-Systematic Generator Matrix Systematic}
+
+\begin{infobox}[Short Process]
+To convert a non-systematic generator matrix into systematic form:
+\begin{itemize}
+    \item Make the left side look like an identity matrix.
+    \item Find a \(1\) in the current column.
+    \item Keep that row as the pivot row.
+    \item Use modulo-\(2\) row addition to make the other entries in that column \(0\).
+    \item Move to the next column and repeat.
+    \item When the left part becomes \(I_k\), the right part becomes \(P\).
+\end{itemize}
+\[
+G_s=[I_k\mid P]
+\]
+Find \(1\), clear the column, move right, repeat.
+\end{infobox}
+
 \begin{questionanswerbox}[Systematic Form of a Generator Matrix Example]
 \textbf{Q:} The \((5,3)\) linear code has the generator matrix
 \[
@@ -4290,12 +4743,32 @@ Determine its systematic form.
 
 \textbf{A:}
 
-Apply row operations over modulo-\(2\):
+\textbf{Given,}
+\[
+G=
+\begin{bmatrix}
+1&0&1&0&0\\
+0&1&0&0&1\\
+0&1&1&1&0
+\end{bmatrix}
+\]
+
+\textbf{Simple idea:}
+\begin{itemize}
+    \item A generator matrix is in \textbf{systematic form} when its left part becomes an identity matrix.
+    \item So for a \((5,3)\) code, we want
+    \[
+    G_s=[I_3\mid P]
+    \]
+    \item We use modulo-\(2\) row operations to convert the left \(3\times 3\) part into \(I_3\).
+\end{itemize}
+
+\textbf{Step 1: Make the third row independent}
 \begin{align*}
 R_3 &\leftarrow R_3+R_2
 \end{align*}
 
-Then,
+This gives
 \[
 \begin{bmatrix}
 1&0&1&0&0\\
@@ -4304,7 +4777,12 @@ Then,
 \end{bmatrix}
 \]
 
-So the systematic form is
+\textbf{Step 2: Clear the \(1\) above the third pivot}
+\begin{align*}
+R_1 &\leftarrow R_1+R_3
+\end{align*}
+
+So we get
 \[
 G_s=
 \begin{bmatrix}
@@ -4313,6 +4791,17 @@ G_s=
 0&0&1&1&1
 \end{bmatrix}
 \]
+
+Now the left part is
+\[
+I_3=
+\begin{bmatrix}
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}
+\]
+so this is the required \textbf{systematic form}.
 \end{questionanswerbox}
 
 \section{Parity Check Matrix}
@@ -4321,6 +4810,7 @@ G_s=
 A parity check matrix \(H\) is used in decoding to test whether a received word satisfies the parity constraints of the code.
 \end{definitionbox}
 
+\begin{formulabox}[Parity Check Matrix for Systematic Codes]
 For a systematic generator matrix written as
 \[
 G=[I_k\mid P]
@@ -4334,6 +4824,7 @@ where:
     \item \(P^T\) is the transpose of the parity part,
     \item \(I_{n-k}\) is the identity matrix of order \(n-k\).
 \end{itemize}
+\end{formulabox}
 
 \begin{questionanswerbox}[Parity Check Matrix for the Hamming Code Example]
 \textbf{Q:} Determine the parity check matrix for the \((7,4)\) Hamming code.
@@ -4452,10 +4943,33 @@ Using the systematic forms
 \[
 G=[I_k\mid P],\qquad H=[P^T\mid I_{n-k}]
 \]
+\paragraph{Side Notes}
+\begin{itemize}
+    \item Since \(H=[P^T\mid I_{n-k}]\), taking transpose gives
+    \[
+    H^T=
+    \begin{bmatrix}
+    (P^T)^T\\
+    I_{n-k}^T
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    P\\
+    I_{n-k}
+    \end{bmatrix}
+    \]
+    \item \((P^T)^T=P\)
+    \item \(I_{n-k}^T=I_{n-k}\)
+    \item Identity matrices do not change a compatible matrix:
+    \[
+    I_kP=P,\qquad PI_{n-k}=P
+    \]
+\end{itemize}
+
 we get
 \begin{align*}
 GH^T
-&=
+&= 
 [I_k\mid P]
 \begin{bmatrix}
 P\\
@@ -4485,6 +4999,2207 @@ GH^T=0
 \qquad\text{and}\qquad
 CH^T=0
 \]
+\end{questionanswerbox}
+
+\section{Error Syndromes}
+
+\begin{formulabox}[Linear Code Error Syndrome]
+If \(V\) is the received codeword, then the error syndrome is
+\[
+S=VH^T
+\]
+\begin{itemize}
+    \item \(S\) = syndrome
+    \item \(V\) = received codeword
+    \item \(H\) = parity-check matrix
+    \item \(H^T\) = transpose of the parity-check matrix
+    \item If \(V\) is a valid codeword, then \(S = VH^T = 0\).
+    \item If \(V\) is not a valid codeword, then \(S = VH^T \ne 0\).
+\end{itemize}
+\par\vspace{\baselineskip}
+If the received word is
+\[
+V=C+E
+\]
+\begin{itemize}
+    \item \(C\) = transmitted valid codeword
+    \item \(E\) = error pattern
+\end{itemize}
+\par\vspace{\baselineskip}
+then
+\begin{align*}
+VH^T &= (C+E)H^T\\
+     &= CH^T+EH^T\\
+     &= EH^T
+\end{align*}
+because \(CH^T=0\).
+\par\vspace{\baselineskip}
+Thus, the syndrome can also be written as
+\[
+S=VH^T=EH^T
+\]
+\end{formulabox}
+
+\begin{questionanswerbox}[Finding Error Syndromes of Received Words Example]
+\textbf{Q:} Find the error syndromes of \(V_1=1101101\) and \(V_2=0100101\), where \(V_1\) and \(V_2\) are received codewords of a \((7,4)\) code that have incurred errors.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+H^T=
+\begin{bmatrix}
+1&0&1\\
+1&1&1\\
+1&1&0\\
+0&1&1\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}
+\]
+
+We use
+\[
+S=VH^T
+\]
+
+For \(V_1\),
+\begin{align*}
+S_1 &= V_1H^T\\
+    &= [1101101]
+\begin{bmatrix}
+1&0&1\\
+1&1&1\\
+1&1&0\\
+0&1&1\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}\\
+    &= [100]
+\end{align*}
+
+From the \((7,4)\) syndrome table,
+\[
+[100]\longrightarrow 0000100
+\]
+so the error is in the third bit from the right.
+
+Therefore, the corrected valid codeword for \(V_1\) is
+\begin{align*}
+C &= 1101101 \oplus 0000100\\
+  &= 1101001
+\end{align*}
+
+For \(V_2\),
+\begin{align*}
+S_2 &= V_2H^T\\
+    &= [0100101]
+\begin{bmatrix}
+1&0&1\\
+1&1&1\\
+1&1&0\\
+0&1&1\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}\\
+    &= [010]
+\end{align*}
+
+From the \((7,4)\) syndrome table,
+\[
+[010]\longrightarrow 0000010
+\]
+so the error is in the second bit from the right.
+
+Therefore, the corrected valid codeword for \(V_2\) is
+\begin{align*}
+C &= 0100101 \oplus 0000010\\
+  &= 0100111
+\end{align*}
+\end{questionanswerbox}
+
+\subsection{Detection and Correction Steps}
+\begin{enumerate}
+    \item Calculate the syndrome:
+    \[
+    S=VH^T
+    \]
+    \item Find the error pattern \(\hat E\) corresponding to \(S\) from the syndrome table.
+    \item The decoder's estimate of the codeword is
+    \[
+    \hat C=V+\hat E
+    \]
+\end{enumerate}
+
+\begin{questionanswerbox}[(6,3) Error Detection and Correction Example]
+\textbf{Q:} Consider the codeword \(C=[110110]\) of a \((6,3)\) single-error-correcting code. Determine \(\hat E\) and the decoder estimate \(\hat C\) when \(C\) incurs the error patterns \(E_1,E_2,E_3\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\begin{align*}
+E_1 &= [001000]\\
+E_2 &= [011011]\\
+E_3 &= [000111]
+\end{align*}
+
+For this \((6,3)\) code,
+\[
+H^T=
+\begin{bmatrix}
+0&1&1\\
+1&0&1\\
+1&1&0\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}
+\]
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Error Pattern \(\hat E\)} & \textbf{Syndrome \(S\)} \\
+\hline
+\(000000\) & \(000\) \\
+\hline
+\(000001\) & \(001\) \\
+\hline
+\(000010\) & \(010\) \\
+\hline
+\(000100\) & \(100\) \\
+\hline
+\(001000\) & \(110\) \\
+\hline
+\(010000\) & \(101\) \\
+\hline
+\(100000\) & \(011\) \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{(i) For \(E_1=[001000]\)}
+\begin{align*}
+V &= C+E_1\\
+  &= [110110]+[001000]\\
+  &= [111110]
+\end{align*}
+
+\begin{align*}
+S &= VH^T\\
+  &= [111110]
+\begin{bmatrix}
+0&1&1\\
+1&0&1\\
+1&1&0\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}\\
+  &= [110]
+\end{align*}
+
+From the syndrome table,
+\[
+[110]\longrightarrow \hat E=[001000]
+\]
+
+So,
+\begin{align*}
+\hat C &= V+\hat E\\
+       &= [111110]+[001000]\\
+       &= [110110]
+\end{align*}
+
+\textbf{(ii) For \(E_2=[011011]\)}
+\begin{align*}
+V &= C+E_2\\
+  &= [110110]+[011011]\\
+  &= [101101]
+\end{align*}
+
+\begin{align*}
+S &= VH^T\\
+  &= [101101]
+\begin{bmatrix}
+0&1&1\\
+1&0&1\\
+1&1&0\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}\\
+  &= [000]
+\end{align*}
+
+So this received word behaves like a valid codeword. The decoder takes
+\[
+\hat E=[000000]
+\]
+and the decoder estimate becomes
+\[
+\hat C=[101101]
+\]
+
+\textbf{(iii) For \(E_3=[000111]\)}
+\begin{align*}
+V &= C+E_3\\
+  &= [110110]+[000111]\\
+  &= [110001]
+\end{align*}
+
+\begin{align*}
+S &= VH^T\\
+  &= [110001]
+\begin{bmatrix}
+0&1&1\\
+1&0&1\\
+1&1&0\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}\\
+  &= [111]
+\end{align*}
+
+The syndrome \([111]\) is not present in the single-error syndrome table, so this error pattern cannot be corrected by the decoder.
+\end{questionanswerbox}
+
+\section{Standard Array}
+
+\begin{definitionbox}[Standard Array]
+A standard array lists all possible received words by arranging valid codewords in the first row and then building the remaining rows with coset leaders.
+\end{definitionbox}
+
+\begin{questionanswerbox}[(6,3) Standard Array Example]
+\textbf{Q:} The generator matrix of a \((6,3)\) code is
+\[
+G=
+\begin{bmatrix}
+0&1&1&1&0&0\\
+1&0&1&0&1&0\\
+1&1&0&0&0&1
+\end{bmatrix}
+\]
+Determine the standard array of the code.
+
+\textbf{A:}
+
+Using
+\[
+C=iG
+\]
+the codewords corresponding to each message are:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{10pt}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Message \(i\)} & \textbf{Codeword \(C\)} & \textbf{Message \(i\)} & \textbf{Codeword \(C\)} \\
+\hline
+\(000\) & \(000000\) & \(100\) & \(011100\) \\
+\hline
+\(001\) & \(110001\) & \(101\) & \(101101\) \\
+\hline
+\(010\) & \(101010\) & \(110\) & \(110110\) \\
+\hline
+\(011\) & \(011011\) & \(111\) & \(000111\) \\
+\hline
+\end{tabular}
+\end{center}
+
+So the first row of the standard array contains these \(8\) codewords. The remaining rows are formed by choosing the lowest-weight vectors not already present as coset leaders and adding them to every codeword in the first row.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.96\linewidth]{Figures/generated/standard_array_63_hamming.png}
+    \caption{Handwritten standard array construction for the \((6,3)\) code}
+\end{figure}
+\end{questionanswerbox}
+
+\section{Hamming \((7,4)\) Code Problem (Very Important)}
+
+\begin{questionanswerbox}[Hamming \((7,4)\) Generator Matrix Very Important Example]
+\textbf{Q:} Use a generator matrix to generate all possible codewords for Hamming \((7,4)\) code. Pick any codeword, insert an error into it, show the received codeword, calculate the error syndrome, and perform error correction.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+G=
+\begin{bmatrix}
+1&0&0&0&1&0&1\\
+0&1&0&0&1&1&1\\
+0&0&1&0&1&1&0\\
+0&0&0&1&0&1&1
+\end{bmatrix}
+\]
+
+Here \(k=4\), so the information words run from \(i_0=0000\) to \(i_{15}=1111\). The generated codewords are from \(C_0\) to \(C_15\). Now \(C = iG\) then:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Information Word} & \textbf{Codeword} & \textbf{Information Word} & \textbf{Codeword} \\
+\hline
+\(i_0=0000\) & \(C_0=0000000\) & \(i_8=1000\) & \(C_8=1000101\) \\
+\hline
+\(i_1=0001\) & \(C_1=0001011\) & \(i_9=1001\) & \(C_9=1001110\) \\
+\hline
+\(i_2=0010\) & \(C_2=0010110\) & \(i_{10}=1010\) & \(C_{10}=1010011\) \\
+\hline
+\(i_3=0011\) & \(C_3=0011101\) & \(i_{11}=1011\) & \(C_{11}=1011000\) \\
+\hline
+\(i_4=0100\) & \(C_4=0100111\) & \(i_{12}=1100\) & \(C_{12}=1100010\) \\
+\hline
+\(i_5=0101\) & \(C_5=0101100\) & \(i_{13}=1101\) & \(C_{13}=1101001\) \\
+\hline
+\(i_6=0110\) & \(C_6=0110001\) & \(i_{14}=1110\) & \(C_{14}=1110100\) \\
+\hline
+\(i_7=0111\) & \(C_7=0111010\) & \(i_{15}=1111\) & \(C_{15}=1111111\) \\
+\hline
+\end{tabular}
+\end{center}
+
+Now choose \(C_0=0000000\). Using \(\texttt{10}\) as the ID-based error choice, the received codeword becomes
+\[
+V=0000010
+\]
+
+Calculating the error syndrome,
+\begin{align*}
+S &= VH^T\\
+  &= [0000010]
+\begin{bmatrix}
+1&0&1\\
+1&1&1\\
+1&1&0\\
+0&1&1\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}\\
+  &= [010]
+\end{align*}
+
+From the Hamming syndrome table, \([010]\) means the error is in the second bit from the right. So the corrected word is
+\begin{align*}
+\hat V &= 0000010 \oplus 0000010\\
+       &= 0000000
+\end{align*}
+
+Thus, the corrected received word is the transmitted codeword \(C_0\).
+\end{questionanswerbox}
+
+\section{Cyclic Code}
+
+\begin{definitionbox}[Cyclic Code]
+A cyclic code is a type of linear block code in which a cyclic shift of any valid codeword produces another valid codeword.
+\end{definitionbox}
+
+\begin{formulabox}[Cyclic Shift]
+If
+\[
+C=(c_0,c_1,\ldots,c_{n-1})
+\]
+is a codeword, then its cyclic shift
+\[
+C'=(c_{n-1},c_0,c_1,\ldots,c_{n-2})
+\]
+is also a codeword for a cyclic code.
+\end{formulabox}
+
+\begin{infobox}[Simple Reading]
+\begin{itemize}
+    \item Take a valid codeword.
+    \item Shift the bits cyclically.
+    \item If the new shifted word is still valid every time, the code is cyclic.
+\end{itemize}
+\end{infobox}
+
+\begin{questionanswerbox}[Hamming Code Is Cyclic Example]
+
+\textbf{Q:} Prove that Hamming code is a cyclic code.
+
+\textbf{A:}
+
+To illustrate the cyclic property, consider a Hamming \((7,4)\) code.
+
+Let a valid codeword be
+\[
+C = 0101100
+\]
+
+Perform a 2-bit cyclic right shift (moving the last two bits to the front):
+\[
+C' = 0001011
+\]
+
+To verify whether \(C'\) is a valid codeword, we use the parity-check matrix \(H\):
+\[
+H =
+\begin{bmatrix}
+1 & 0 & 1 & 0 & 1 & 0 & 1 \\
+0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+0 & 0 & 0 & 1 & 1 & 1 & 1
+\end{bmatrix}
+\]
+
+We need to check if \(C' \cdot H^T = 0\). Cause a valid Hamming code satisfies the condition \(C \cdot H^T = 0\)
+
+Now compute:
+\[
+C' \cdot H^T
+\]
+
+\[
+=
+\begin{bmatrix}
+0 & 0 & 0 & 1 & 0 & 1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+1 & 1 & 0 \\
+0 & 0 & 1 \\
+1 & 0 & 1 \\
+0 & 1 & 1 \\
+1 & 1 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 & 0 & 0
+\end{bmatrix}
+\]
+
+Since
+\[
+C' \cdot H^T = 0
+\]
+the shifted codeword \(C'\) is also a valid codeword.
+
+Thus, cyclic shifting produces another valid codeword.
+
+\textbf{Hence, Hamming code exhibits the cyclic property.}
+
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[(5,2) Linear Code Is Not Cyclic Example]
+\textbf{Q:} Show that a \((5,2)\) linear code is not cyclic.
+
+\textbf{A:}
+
+Consider the codeword set:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{12pt}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Message} & \textbf{Codeword} \\
+\hline
+\(00\) & \(00000\) \\
+\hline
+\(01\) & \(01100\) \\
+\hline
+\(10\) & \(10110\) \\
+\hline
+\(11\) & \(11010\) \\
+\hline
+\end{tabular}
+\end{center}
+
+Take the valid codeword
+\[
+01100
+\]
+and perform a \(1\)-bit cyclic shift to the right:
+\[
+01100 \longrightarrow 00110
+\]
+
+But \(00110\) is not in the codeword table above.
+
+So a cyclic shift of a valid codeword does not always remain valid. Therefore, this \((5,2)\) linear code is not cyclic.
+\end{questionanswerbox}
+
+% Source PDF page 76
+\subsection{Polynomial Representation of Codewords}
+
+\begin{definitionbox}[Polynomial Representation]
+An \(n\)-bit word
+\[
+(a_{n-1},a_{n-2},\ldots,a_1,a_0)
+\]
+can be represented by the polynomial
+\[
+P(x)=a_{n-1}x^{n-1}+a_{n-2}x^{n-2}+\cdots+a_1x+a_0
+\]
+\end{definitionbox}
+
+\begin{questionanswerbox}[Polynomial Form of Codewords Example]
+\textbf{Q:} Represent two codewords by polynomials and show their addition, multiplication, and division.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+C_1=0110010,\qquad C_2=0001011
+\]
+
+For these codewords,
+\[
+P_1(x)=x^5+x^4+x
+\qquad \text{with degree } 5
+\]
+and
+\[
+P_2(x)=x^3+x+1
+\qquad \text{with degree } 3
+\]
+
+\paragraph{Addition}
+\begin{align*}
+P_1(x)+P_2(x)
+&=(x^5+x^4+x)+(x^3+x+1)\\
+&=x^5+x^4+x^3+x+x+1\\
+&=x^5+x^4+x^3+x(1+1)+1\\
+&=x^5+x^4+x^3+1
+\end{align*}
+
+\paragraph{Multiplication}
+\begin{align*}
+P_1(x)P_2(x)
+&=(x^5+x^4+x)(x^3+x+1)\\
+&=x^8+x^6+x^5+x^7+x^5+x^4+x^4+x^2+x\\
+&=x^8+x^7+x^6+x^4+x^4+x^5+x^5+x^2+x\\
+&=x^8+x^7+x^6+x^2+x
+\end{align*}
+
+\paragraph{Division}
+\[
+\frac{P_1(x)}{P_2(x)}=\frac{x^5+x^4+x}{x^3+x+1}
+\]
+
+Now divide step by step:
+\begin{align*}
+x^5+x^4+x
+&-(x^2)(x^3+x+1)\\
+&=(x^5+x^4+x)-(x^5+x^3+x^2)\\
+&=x^4+x^3+x^2+x
+\end{align*}
+
+\begin{align*}
+x^4+x^3+x^2+x
+&-(x)(x^3+x+1)\\
+&=(x^4+x^3+x^2+x)-(x^4+x^2+x)\\
+&=x^3
+\end{align*}
+
+\begin{align*}
+x^3
+&-(1)(x^3+x+1)\\
+&=x^3-(x^3+x+1)\\
+&=x+1
+\end{align*}
+
+So,
+\[
+\frac{P_1(x)}{P_2(x)}=x^2+x+1
+\]
+with remainder
+\[
+x+1
+\]
+\end{questionanswerbox}
+
+\subsection{Generator Polynomial}
+
+\begin{formulabox}[Generator Polynomial]
+For a cyclic code, a generator polynomial \(g(x)\) generates valid codewords.
+\[
+C(x)=i(x)\,g(x)
+\]
+\begin{itemize}
+    \item \(g(x)\) = generator polynomial
+    \item \(i(x)\) = information polynomial
+    \item \(C(x)\) = generated codeword polynomial
+\end{itemize}
+\end{formulabox}
+
+\begin{formulabox}[Important Property of a Cyclic Code]
+For an \((n,k)\) cyclic code,
+\[
+\deg g(x)=n-k
+\]
+\begin{itemize}
+    \item \(\deg g(x)\) = degree of the generator polynomial
+    \item \(n-k\) = number of parity bits
+\end{itemize}
+So whenever \(\deg g(x)=3\), we have
+\[
+n-k=3
+\]
+\end{formulabox}
+
+\begin{questionanswerbox}[Generator Polynomial from Hamming Code Example]
+\textbf{Q:} Find the generator polynomial from the first non-zero Hamming codeword and generate more codewords from it.
+
+\textbf{A:}
+
+Consider the first non-zero Hamming codeword
+\[
+C_1 = 0001011
+\]
+So the generated polynomial is
+\[
+C_1(x)=x^3+x+1
+\]
+
+Now,
+\begin{align*}
+x\cdot C_1(x) &= x(x^3+x+1)=x^4+x^2+x \\
+        &\longrightarrow 0010110
+\end{align*}
+
+\begin{align*}
+x^3 \cdot C_1(x) &= x^3(x^3+x+1)=x^6+x^4+x^3 \\
+         &\longrightarrow 1011000
+\end{align*}
+\end{questionanswerbox}
+
+% Source PDF page 77
+\subsection{Shift Operation and Cyclic Encoding}
+
+\begin{infobox}[Shift Reading]
+In these handwritten notes, the words \textbf{right} and \textbf{left} are being used in the handwritten convention shown on the page:
+\begin{itemize}
+    \item shifting to the \textbf{right side} means appending a \(0\) on the right, which multiplies the number by \((10)_2\)
+    \item shifting to the \textbf{left side} means removing that rightmost place in the reverse example, which acts like division by \(2\)
+\end{itemize}
+In \textbf{standard digital-logic terminology}, appending a \(0\) on the right is actually called a \textbf{left shift}, and dividing by \(2\) is associated with a \textbf{right shift}. So the handwritten wording is nonstandard.
+\par\vspace{0.5\baselineskip}
+This is a \textbf{logical shift explanation from the note}, not a cyclic shift.
+\end{infobox}
+
+\begin{questionanswerbox}[Shift Operation Example]
+\textbf{Q:} Logical shifting in right means multiplication with \((10)_2\) in binary and in left means division. Explain.
+
+\textbf{A:}
+
+\textbf{Handwritten note statement:} shifting a binary number to the right side is equivalent to multiplying it by \(2\), that is, by \((10)_2\) in binary.
+
+\[
+(1011)_2 \xrightarrow{\text{right shift}\ \times 2} (10110)_2
+\]
+\[
+\text{Dec}(11) \longrightarrow \text{Dec}(22)
+\]
+
+So,
+\[
+(1011)_2=11,\qquad (10110)_2=22,\qquad 22=11\times 2
+\]
+
+Hence, in the handwritten note, shifting to the right side means multiplication by \(2\).
+\par\vspace{0.5\baselineskip}
+\textbf{Standard naming:} the change
+\[
+(1011)_2 \to (10110)_2
+\]
+is normally called a \textbf{left shift}, because a \(0\) is appended on the right.
+
+\par\vspace{\baselineskip}
+\textbf{Handwritten note statement:} shifting a binary number to the left side is treated in this example as division by \(2\).
+
+\[
+(10110)_2 \xrightarrow{\text{left shift}\ \div 2} (1011)_2
+\]
+\[
+\text{Dec}(22) \longrightarrow \text{Dec}(11)
+\]
+
+So,
+\[
+(10110)_2=22,\qquad (1011)_2=11,\qquad 11=\frac{22}{2}
+\]
+
+Hence, in the handwritten note, shifting to the left side means division by \(2\).
+\par\vspace{0.5\baselineskip}
+\textbf{Standard naming:} this reverse change is normally associated with a \textbf{right shift}.
+
+\[
+\boxed{\text{This is not a cyclic shift}}
+\]
+\end{questionanswerbox}
+
+\subsubsection{Non-Systematic Encoding}
+
+\begin{definitionbox}[Non-Systematic Encoding]
+In non-systematic encoding, the information bits and parity bits are mixed together. So the original information bits do not remain visible separately in the final codeword.
+\end{definitionbox}
+
+\begin{formulabox}[Non-Systematic Cyclic Encoding]
+\[
+C(x)=i(x)\,g(x)
+\]
+\begin{itemize}
+    \item \(i(x)\) = information polynomial
+    \item \(g(x)\) = generator polynomial
+    \item \(C(x)\) = generated codeword polynomial
+\end{itemize}
+\end{formulabox}
+
+\begin{questionanswerbox}[Non-Systematic Cyclic Encoding Example]
+\textbf{Q:} If \(i=0101\) and \(g(x)=x^3+x+1\), find the codeword.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+i=0101,\qquad g(x)=x^3+x+1
+\]
+
+The information polynomial is
+\[
+i(x)=x^2+1
+\]
+
+Now,
+\begin{align*}
+C(x)&=i(x)\,g(x)\\
+    &=(x^2+1)(x^3+x+1)\\
+    &=x^5+x^3+x^2+x^3+x+1\\
+    &=x^5+x^2+x+1
+\end{align*}
+
+Hence the generated codeword is
+\[
+100111
+\]
+\end{questionanswerbox}
+
+% Source PDF page 78
+\subsubsection{Systematic Encoding}
+
+\begin{definitionbox}[Systematic Encoding]
+In systematic encoding, the codeword keeps the original information bits and appends parity bits to them.
+\end{definitionbox}
+
+\begin{formulabox}[Systematic Cyclic Encoding]
+If the degree of \(g(x)\) is \(d=n-k\), then
+\[
+C(x)=x^d\,i(x)+r(x)
+\]
+where \(r(x)\) is the remainder obtained when \(x^d i(x)\) is divided by \(g(x)\).
+\begin{itemize}
+    \item \(C(x)\) = final systematic codeword polynomial
+    \item \(i(x)\) = information polynomial
+    \item \(g(x)\) = generator polynomial
+    \item \(d\) = degree of \(g(x)\)
+    \item \(n\) = total number of bits in the codeword
+    \item \(k\) = number of information bits
+    \item \(d=n-k\) = number of parity bits
+    \item \(x^d i(x)\) = shifted information polynomial
+    \item \(r(x)\) = remainder after dividing \(x^d i(x)\) by \(g(x)\)
+\end{itemize}
+\end{formulabox}
+
+\begin{infobox}[Short Process]
+\begin{itemize}
+    \item Multiply \(i(x)\) by \(x^{n-k}\).
+    \item Divide \(x^{n-k}i(x)\) by \(g(x)\).
+    \item Take the remainder \(r(x)\).
+    \item Add that remainder to \(x^{n-k}i(x)\) to get the codeword.
+\end{itemize}
+\end{infobox}
+
+\begin{questionanswerbox}[Systematic Cyclic Encoding Example]
+\textbf{Q:} Consider \(i=0101\) and \(g(x)=x^3+x+1\). Construct the systematic codeword.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+i=0101,\qquad g(x)=x^3+x+1
+\]
+
+Here \(i=0101\) is the \textbf{4-bit information word}. Since \(\deg g(x)=3\), we have
+\[
+n-k=3
+\]
+So this is a \((7,4)\) cyclic code:
+\[
+k=4,\qquad n=7
+\]
+That is why the \textbf{message length is 4} but the \textbf{final codeword length is 7}.
+
+Now,
+\[
+i(x)=x^2+1,\qquad n-k=7-4=3
+\]
+
+First multiply by \(x^{n-k}=x^3\):
+\[
+x^{n-k}i(x)=(x^2+1)x^3=x^5+x^3
+\]
+
+Now divide by \(g(x)\):
+\begin{align*}
+x^5+x^3 &= x^2(x^3+x+1)+x^2 \\
+\therefore\quad r(x) &= x^2
+\end{align*}
+
+So the codeword becomes
+\begin{align*}
+C(x)&=x^{n-k}i(x)+r(x)\\
+    &=x^5+x^3+x^2
+\end{align*}
+
+Writing the coefficients from \(x^6\) down to \(x^0\),
+\[
+0101100
+\]
+
+So the systematic codeword is
+\[
+C=0101100=0101\,100
+\]
+where `0101` is the original information part and `100` is the appended parity part.
+\end{questionanswerbox}
+
+% Source PDF pages 79-80
+\subsection{Decoding Cyclic Code}
+
+\begin{formulabox}[Syndrome Polynomial]
+If the received polynomial is
+\[
+V(x)=C(x)+E(x)
+\]
+then the syndrome polynomial is
+\[
+S(x)=R_{g(x)}[V(x)]
+\]
+where \(R_{g(x)}[\cdot]\) means the remainder after division by \(g(x)\).
+\end{formulabox}
+
+\begin{infobox}[What This Means]
+\begin{itemize}
+    \item For a valid codeword, dividing by \(g(x)\) gives remainder \(0\). That means \(R_{g(x)}[C(x)] = 0\).
+    \item So
+    \[
+    S(x)=R_{g(x)}[V(x)]=R_{g(x)}[E(x)]
+    \]
+    \item This means the syndrome depends only on the error, not on the original codeword.
+\end{itemize}
+\end{infobox}
+
+\begin{questionanswerbox}[Cyclic Decoding Example]
+\textbf{Q:} Consider decoding when the codeword \(C=(1010011)\) of a \((7,4)\) code incurs the error \(E=(1000000)\). Find the received codeword and the decoded word.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+C=(1010011),\qquad E=(1000000)
+\]
+
+So the corresponding polynomials are
+\[
+C(x)=x^6+x^4+x+1,\qquad E(x)=x^6
+\]
+
+For the \((7,4)\) Hamming cyclic code,
+\[
+g(x)=x^3+x+1
+\]
+
+First find the received polynomial:
+\begin{align*}
+V(x)&=C(x)+E(x)\\
+    &=(x^6+x^4+x+1)+x^6\\
+    &=x^4+x+1
+\end{align*}
+
+Thus the received codeword is
+\[
+V=0010011
+\]
+
+Now divide \(V(x)\) by \(g(x)\). The remainder is
+\[
+S(x)=x^2+1
+\]
+
+From the error-pattern table below, the remainder \(x^2+1\) corresponds to
+\[
+E=(1000000)
+\]
+
+So the decoded codeword is
+\begin{align*}
+\hat C &= V+E\\
+       &= 0010011+1000000\\
+       &= 1010011
+\end{align*}
+\end{questionanswerbox}
+
+\subsubsection{Single-Bit Error Pattern Table for Seven Four Hamming Code}
+
+\begin{formulabox}[Single-Bit Error Pattern Table for 7 4 Hamming Code]
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Error} & \textbf{Error Code} & \textbf{Error Polynomial} & \textbf{Remainder Error Pattern} \\
+\hline
+\(e_0\) & \(0000001\) & \(1\) & \(1\) \\
+\hline
+\(e_1\) & \(0000010\) & \(x\) & \(x\) \\
+\hline
+\(e_2\) & \(0000100\) & \(x^2\) & \(x^2\) \\
+\hline
+\(e_3\) & \(0001000\) & \(x^3\) & \(x+1\) \\
+\hline
+\(e_4\) & \(0010000\) & \(x^4\) & \(x^2+x\) \\
+\hline
+\(e_5\) & \(0100000\) & \(x^5\) & \(x^2+x+1\) \\
+\hline
+\(e_6\) & \(1000000\) & \(x^6\) & \(x^2+1\) \\
+\hline
+\end{tabular}
+\end{center}
+\end{formulabox}
+% Source PDF pages 81-84
+\subsubsection{Additional Worked Examples on Cyclic Encoding and Decoding}
+
+\begin{questionanswerbox}[Cyclic Encoding and Decoding Example]
+\textbf{Q:} For a \((7,4)\) cyclic code of generating function \(g(x)=x^3+x+1\), if the message sequence is \(m=1011\), determine the codeword. Also find the actual codeword for the received word \(V_r=0010011\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+m=1011,\qquad g(x)=x^3+x+1,\qquad n-k=7-4=3
+\]
+
+So,
+\[
+i(x)=x^3+x+1
+\]
+
+\textbf{Generating the codeword}
+\begin{align*}
+x^{n-k}i(x)&=x^3(x^3+x+1)\\
+          &=x^6+x^4+x^3
+\end{align*}
+
+Now divide by \(g(x)\):
+\[
+x^6+x^4+x^3 \div (x^3+x+1)
+\]
+The remainder is zero. So,
+\begin{align*}
+C(x)&=x^{n-k}i(x)+0\\
+    &=x^6+x^4+x^3
+\end{align*}
+
+Hence the generated codeword is
+\[
+1011000
+\]
+
+\textbf{Decoding the received word}
+If
+\[
+V_r=0010011
+\]
+then
+\[
+V(x)=x^4+x+1
+\]
+
+Now divide \(V(x)\) by \(g(x)\). The remainder is
+\[
+S(x)=x^2+1
+\]
+
+From the error-pattern table,
+\[
+x^2+1 \longrightarrow x^6
+\]
+So the estimated error is
+\[
+\hat E(x)=x^6
+\]
+
+Thus, actual sent codeword is
+\begin{align*}
+\hat C(x)&=\hat V(x)+\hat E(x)\\
+         &=(x^4+x+1)+x^6\\
+         &=x^6+x^4+x+1
+\end{align*}
+
+\[
+1010011
+\]
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Cyclic Encoding and Decoding Example]
+\textbf{Q:} For a \((7,4)\) cyclic code of generating function \(g(x)=1+x+x^3\), if the message is \(i=0110\), determine the codeword \(C\). Also decode the received word \(0101011\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+i=0110,\qquad g(x)=1+x+x^3=x^3+x+1,\qquad n-k=3
+\]
+
+So,
+\[
+i(x)=x^2+x
+\]
+
+\textbf{Generating the codeword}\\
+First multiply by \(x^3\):
+\begin{align*}
+x^3 i(x)&=x^3(x^2+x)\\
+        &=x^5+x^4
+\end{align*}
+
+If we stop here, we would write
+\[
+0110000
+\]
+but this is not yet the final systematic codeword. We still need the remainder.
+
+Now divide \(x^5+x^4\) by \(g(x)=x^3+x+1\). The remainder is
+\[
+r(x)=1
+\]
+
+So,
+\begin{align*}
+C(x)&=x^3i(x)+r(x)\\
+    &=x^5+x^4+1
+\end{align*}
+
+Hence the generated codeword is
+\[
+0110001
+\]
+
+\textbf{Decoding the received word}\\
+If the received codeword is
+\[
+V=0101011
+\]
+then
+\[
+V(x)=x^5+x^3+x+1
+\]
+
+Dividing \(V(x)\) by \(g(x)\), the remainder is
+\[
+S(x)=x^2+x+1
+\]
+
+From the error-pattern table,
+\[
+x^2+x+1 \longrightarrow x^5
+\]
+So the estimated error is
+\[
+\hat E(x)=x^5
+\]
+
+Therefore,
+\begin{align*}
+\hat C(x)&=\hat V(x)+\hat E(x)\\
+         &=(x^5+x^3+x+1)+x^5\\
+         &=x^3+x+1
+\end{align*}
+
+Thus the corrected received codeword is
+\[
+0001011
+\]
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Cyclic Encoding with Detection-Only Case Example]
+\textbf{Q:} Consider a cyclic code with dimension \((7,4)\). For \(g(x)=x^2+x+1\), obtain the encoded sequence for \(m=0100\). Also explain the decoding when the received codeword is \(V=0110011\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+m=0100,\qquad g(x)=x^2+x+1
+\]
+
+So,
+\[
+i(x)=m(x)=x^2
+\]
+
+\textbf{Generating the codeword}\\
+First multiply by \(x^3\):
+\[
+x^3 i(x)=x^3 \cdot x^2=x^5
+\]
+
+Now divide \(x^5\) by \(g(x)=x^2+x+1\). The remainder is
+\[
+r(x)=x^2
+\]
+
+Thus,
+\begin{align*}
+C(x)&=x^3i(x)+r(x)\\
+    &=x^5+x^2
+\end{align*}
+
+Hence the generated codeword is
+\[
+0100100
+\]
+
+\textbf{Decoding the received word}\\
+If the received codeword is
+\[
+V=0110011
+\]
+then
+\[
+V(x)=x^5+x^4+x+1
+\]
+
+Dividing \(V(x)\) by \(g(x)\), the remainder is
+\[
+S(x)=x
+\]
+
+Here the syndrome is not unique. In this code,
+\[
+x \longrightarrow 0000010
+\qquad \text{and} \qquad
+x \longrightarrow 0010000
+\]
+So the same syndrome can come from two different error patterns.
+
+\begin{infobox}[What This Means]
+\begin{itemize}
+    \item The error is detected because the syndrome is nonzero.
+    \item But the error cannot be corrected uniquely because the syndrome points to more than one possible error pattern.
+    \item This happens because
+    \[
+    \deg g(x)=2 \neq n-k=7-4=3
+    \]
+    \item For single-error correction in this style of cyclic code, the degree of the generator polynomial should match \(n-k\).
+\end{itemize}
+\end{infobox}
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Cyclic Encoding and Syndrome Comparison Example]
+\textbf{Q:} The first codeword for a \((15,11)\) code is \(000\,0000\,0001\,0011\). Using the generator polynomial, generate the codeword for the information \((101\,1011\,0101)\). If during transmission the second bit from the right is in error, generate the syndrome and compare it with the syndrome for the first codeword under the same type of error.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+g(x)=1+x+x^4=x^4+x+1,\qquad n-k=15-11=4
+\]
+
+The information sequence is
+\[
+10110110101
+\]
+So,
+\[
+i(x)=x^{10}+x^8+x^7+x^5+x^4+x^2+1
+\]
+
+\textbf{Generating the codeword}\\
+First multiply by \(x^{n-k}=x^4\):
+\begin{align*}
+x^4i(x)&=x^4(x^{10}+x^8+x^7+x^5+x^4+x^2+1)\\
+       &=x^{14}+x^{12}+x^{11}+x^9+x^8+x^6+x^4
+\end{align*}
+
+Now divide \(x^4 i(x)\) by \(g(x)=x^4+x+1\). The remainder is
+\[
+r(x)=x^3
+\]
+
+Hence,
+\begin{align*}
+C(x)&=x^4i(x)+r(x)\\
+    &=x^{14}+x^{12}+x^{11}+x^9+x^8+x^6+x^4+x^3
+\end{align*}
+
+So the generated codeword is
+\[
+101101101011000
+\]
+
+\textbf{Syndrome for a second-bit-from-right error}\\
+If the second bit from the right is in error, then the received word becomes
+\[
+V=101101101011010
+\]
+So,
+\[
+V(x)=x^{14}+x^{12}+x^{11}+x^9+x^8+x^6+x^4+x^3+x
+\]
+
+Dividing \(V(x)\) by \(g(x)\), the remainder is
+\[
+S(x)=x
+\]
+
+\textbf{Compare with the first codeword}\\
+The first codeword is
+\[
+000\,0000\,0001\,0011
+\]
+which corresponds to
+\[
+C_1(x)=x^4+x+1
+\]
+
+If the same second-bit-from-right error occurs, the received word becomes
+\[
+\bar V=000\,0000\,0001\,0001
+\]
+So,
+\[
+\bar V(x)=x^4+1
+\]
+
+Again, dividing by \(g(x)\) gives the remainder
+\[
+\bar S(x)=x
+\]
+
+Thus both cases give the same syndrome:
+\[
+S(x)=\bar S(x)=x
+\]
+
+\begin{infobox}[What This Means]
+\begin{itemize}
+    \item The syndrome depends on the error pattern, not on which valid codeword was sent.
+    \item So the same type of bit error produces the same syndrome for different transmitted codewords.
+\end{itemize}
+\end{infobox}
+\end{questionanswerbox}
+
+% Source PDF pages 87-90
+\section{Convolutional Codes}
+
+\subsection{Basic Idea of Convolutional Codes}
+
+\begin{definitionbox}[Convolutional Code]
+In convolutional coding, the encoder generates output bits continuously. The output at a given time depends not only on the current input message (k) bits, but also on some previous input bits (m - 1) stored in memory.
+\end{definitionbox}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{Figures/convolutional_encoder.png}
+\caption{Convolutional encoder with two memory elements \(m_1\) and \(m_2\) storing the previous two input bits. The current input bit is \(m\). The output bits \(x_1\) and \(x_2\) are generated based on the current and previous bits.}
+\label{Convulational_encoder}
+\end{figure}
+
+From the encoder shown, the current input bit is \(m\), and the two previous bits are stored as \(m_1\) and \(m_2\). The two output bits are:
+\[
+x_1=m\oplus m_1\oplus m_2,\qquad x_2=m\oplus m_2
+\]
+
+Output switch first sample $x_1$ and then $x_2$. Thus output is $X = x_1 x_2 x_1 x_2 x_1 x_2...$
+
+\par\vspace{\baselineskip}
+Referring to the figure, the input to the encoder is \textbf{1 bit} at a time and the outputs are the two bits \(x_1\) and \(x_2\).
+
+\par\vspace{\baselineskip}
+Here:
+\begin{itemize}
+    \item \(m\) is the present input bit
+    \item \(m_1\) and \(m_2\) are the previous input bits stored in memory
+\end{itemize}
+
+\par\vspace{\baselineskip}
+So the encoder state is determined by the stored pair \((m_2,m_1)\). Depending on the values of \(m_1\) and \(m_2\), the encoder can be in one of four states.
+
+\begin{definitionbox}[Code Rate]
+    The code rate \(r_c\) is the ratio of the number of input bits (\(k\)) to the number of output bits (\(n\))  per encoding step.
+\end{definitionbox}
+
+\begin{formulabox}[Code Rate Constraint Length and Code Dimension]
+\[
+r_c=\frac{k}{n}
+\]
+\begin{itemize}
+    \item \(r_c\) = code rate
+    \item \(k\) = number of input bits per encoding step
+    \item \(n\) = number of output bits per encoding step
+\end{itemize}
+\end{formulabox}
+
+For the encoder above:
+\begin{itemize}
+    \item one input bit enters at a time, so \(k=1\)
+    \item two output bits are produced, so \(n=2\)
+    \item therefore
+    \[
+    r_c=\frac{1}{2}
+    \]
+    \item the output depends on \(m,m_1,m_2\), so the constraint length is
+    \[
+    K=3
+    \]
+\end{itemize}
+
+\begin{definitionbox}[Constraint length]
+    The constraint length \(K\) is the number of memory elements, including the current input bit, that affect the output.
+\end{definitionbox}
+
+\begin{definitionbox}[Code Dimension]
+    The code dimension is denoted as \((n,k)\), where \(n\) is the number of output bits and \(k\) is the number of input bits per encoding step.
+\end{definitionbox}
+
+\subsection{Shift Registers in Convolutional Coding}
+
+\begin{questionanswerbox}[Shift Register and Convolutional Encoder Example]
+\textbf{Q:} What are shift registers and how are they used to implement convolutional code?
+
+\textbf{A:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Figures/Shift_register.png}
+    \caption{Shift register as convulational encoder.}
+    \label{Shift_register}
+\end{figure}
+
+Shift registers are sequential logic circuits made of flip-flops connected in series. They store and shift binary data one position at a time with each clock pulse.
+\par\vspace{\baselineskip}
+In convolutional coding, the shift register stores the present and previous input bits. As a new input bit enters:
+\begin{itemize}
+    \item the existing bits shift to the next memory locations
+    \item selected bits are tapped from the register
+    \item those tapped bits are combined according to the generator relations
+    \item the encoder produces output bits continuously
+\end{itemize}
+\par\vspace{\baselineskip}
+So the output depends on:
+\begin{itemize}
+    \item the current input bit
+    \item one or more previous input bits kept in memory
+\end{itemize}
+
+Hence, shift registers act as the hardware mechanism that makes real-time convolutional encoding possible.
+\end{questionanswerbox}
+
+\subsection{Linear Block Codes vs Convolutional Codes}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.8}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{|L{8.5cm}|L{8.5cm}|}
+\hline
+\textbf{Linear Block Codes} & \textbf{Convolutional Codes} \\
+\hline
+Encode data in fixed-size blocks & Encode data as a continuous stream \\
+\hline
+Output depends only on the current input block & Output depends on current and previous input bits \\
+\hline
+Often decoded using algebraic methods & Decoding often uses algorithms like Viterbi \\
+\hline
+Used in storage and data transmission & Used in real-time communication systems \\
+\hline
+Limited error correction capability & Better error correction for noisy channels \\
+\hline
+Lower latency since encoding is blockwise & Higher latency due to memory usage \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{States of the Encoder}
+
+For the encoder, the state is determined by the two previous bits \((m_2,m_1)\). So there are four possible states:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{|c|c|}
+\hline
+\(\boldsymbol{(m_2,m_1)}\) & \textbf{Current State} \\
+\hline
+\((0,0)\) & \(a\) \\
+\hline
+\((0,1)\) & \(b\) \\
+\hline
+\((1,0)\) & \(c\) \\
+\hline
+\((1,1)\) & \(d\) \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{infobox}[Simple Reading]
+\begin{itemize}
+    \item The present bit \(m\) changes from one clock instant to the next.
+    \item The pair \((m_2,m_1)\) stores the previous two bits.
+    \item That stored pair tells us the current state of the encoder.
+    \item So the four possible memory pairs \((0,0),(0,1),(1,0),(1,1)\) give the four states \(a,b,c,d\).
+\end{itemize}
+\end{infobox}
+
+\subsection{Code Tree}
+
+\begin{definitionbox}[Code Tree]
+A code tree is a graphical representation of all possible output sequences of a convolutional encoder for the given input bits.
+\end{definitionbox}
+
+Each branch of the tree represents:
+\begin{itemize}
+    \item an input symbol
+    \item the corresponding pair of output bits written on that branch
+\end{itemize}
+
+So the code tree shows how the encoder can move from one possible output path to another as new input bits arrive.
+
+\begin{questionanswerbox}[Code Tree for the Message \(m=110\) Example]
+\textbf{Q:} Draw the code tree for the message \(m=110\).
+
+\textbf{A:}
+
+Using the encoder relations
+\[
+x_1=m\oplus m_1\oplus m_2,\qquad x_2=m\oplus m_2
+\]
+and starting from the zero state:
+
+\begin{enumerate}
+    \item For the first input \(1\), the register becomes \(100\).
+    \[
+    x_1=1\oplus0\oplus0=1,\qquad x_2=1\oplus0=1
+    \]
+    So the first output is \(11\).
+
+    \item For the second input \(1\), the register becomes \(110\).
+    \[
+    x_1=1\oplus1\oplus0=0,\qquad x_2=1\oplus0=1
+    \]
+    So the second output is \(01\).
+
+    \item For the third input \(0\), the register becomes \(011\).
+    \[
+    x_1=0\oplus1\oplus1=0,\qquad x_2=0\oplus1=1
+    \]
+    So the third output is \(01\).
+\end{enumerate}
+
+Therefore, the encoded output for the message \(110\) is
+\[
+11\,01\,01
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.78\linewidth]{Figures/generated/next_batch_85_90/page-089.png}
+    \caption{Handwritten code-tree construction for the message \(m=110\)}
+\end{figure}
+\end{questionanswerbox}
+
+\subsection{Code Trellis and State Diagram}
+
+\begin{infobox}[State Transition Table]
+The handwritten table below is the \textbf{state transition table} of the convolutional encoder. It shows:
+\begin{itemize}
+    \item the \textbf{present state}, meaning the two bits currently stored in the encoder memory
+    \item the current \textbf{input bit} \(m\)
+    \item the \textbf{next state} after shifting
+    \item the corresponding \textbf{output pair} \((x_1,x_2)\)
+\end{itemize}
+So for each present state and each input value \(0\) or \(1\), the table tells us where the encoder moves next and what output bits it produces.
+\end{infobox}
+
+\textbf{How to read the table:}
+Treat the two present-state columns as the two stored memory bits of the encoder. The input column gives the current bit \(m\). Then use
+\[
+x_1=m\oplus m_1\oplus m_2,\qquad x_2=m\oplus m_2
+\]
+For example, in the row with present state \(10\) and input \(0\):
+\[
+m=0,\quad m_1=1,\quad m_2=0
+\]
+So,
+\[
+x_1=0\oplus1\oplus0=1,\qquad x_2=0\oplus0=0
+\]
+hence the output is \(10\). The next state becomes \(01\), because after shifting, the new stored pair is formed from the current input and the previous stored bit.
+
+
+
+\begin{definitionbox}[Code Trellis]
+A code trellis is the compact representation of a code tree. It is a time-sequenced diagram showing the possible state transitions and the corresponding outputs of a convolutional encoder.
+\end{definitionbox}
+
+\begin{infobox}[Reading the Handwritten Trellis]
+\begin{itemize}
+    \item the handwritten table lists present state, input, next state, and output pair
+    \item the trellis branches are labeled by the output bits
+    \item the solid branch denotes input \(0\)
+    \item the dotted branch denotes input \(1\)
+\end{itemize}
+\end{infobox}
+
+\begin{definitionbox}[State Diagram]
+A state diagram is a graphical representation of all states of a convolutional encoder and the transitions between them. It shows how the encoder moves from one state to another for each input bit.
+\end{definitionbox}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.96\linewidth]{Figures/generated/next_batch_85_90/page-090.jpeg}
+    \caption{Table, code Trellis, and state Diagram sketch for the convolutional encoder}
+\end{figure}
+
+\subsection{Code Tree vs Trellis Diagram}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{|L{8.5cm}|L{8.5cm}|}
+\hline
+\textbf{Code Tree} & \textbf{Trellis Diagram} \\
+\hline
+Shows the flow of code signals along a branching tree & Shows transitions from current state to next state \\
+\hline
+Lengthy representation & Shorter and more compact representation \\
+\hline
+Decoding process is easier to visualize directly & Looks more complex at first \\
+\hline
+Needs more detailed branching expansion & Simpler for structured programming and repeated transitions \\
+\hline
+Paths do not merge & Paths can merge at the same state \\
+\hline
+Expands like a tree with many branches & Forms a grid-like structure with repeated state connections \\
+\hline
+\end{tabular}
+\end{center}
+
+% Source PDF pages 91-95
+\subsection{Viterbi Algorithm}
+
+\begin{definitionbox}[Viterbi Algorithm]
+The Viterbi algorithm is a dynamic-programming decoding method used for convolutional codes. It finds the most likely transmitted bit sequence by tracing the optimum path through a trellis diagram.
+\end{definitionbox}
+
+The main idea is:
+\begin{itemize}
+    \item compare all possible paths in the trellis
+    \item compute the path metric at each step
+    \item keep the path with minimum distance
+    \item trace back the survivor path to recover the transmitted data
+\end{itemize}
+
+\begin{infobox}[Maximum Likelihood Path]
+The maximum-likelihood path is the path through the trellis that has the highest probability of being the original transmitted sequence. In hard-decision decoding, this is the same as the path with the minimum Hamming distance.
+\[
+\text{maximum likelihood path} \Longleftrightarrow \text{minimum distance path}
+\]
+\end{infobox}
+
+\paragraph{Advantages}
+\begin{enumerate}
+    \item Provides optimal decoding for convolutional codes.
+    \item Minimizes bit error rate by choosing the minimum-distance path.
+    \item Works for both hard-decision and soft-decision decoding.
+    \item Is efficient for real-time applications with fixed complexity.
+    \item Performs well in noisy communication channels.
+    \item Reduces retransmission by correcting many errors directly.
+    \item Is widely used in wireless, satellite, and digital communication systems.
+\end{enumerate}
+
+\begin{questionanswerbox}[Convolutional Encoding and Viterbi Decoding Example]
+\textbf{Q:} Using convolutional encoding, encode the message \(101\). If the received codeword is \(V=110000\), check whether any error has been introduced and decode the actual message.
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+\text{Initial register state } = 000
+\]
+and the encoder relations
+\[
+x_1=m\oplus m_1\oplus m_2,\qquad x_2=m\oplus m_2
+\]
+
+\paragraph{Encoding the message \(101\)}
+\begin{enumerate}
+    \item Insert \(1\):
+    \[
+    x_1=1+0+0=1,\qquad x_2=1+0=1
+    \]
+    So the output is \(11\).
+
+    \item Insert \(0\):
+    \[
+    x_1=0+1+0=1,\qquad x_2=0+0=0
+    \]
+    So the output is \(10\).
+
+    \item Insert \(1\):
+    \[
+    x_1=1+0+1=0,\qquad x_2=1+1=0
+    \]
+    So the output is \(00\).
+\end{enumerate}
+
+Hence the transmitted sequence is
+\[
+111000
+\]
+
+Since the received codeword is
+\[
+V=110000
+\]
+an error has occurred at the third bit from the left.
+
+\paragraph{Viterbi decoding}
+The trellis-based survivor-path calculation is shown in the figure below. The minimum-distance path matches the codeword
+\[
+\hat V=001011
+\]
+and tracing the survivor path gives the message
+\[
+101
+\]
+
+So the decoded message matches the original input.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\linewidth]{Figures/generated/next_batch_91_95/page-092.png}
+    \caption{Worked convolutional encoding and Viterbi-decoding example for the message \(101\)}
+\end{figure}
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[State Diagram Trellis Diagram and Encoding Example]
+\textbf{Q:} Draw the state diagram and trellis diagram for the code generator shown below. Also find the encoded sequence for the bit stream \(1001101\).
+
+\textbf{A:}
+
+This worked page is diagram-heavy. It contains:
+\begin{itemize}
+    \item the state table for the \((2,1)\) convolutional encoder
+    \item the trellis diagram
+    \item the state diagram
+    \item the step-by-step register evolution for the stream \(1001101\)
+\end{itemize}
+
+The full handwritten construction is preserved below so the state transitions and branch outputs remain visible.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\linewidth]{Figures/generated/next_batch_91_95/page-093.png}
+    \caption{Worked state-diagram trellis-diagram and encoding construction for the stream \(1001101\)}
+\end{figure}
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Viterbi Decoding Example]
+\textbf{Q:} Decode the received sequence \(1011011010\) when the generating system is the same as in the previous-page encoder.
+
+\textbf{A:}
+
+Using the Viterbi algorithm, the survivor-path calculation shown below gives the corrected codeword
+\[
+\hat V=0011011010
+\]
+
+Following the traced path from left to right, the decoded message is
+\[
+01111
+\]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\linewidth]{Figures/generated/next_batch_91_95/page-094.png}
+    \caption{Worked Viterbi-decoding example for the received sequence \(1011011010\)}
+\end{figure}
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Tie Case in Viterbi Decoding Example]
+\textbf{Q:} Explain the case where the trellis gives two minimum-distance survivor paths.
+
+\textbf{A:}
+
+In the worked trellis below, two possible survivor paths are obtained. They lead to two possible corrected codewords and two decoded messages:
+\begin{itemize}
+    \item one path gives
+    \[
+    \hat V=1110111011,\qquad \text{decoded message }=10100
+    \]
+    \item the other path gives
+    \[
+    \hat V=1110111000,\qquad \text{decoded message }=10101
+    \]
+\end{itemize}
+
+This is a tie case: both paths have the same minimum metric, so the decoder cannot uniquely prefer one over the other using the trellis metric alone.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.86\linewidth]{Figures/generated/next_batch_91_95/page-095.png}
+\caption{Worked example showing equal-metric survivor paths in Viterbi decoding}
+\end{figure}
+\end{questionanswerbox}
+
+% Source PDF page 96
+\subsection{Tie Case Note in Viterbi Decoding}
+
+\begin{infobox}[Important Clarification]
+If more than one path in the trellis has the same minimum Hamming distance, then any one of those minimum-distance paths can be chosen by the decoder. They are equally likely under the same metric.
+\end{infobox}
+
+\paragraph{Why communication can still work}
+\begin{enumerate}
+    \item Convolutional encoding adds redundancy, so most error patterns are still corrected reliably.
+    \item In practical noisy channels, exact equal-metric ties are not very common.
+    \item With soft-decision decoding, ties become less likely because probabilities are more finely separated.
+    \item Real systems often add another error-detection layer such as CRC, so a wrong tied path can still be detected.
+    \item If detection fails, higher-layer protocols may request retransmission.
+\end{enumerate}
+
+\paragraph{Short Reading}
+The receiver does not directly "see" the conflict inside the trellis. It only chooses a survivor path. If a post-decoding check such as CRC fails, then the receiver can infer that the chosen path was wrong.
+
+% Source PDF pages 97-100
+\chapter{Channel Models and Noise}
+
+\section{Gaussian Distribution and Gaussian Channels}
+
+\subsection{Gaussian Distribution}
+
+\begin{definitionbox}[Gaussian Distribution]
+The Gaussian distribution, also called the normal distribution, is a continuous probability distribution represented by a bell-shaped curve.
+\end{definitionbox}
+
+It is characterized by two parameters:
+\begin{itemize}
+    \item mean \(\mu\)
+    \item standard deviation \(\sigma\)
+\end{itemize}
+
+\begin{formulabox}[Gaussian Probability Density Function]
+\[
+f(x)=\frac{1}{\sigma\sqrt{2\pi}}\,e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+\]
+\begin{itemize}
+    \item \(\mu\) = mean
+    \item \(\sigma\) = standard deviation
+    \item \(x\) = random variable
+\end{itemize}
+\end{formulabox}
+
+\subsection{Channel and Gaussian Channel}
+
+\begin{definitionbox}[Channel]
+A channel is the medium through which information travels from sender to receiver. In practice, it is often affected by noise and distortion.
+\end{definitionbox}
+
+\begin{definitionbox}[Gaussian Channel]
+A Gaussian channel is a communication channel affected by additive white Gaussian noise (AWGN), where the noise is modeled by a Gaussian probability distribution.
+\end{definitionbox}
+
+It assumes that the added noise is:
+\begin{itemize}
+    \item random
+    \item continuous
+    \item normally distributed
+    \item often modeled with zero mean and known variance
+\end{itemize}
+
+\subsection{Parallel Gaussian Channel}
+
+\begin{definitionbox}[Parallel Gaussian Channel]
+A parallel Gaussian channel consists of multiple independent Gaussian subchannels used simultaneously. Each subchannel has its own noise and may have a different signal-to-noise ratio.
+\end{definitionbox}
+
+\paragraph{Why it is useful}
+\begin{itemize}
+    \item increases data rate by using multiple frequency bands or antennas
+    \item improves capacity by distributing power across subchannels
+    \item exploits diversity and reduces the effect of fading or interference
+\end{itemize}
+
+\section{Error Probability and AWGN}
+
+\subsection{Error Probability in Gaussian Channel}
+
+In a Gaussian channel, the transmitted signal is affected by additive white Gaussian noise, which can cause the receiver to misinterpret symbols and make errors. The error probability depends on:
+\begin{itemize}
+    \item signal-to-noise ratio (SNR)
+    \item modulation scheme
+\end{itemize}
+
+\begin{formulabox}[Bit Error Probability for Binary Signaling]
+For binary signaling such as BPSK,
+\[
+P_e=Q\!\left(\sqrt{\frac{2E_b}{N_0}}\right)
+\]
+\begin{itemize}
+    \item \(Q(\cdot)\) = Gaussian \(Q\)-function
+    \item \(E_b\) = energy per bit
+    \item \(N_0\) = noise power spectral density
+\end{itemize}
+\end{formulabox}
+
+As SNR increases, the error probability decreases.
+
+\subsection{Additive White Gaussian Noise}
+
+\begin{definitionbox}[Additive White Gaussian Noise]
+AWGN is a basic noise model used in communication systems to represent random noise that interferes with signal transmission.
+\end{definitionbox}
+
+The name means:
+\begin{itemize}
+    \item \textbf{Additive:} noise is added to the signal
+    \item \textbf{White:} it has constant power spectral density
+    \item \textbf{Gaussian:} its amplitude follows a Gaussian distribution
+\end{itemize}
+
+AWGN distorts the transmitted signal by adding random variations, which reduces SNR and increases the chance of reception error.
+
+\section{Why Gaussian Distribution Matters in Communication}
+
+\begin{enumerate}
+    \item It models thermal noise in electronic components as AWGN.
+    \item It helps analyze error probability in digital communication systems.
+    \item It simplifies performance evaluation of modulation schemes.
+    \item It enables the use of the \(Q\)-function in bit-error-rate calculation.
+    \item It is central to Shannon's capacity theorem for noisy channels.
+    \item It is widely used in probabilistic decoding and signal detection.
+    \item It provides a useful benchmark noise model for system design.
+\end{enumerate}
+
+\section{Basic Channel Models}
+
+\subsection{Unreliable Channel}
+
+\begin{definitionbox}[Unreliable Channel]
+An unreliable channel is a communication channel where errors occur during transmission because of noise, interference, or multiple-signal fading. As a result, the received data may differ from the transmitted data.
+\end{definitionbox}
+
+\subsection{Binary Symmetric Channel}
+
+\begin{definitionbox}[Binary Symmetric Channel]
+A Binary Symmetric Channel (BSC) is a digital communication channel where binary bits \(0\) and \(1\) are transmitted, and each bit can be flipped with probability \(p\) during transmission.
+\end{definitionbox}
+
+In a BSC:
+\begin{itemize}
+    \item input and output symbols are binary: \(0\) and \(1\)
+    \item the crossover probability is \(p\), with \(0\le p\le 0.5\)
+    \item a transmitted \(0\) flips to \(1\) with probability \(p\)
+    \item a transmitted \(1\) flips to \(0\) with probability \(p\)
+    \item correct reception happens with probability \(1-p\)
+    \item errors occur independently, so the channel is memoryless
+\end{itemize}
+
+\begin{formulabox}[Capacity of a Binary Symmetric Channel]
+\[
+C=1-H(p)
+\]
+\begin{itemize}
+    \item \(C\) = channel capacity
+    \item \(H(p)\) = binary entropy function
+    \item \(p\) = crossover probability
+\end{itemize}
+\end{formulabox}
+
+\begin{questionanswerbox}[Why Error Probability \(0.5\) Gives Channel Capacity \(0\) Example]
+\textbf{Q:} Explain why error probability \(p=0.5\) gives channel capacity \(0\).
+
+\textbf{A:}
+
+We have
+\[
+C=1-H(p)
+\]
+For
+\[
+p=\frac{1}{2}
+\]
+\begin{align*}
+H\!\left(\frac12\right)
+&=-\frac12\log_2\frac12-\frac12\log_2\frac12\\
+&=1
+\end{align*}
+
+So,
+\[
+C=1-1=0
+\]
+
+This means the received bit is completely random and carries no useful information about the transmitted bit.
+\end{questionanswerbox}
+
+\subsection{Memory Channel}
+
+\begin{definitionbox}[Memory Channel]
+A memory channel is one where the current output depends not only on the current input but also on previous inputs or outputs.
+\end{definitionbox}
+
+Examples include channels affected by inter-symbol interference, fading, or multipath propagation.
+
+\subsection{Band Limited Channel}
+
+\begin{definitionbox}[Band Limited Channel]
+A band-limited channel only allows signals within a specific frequency range to pass.
+\end{definitionbox}
+
+Its main effects are:
+\begin{itemize}
+    \item distortion due to bandwidth constraint
+    \item limited data rate
+    \item need for pulse shaping and suitable modulation methods
+\end{itemize}
+
+It is commonly analyzed using Nyquist and Shannon ideas.
+
+\subsection{Erasure Channel}
+
+\begin{definitionbox}[Erasure Channel]
+An erasure channel is a channel where some transmitted symbols are lost or marked as unknown during transmission, but the receiver knows the positions of the erased symbols.
+\end{definitionbox}
+
+A common example is the binary erasure channel.
+
+% Source PDF pages 101-103
+\section{Shannon Capacity and Noisy Channel Coding}
+
+\subsection{Capacity of an AWGN Channel}
+
+\begin{questionanswerbox}[Proving the Capacity of AWGN Channel Example]
+\textbf{Q:} Prove that the capacity of an AWGN channel is
+\[
+C=W\log_2\!\left(1+\frac{P}{N_0W}\right)
+\]
+where the symbols have their usual meaning.
+
+\textbf{A:}
+
+The proof uses Shannon's capacity idea.
+
+If the received signal contains both signal power and noise power, then:
+\[
+\text{received power}=S+N
+\]
+where:
+\begin{itemize}
+    \item \(S\) = signal power
+    \item \(N\) = noise power
+\end{itemize}
+
+The number of distinguishable levels is
+\[
+m=\frac{\sqrt{S+N}}{\sqrt{N}}=\sqrt{1+\frac{S}{N}} \tag{i}
+\]
+
+So the information per pulse is
+\begin{align*}
+I&=\log_2 m\\
+ &=\log_2\sqrt{1+\frac{S}{N}}\\
+ &=\frac{1}{2}\log_2\!\left(1+\frac{S}{N}\right) \tag{ii}
+\end{align*}
+
+If the channel transmits \(K\) pulses per second, then channel capacity is
+\begin{align*}
+C&=IK\\
+ &=\frac{K}{2}\log_2\!\left(1+\frac{S}{N}\right)
+\end{align*}
+
+From Nyquist theorem,
+\[
+K=2B \tag{iii}
+\]
+
+Substituting,
+\[
+C=B\log_2\!\left(1+\frac{S}{N}\right) \tag{1}
+\]
+
+For an AWGN channel:
+\[
+B=W,\qquad N=N_0W,\qquad S=P
+\]
+
+So from (1),
+\[
+C=W\log_2\!\left(1+\frac{P}{N_0W}\right)
+\]
+
+Hence proved.
+\end{questionanswerbox}
+
+\subsection{Worked Examples on Shannon Capacity}
+
+\begin{questionanswerbox}[Voice Channel Capacity Example]
+\textbf{Q:} A narrowband voice channel has a bandwidth of \(64\,\text{kHz}\) and SNR \(=21.4\,\text{dB}\). Determine the channel capacity. Also calculate the capacity when SNR is increased to \(32.4\,\text{dB}\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+B=64\,\text{kHz}=64000\,\text{Hz}
+\]
+
+From Shannon's capacity formula,
+\[
+C=B\log_2(1+\text{SNR})
+\]
+
+For the first case,
+\[
+\frac{S}{N}=10^{\text{SNR(dB)}/10}=10^{21.4/10}=10^{2.14}
+\]
+
+So,
+\begin{align*}
+C&=64000\log_2(1+10^{2.14})\\
+ &\approx 455637.7504\ \text{bit/sec}
+\end{align*}
+
+For the second case,
+\[
+\frac{S}{N}=10^{32.4/10}=10^{3.24}
+\]
+
+Thus,
+\begin{align*}
+C'&=64000\log_2(1+10^{3.24})\\
+  &\approx 688888.1263\ \text{bit/sec}
+\end{align*}
+
+So increasing SNR increases the channel capacity.
+\end{questionanswerbox}
+
+\begin{questionanswerbox}[Reduced Signal Power Capacity Example]
+\textbf{Q:} A voice channel has a bandwidth of \(3.1\,\text{kHz}\) and SNR \(=18.2\,\text{dB}\). Determine the channel capacity. Also find the capacity when signal power is reduced to \(120\,\text{dBm}\).
+
+\textbf{A:}
+
+\textbf{Given,}
+\[
+B=3.1\,\text{kHz}=3100\,\text{Hz}
+\]
+
+We use
+\[
+C=B\log_2(1+\text{SNR})
+\]
+
+For the first case,
+\[
+\frac{S}{N}=10^{18.2/10}=10^{1.82}
+\]
+So,
+\begin{align*}
+C&=3100\log_2(1+10^{1.82})\\
+ &\approx 18809.503\ \text{bit/sec}
+\end{align*}
+
+\paragraph{For the reduced-power case}
+From the handwritten calculation,
+\[
+N_{\text{dBm}}=10\log_{10}\!\left(\frac{kTB}{0.001}\right)\approx -139\,\text{dBm}
+\]
+
+If signal power is reduced to
+\[
+S=-120\,\text{dBm}
+\]
+then
+\[
+\text{SNR}_{\text{dB}}=-120-(-139)=19\,\text{dB}
+\]
+
+Hence,
+\begin{align*}
+C'&=3100\log_2(1+10^{19/10})\\
+  &\approx 19622.1086\ \text{bit/sec}
+\end{align*}
+\end{questionanswerbox}
+
+\subsection{Shannon's Noisy Channel Coding Theorem}
+
+\begin{definitionbox}[Shannon's Noisy Channel Coding Theorem]
+For a noisy channel with capacity \(C\), reliable communication is possible at any transmission rate \(R<C\) with arbitrarily small probability of error, using appropriate coding.
+\end{definitionbox}
+
+But if
+\[
+R>C
+\]
+then reliable communication is not possible.
+
+\begin{infobox}[What the Symbols Mean]
+\begin{itemize}
+    \item \(C\) = channel capacity
+    \item \(R\) = transmission or data rate
+\end{itemize}
+\end{infobox}
+
+\subsection{Sphere Packing Idea in Decoding}
+
+\begin{questionanswerbox}[Sphere Packing Problem in Decoding Example]
+\textbf{Q:} Graphically explain the sphere packing problem in the decoding sphere.
+
+\textbf{A:}
+
+\textbf{Concept:}
+In a noisy channel, a transmitted codeword may be slightly altered by noise. So instead of receiving the exact point, the decoder must guess which codeword was intended based on proximity.
+
+Imagine each codeword as a point in an \(n\)-dimensional space. Around each codeword, draw a sphere of radius equal to the error-correcting capability.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=0.95]
+        \draw[thick, color=chaptercolor] (-1.1,0) circle (1.35);
+        \draw[thick, color=softlavender] (1.1,0.15) circle (1.35);
+        \draw[thick, color=softcoral] (0,-1.0) circle (1.35);
+        \node at (-1.35,0.2) {$c_1$};
+        \node at (1.45,0.35) {$c_2$};
+        \node at (0,-1.45) {$c_3$};
+        \fill[chaptercolor] (-0.15,-0.1) circle (2pt);
+        \fill[softlavender] (0.35,-0.05) circle (2pt);
+        \fill[softcoral] (0.12,-0.55) circle (2pt);
+    \end{tikzpicture}
+    \caption{Sphere-packing idea in decoding}
+\end{figure}
+
+If two spheres overlap, the decoder may confuse which codeword was actually sent.
+
+So the goal is:
+\begin{itemize}
+    \item pack as many spheres as possible
+    \item avoid overlap
+    \item maximize data rate while preserving error correction
+\end{itemize}
+
+This sphere-packing idea is the geometric intuition behind why reliable communication is possible below channel capacity.
 \end{questionanswerbox}
 
 \end{document}
